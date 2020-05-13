@@ -6,7 +6,7 @@ let config = {
     physics:{
         default: "arcade",
         arcade: {
-            gravity: {y: 1000},
+            //gravity: {y: 1000},
             debug: true
         }
     }
@@ -24,4 +24,4 @@ game.settings = {
 }
 
 //reserve keyboard vars
-let keyF, keyLEFT, keyRIGHT;
+let keyF, keyLEFT, keyRIGHT, keyUP, keyDOWN;
