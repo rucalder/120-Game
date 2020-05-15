@@ -62,13 +62,14 @@ var GameScene = new Phaser.Class({
         //creating render in scene
         this.customPipeline = this.game.renderer.addPipeline('Custom', new CustomPipeline2(this.game));
         this.customPipeline.setFloat2('resolution', this.game.config.width, this.game.config.height);
-
+        //adding background image
         this.add.image(400, 300, 'sky');
 
         //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
-        //creating ground assets
-        platforms.create(50, 250, 'ground');
+        //creating middle divide ground
+        platforms.create(50, 300, 'ground');
+        //ground for bottom player
         platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 
         //creating player with physics
@@ -134,7 +135,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 400 },
             debug: false
         }
     },
