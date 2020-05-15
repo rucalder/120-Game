@@ -1,18 +1,24 @@
-let config = {
-    type: Phaser.CANVAS,
-    width: 640,
-    height: 480,
-    scene: [Menu, Play],
-    physics:{
-        default: "arcade",
+var config = {
+    type: Phaser.WEBGL,
+    scale: {
+        mode: Phaser.DOM.FIT,
+        parent: 'phaser-example',
+        autoCenter: Phaser.DOM.CENTER_BOTH,
+        width: 800,
+        height: 600,
+    },
+    physics: {
+        default: 'arcade',
         arcade: {
-            //gravity: {y: 1000},
-            debug: true
+            gravity: { y: 800 },
+            debug: false
         }
-    }
-}
+    },
+    scene: GameScene
+};
 
-let game = new Phaser.Game(config);
+var game = new Phaser.Game(config);
+
 
 function create(){
     
