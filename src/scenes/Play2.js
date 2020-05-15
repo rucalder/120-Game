@@ -43,6 +43,7 @@ var GameScene = new Phaser.Class({
         Phaser.Scene.call(this, { key: 'gameScene', active: true });
 
         this.player = null;
+        this.player2 = null;
         this.cursors = null;
         this.score = 0;
         this.scoreText = null;
@@ -53,7 +54,8 @@ var GameScene = new Phaser.Class({
     preload: function ()
     {
         this.load.image('ground', "./assets/ground.png");
-        this.load.image('dude', "./assets/player.png");
+        this.load.image('player1', "./assets/player.png");
+        this.load.image('player2', "./assets/player2Sample.png");
         this.load.image('sky', "./assets/starfield.png");
     },
 
@@ -73,16 +75,26 @@ var GameScene = new Phaser.Class({
         platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 
         //creating player with physics
-        var player = this.physics.add.sprite(100, 450, 'dude');
+        var player = this.physics.add.sprite(100, 450, 'player1');
+        var player2 = this.physics.add.sprite(100, 200, 'player2');
         //how much character bounces when hitting the ground
         player.setBounce(0);
         player.setCollideWorldBounds(true);
+
+        player2.setBounce(0);
+        player2.setCollideWorldBounds(true);
         //controls for character
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        //add in WASD controls for second player
+        this.input.keyboard.addKeys('W,S,A,D');
+        
         //collisions between player and platform
         this.physics.add.collider(player, platforms);
+        this.physics.add.collider(player2, platforms);
 
         this.player = player;
+        this.player2 = player2;
 
         //set camera to render the texture
         this.cameras.main.setRenderToTexture(this.customPipeline);
@@ -92,6 +104,9 @@ var GameScene = new Phaser.Class({
     {
         var cursors = this.cursors;
         var player = this.player;
+        var player2 = this.player2;
+
+        ///////////////////////player 1 controls/////////////////////////////////////
         //if left arrow is pressed
         if (cursors.left.isDown)
         {
@@ -116,6 +131,35 @@ var GameScene = new Phaser.Class({
             //the speed at which the player ascends
             player.setVelocityY(-450);
         }
+
+
+        ///////////////////////player 2 controls/////////////////////////////////////
+        if (this.input.keyboard.on('keydown_A', function (event) {
+
+            // A key down
+            player2.setVelocityX(-160);
+       
+        }));
+
+        else if (this.input.keyboard.on('keydown_D', function (event) {
+
+            //D key down
+            player2.setVelocityX(160);
+   
+        }));
+
+        //no keys pressed
+        else {
+            player2.setVelocityX(0);
+        }
+
+        //player 2 jump
+        if (player2.body.touching.down && this.input.keyboard.on('keydown_W', function (event) {
+
+            // W key down
+            player2.setVelocityY(-450);
+       
+        }));
 
         this.customPipeline.setFloat1('time', this.t);
 
