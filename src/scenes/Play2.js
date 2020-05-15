@@ -59,51 +59,57 @@ var GameScene = new Phaser.Class({
 
     create: function ()
     {
+        //creating render in scene
         this.customPipeline = this.game.renderer.addPipeline('Custom', new CustomPipeline2(this.game));
         this.customPipeline.setFloat2('resolution', this.game.config.width, this.game.config.height);
 
         this.add.image(400, 300, 'sky');
 
+        //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
-
+        //creating ground assets
+        platforms.create(50, 250, 'ground');
         platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 
+        //creating player with physics
         var player = this.physics.add.sprite(100, 450, 'dude');
-
+        //jumping of character
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
-
+        //controls for character
         this.cursors = this.input.keyboard.createCursorKeys();
-
+        //collisions between player and platform
         this.physics.add.collider(player, platforms);
 
         this.player = player;
 
+        //set camera to render the texture
         this.cameras.main.setRenderToTexture(this.customPipeline);
-        // this.cameras.main.setRenderToTexture();
     },
 
     update: function ()
     {
         var cursors = this.cursors;
         var player = this.player;
-
+        //if left arrow is pressed
         if (cursors.left.isDown)
         {
             player.setVelocityX(-160);
 
         }
+        //if right arrow is pressed
         else if (cursors.right.isDown)
         {
             player.setVelocityX(160);
 
         }
+        //if no arrow is pressed
         else
         {
             player.setVelocityX(0);
 
         }
-
+        //if up arrow is pressed
         if (cursors.up.isDown && player.body.touching.down)
         {
             player.setVelocityY(-330);
