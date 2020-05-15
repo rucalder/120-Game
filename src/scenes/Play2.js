@@ -54,9 +54,9 @@ var GameScene = new Phaser.Class({
     preload: function ()
     {
         this.load.image('ground', "./assets/ground.png");
+        this.load.image('sky', "./assets/starfield.png");
         this.load.image('player1', "./assets/player.png");
         this.load.image('player2', "./assets/player2Sample.png");
-        this.load.image('sky', "./assets/starfield.png");
     },
 
     create: function ()
@@ -70,13 +70,14 @@ var GameScene = new Phaser.Class({
         //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
         //creating middle divide ground
-        platforms.create(400, 300, 'ground');
+        platforms.create(400, 300, 'ground').setScale(2).refreshBody();
         //ground for bottom player
         platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 
         //creating player with physics
         var player = this.physics.add.sprite(100, 450, 'player1');
         var player2 = this.physics.add.sprite(100, 200, 'player2');
+
         //how much character bounces when hitting the ground
         player.setBounce(0);
         player.setCollideWorldBounds(true);
@@ -181,7 +182,7 @@ var config = {
         parent: 'phaser-example',
         autoCenter: Phaser.DOM.CENTER_BOTH,
         width: 800,
-        height: 600
+        height: 600,
     },
     physics: {
         default: 'arcade',
