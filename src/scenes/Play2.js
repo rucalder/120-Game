@@ -87,7 +87,7 @@ var GameScene = new Phaser.Class({
         this.cursors = this.input.keyboard.createCursorKeys();
 
         //add in WASD controls for second player
-        this.input.keyboard.addKeys('W,S,A,D');
+        this.keys = this.input.keyboard.addKeys('W,S,A,D');
         
         //collisions between player and platform
         this.physics.add.collider(player, platforms);
@@ -103,10 +103,12 @@ var GameScene = new Phaser.Class({
     update: function ()
     {
         var cursors = this.cursors;
+        var keys = this.keys;
         var player = this.player;
         var player2 = this.player2;
 
         ///////////////////////player 1 controls/////////////////////////////////////
+
         //if left arrow is pressed
         if (cursors.left.isDown)
         {
@@ -134,32 +136,36 @@ var GameScene = new Phaser.Class({
 
 
         ///////////////////////player 2 controls/////////////////////////////////////
-        if (this.input.keyboard.on('keydown_A', function (event) {
 
-            // A key down
+        //A key is down move left
+        if(keys.A.isDown){
             player2.setVelocityX(-160);
-       
-        }));
+        }
 
-        else if (this.input.keyboard.on('keydown_D', function (event) {
-
-            //D key down
+        //D key down move right
+        else if(keys.D.isDown){
             player2.setVelocityX(160);
-   
-        }));
+        }
 
-        //no keys pressed
-        else {
+        //no key pressed don't move
+        else{
             player2.setVelocityX(0);
         }
 
-        //player 2 jump
-        if (player2.body.touching.down && this.input.keyboard.on('keydown_W', function (event) {
-
-            // W key down
+        //W key is pressed jump
+        if (keys.W.isDown && player2.body.touching.down)
+        {
+            //the speed at which the player ascends
             player2.setVelocityY(-450);
+        }
+
+        // //player 2 jump
+        // if (player2.body.touching.down && this.input.keyboard.on('keydown_W', function (event) {
+
+        //     // W key down
+        //     player2.setVelocityY(-450);
        
-        }));
+        // }));
 
         this.customPipeline.setFloat1('time', this.t);
 
