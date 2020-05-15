@@ -74,8 +74,8 @@ var GameScene = new Phaser.Class({
 
         //creating player with physics
         var player = this.physics.add.sprite(100, 450, 'dude');
-        //jumping of character
-        player.setBounce(0.2);
+        //how much character bounces when hitting the ground
+        player.setBounce(0);
         player.setCollideWorldBounds(true);
         //controls for character
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -113,7 +113,8 @@ var GameScene = new Phaser.Class({
         //if up arrow is pressed
         if (cursors.up.isDown && player.body.touching.down)
         {
-            player.setVelocityY(-330);
+            //the speed at which the player ascends
+            player.setVelocityY(-450);
         }
 
         this.customPipeline.setFloat1('time', this.t);
@@ -135,7 +136,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 400 },
+            gravity: { y: 800 },
             debug: false
         }
     },
