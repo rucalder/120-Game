@@ -51,7 +51,7 @@ var GameScene = new Phaser.Class({
         this.customPipeline;
     },
 
-    preload: function ()
+    preload()
     {
         this.load.image('ground', "./assets/ground.png");
         this.load.image('sky', "./assets/starfield.png");
@@ -59,7 +59,7 @@ var GameScene = new Phaser.Class({
         this.load.image('player2', "./assets/player2Sample.png");
     },
 
-    create: function ()
+    create()
     {
         //creating render in scene
         this.customPipeline = this.game.renderer.addPipeline('Custom', new CustomPipeline2(this.game));
@@ -101,7 +101,7 @@ var GameScene = new Phaser.Class({
         this.cameras.main.setRenderToTexture(this.customPipeline);
     },
 
-    update: function ()
+    update()
     {
         var cursors = this.cursors;
         var keys = this.keys;
