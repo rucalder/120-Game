@@ -68,7 +68,7 @@ var GameScene = new Phaser.Class({
         //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
         //creating middle divide ground
-        platforms.create(50, 300, 'ground');
+        platforms.create(400, 300, 'ground');
         //ground for bottom player
         platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 
