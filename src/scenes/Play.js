@@ -10,6 +10,9 @@ class Play extends Phaser.Scene{
     }
 
     create(){
+
+        //this.customPipeline = this.game.renderer.addPipeline('Custom', new CustomPipeline2(this.game));
+        //this.customPipeline.setFloat2('resolution', this.game.config.width, this.game.config.height);
          //Blue sky
         this.sky = this.add.tileSprite(0, 0, 640, 480, "sky").setOrigin(0, 0);
         
