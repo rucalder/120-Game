@@ -132,7 +132,7 @@ var GameScene = new Phaser.Class({
         if (cursors.up.isDown && player.body.touching.down)
         {
             //the speed at which the player ascends
-            player.setVelocityY(-450);
+            player.setVelocityY(-500);
         }
 
 
@@ -157,16 +157,8 @@ var GameScene = new Phaser.Class({
         if (keys.W.isDown && player2.body.touching.down)
         {
             //the speed at which the player ascends
-            player2.setVelocityY(-450);
+            player2.setVelocityY(-500);
         }
-
-        // //player 2 jump
-        // if (player2.body.touching.down && this.input.keyboard.on('keydown_W', function (event) {
-
-        //     // W key down
-        //     player2.setVelocityY(-450);
-       
-        // }));
 
         this.customPipeline.setFloat1('time', this.t);
 
