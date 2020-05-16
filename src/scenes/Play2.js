@@ -65,9 +65,10 @@ var GameScene = new Phaser.Class({
 
     create()
     {
-        //creating render in scene
+        //this creates the wave effect however refer to the bottom of update for the code that enables the wave to move
         this.customPipeline = this.game.renderer.addPipeline('Custom', new CustomPipeline2(this.game));
         this.customPipeline.setFloat2('resolution', this.game.config.width, this.game.config.height);
+
         //adding background image
         this.add.image(400, 300, 'sky');
 
@@ -214,7 +215,7 @@ var GameScene = new Phaser.Class({
             //the speed at which the player ascends
             player2.setVelocityY(-500);
         }
-
+        //This enables the wave to move
         this.customPipeline.setFloat1('time', this.t);
 
         this.t += 0.005
