@@ -55,7 +55,9 @@ var GameScene = new Phaser.Class({
     {
         this.load.image('ground', "./assets/ground.png");
         this.load.image('sky', "./assets/starfield.png");
-        this.load.image('player1', "./assets/player.png");
+        this.load.spritesheet('player1Left', "./assets/LeftRun.png", { frameWidth: 50, frameHeight: 51 });
+        this.load.spritesheet('player1Right', "./assets/RightRun.png", { frameWidth: 50, frameHeight: 51 });
+        this.load.spritesheet('player1Idle', "./assets/Idle.png", { frameWidth: 50, frameHeight: 50 });
         this.load.image('player2', "./assets/player2Sample.png");
     },
 
@@ -75,15 +77,39 @@ var GameScene = new Phaser.Class({
         platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 
         //creating player with physics
-        var player = this.physics.add.sprite(100, 450, 'player1');
+        var player = this.physics.add.sprite(100, 450, 'player1Idle');
         var player2 = this.physics.add.sprite(100, 200, 'player2');
 
         //how much character bounces when hitting the ground
-        player.setBounce(0);
+        player.setBounce(0.2);
         player.setCollideWorldBounds(true);
 
-        player2.setBounce(0);
+        player2.setBounce(0.2);
         player2.setCollideWorldBounds(true);
+
+
+        this.anims.create({
+            key: 'left',
+            frames: this.anims.generateFrameNumbers('player1Left', { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'turn',
+            frames: [ { key: 'player1Idle', frame: 0 } ],
+            frameRate: 20
+        });
+
+        this.anims.create({
+            key: 'right',
+            frames: this.anims.generateFrameNumbers('player1Right', { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+
+
         //controls for character
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -114,18 +140,21 @@ var GameScene = new Phaser.Class({
         if (cursors.left.isDown)
         {
             player.setVelocityX(-160);
+            player.anims.play('left', true);
 
         }
         //if right arrow is pressed
         else if (cursors.right.isDown)
         {
             player.setVelocityX(160);
+            player.anims.play('right', true);
 
         }
         //if no arrow is pressed
         else
         {
             player.setVelocityX(0);
+            player.anims.play('turn');
 
         }
         //if up arrow is pressed
