@@ -6,13 +6,12 @@ class Play extends Phaser.Scene{
     preload(){
         this.load.image("ground", "./assets/ground.png")
         this.load.image("player", "./assets/player.png")
+        this.load.image('sky', "./assets/starfield.png");
     }
 
     create(){
-        this.onGround = false
-
-        //Blue sky
-        this.add.rectangle(0, 0, 640, 480, 0x87ceeb).setOrigin(0, 0);
+         //Blue sky
+        this.sky = this.add.tileSprite(0, 0, 640, 480, "sky").setOrigin(0, 0);
         
         //Ground
         this.ground = this.physics.add.sprite(320, 460, "ground")
@@ -23,9 +22,7 @@ class Play extends Phaser.Scene{
         this.player = new Player(this, 320, 400, "player")
         this.player.setGravityY(1000)
 
-        this.physics.add.collider(this.player, this.ground, function(){
-            this.onGround = true
-        });
+        this.physics.add.collider(this.player, this.ground);
 
 
         //Define keys
@@ -45,8 +42,7 @@ class Play extends Phaser.Scene{
 
     update(){
         this.player.update()
-        console.log(this.onGround)
-        
+        this.sky.tilePositionX -= 2
     }
 
 }

@@ -27,9 +27,8 @@ class Player extends Phaser.Physics.Arcade.Sprite{
     }
 
     jump(){
-        if (keyUP.isDown && Play.onGround == true){
+        if (keyUP.isDown && this.body.touching.down){
             this.setVelocityY(-500);
-            Play.onGround = false
         }
     }
 }
