@@ -43,6 +43,7 @@ var GameScene = new Phaser.Class({
         Phaser.Scene.call(this, { key: 'gameScene', active: true });
 
         this.player = null;
+        this.player2 = null;
         this.cursors = null;
         this.score = 0;
         this.scoreText = null;
@@ -50,14 +51,15 @@ var GameScene = new Phaser.Class({
         this.customPipeline;
     },
 
-    preload: function ()
+    preload()
     {
         this.load.image('ground', "./assets/ground.png");
-        this.load.image('dude', "./assets/player.png");
         this.load.image('sky', "./assets/starfield.png");
+        this.load.image('player1', "./assets/player.png");
+        this.load.image('player2', "./assets/player2Sample.png");
     },
 
-    create: function ()
+    create()
     {
         //creating render in scene
         this.customPipeline = this.game.renderer.addPipeline('Custom', new CustomPipeline2(this.game));
@@ -68,30 +70,46 @@ var GameScene = new Phaser.Class({
         //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
         //creating middle divide ground
-        platforms.create(400, 300, 'ground');
+        platforms.create(400, 300, 'ground').setScale(2).refreshBody();
         //ground for bottom player
         platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 
         //creating player with physics
-        var player = this.physics.add.sprite(100, 450, 'dude');
+        var player = this.physics.add.sprite(100, 450, 'player1');
+        var player2 = this.physics.add.sprite(100, 200, 'player2');
+
         //how much character bounces when hitting the ground
         player.setBounce(0);
         player.setCollideWorldBounds(true);
+
+        player2.setBounce(0);
+        player2.setCollideWorldBounds(true);
         //controls for character
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        //add in WASD controls for second player
+        this.keys = this.input.keyboard.addKeys('W,S,A,D');
+        
         //collisions between player and platform
         this.physics.add.collider(player, platforms);
+        this.physics.add.collider(player2, platforms);
 
         this.player = player;
+        this.player2 = player2;
 
         //set camera to render the texture
         this.cameras.main.setRenderToTexture(this.customPipeline);
     },
 
-    update: function ()
+    update()
     {
         var cursors = this.cursors;
+        var keys = this.keys;
         var player = this.player;
+        var player2 = this.player2;
+
+        ///////////////////////player 1 controls/////////////////////////////////////
+
         //if left arrow is pressed
         if (cursors.left.isDown)
         {
@@ -117,31 +135,42 @@ var GameScene = new Phaser.Class({
             player.setVelocityY(-450);
         }
 
+
+        ///////////////////////player 2 controls/////////////////////////////////////
+
+        //A key is down move left
+        if(keys.A.isDown){
+            player2.setVelocityX(-160);
+        }
+
+        //D key down move right
+        else if(keys.D.isDown){
+            player2.setVelocityX(160);
+        }
+
+        //no key pressed don't move
+        else{
+            player2.setVelocityX(0);
+        }
+
+        //W key is pressed jump
+        if (keys.W.isDown && player2.body.touching.down)
+        {
+            //the speed at which the player ascends
+            player2.setVelocityY(-450);
+        }
+
+        // //player 2 jump
+        // if (player2.body.touching.down && this.input.keyboard.on('keydown_W', function (event) {
+
+        //     // W key down
+        //     player2.setVelocityY(-450);
+       
+        // }));
+
         this.customPipeline.setFloat1('time', this.t);
 
         this.t += 0.005
     },
 
 });
-
-var config = {
-    type: Phaser.WEBGL,
-    scale: {
-        mode: Phaser.DOM.FIT,
-        parent: 'phaser-example',
-        autoCenter: Phaser.DOM.CENTER_BOTH,
-        width: 800,
-        height: 600
-    },
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 800 },
-            debug: false
-        }
-    },
-    scene: GameScene
-};
-
-var game = new Phaser.Game(config);
-
