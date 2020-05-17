@@ -7,6 +7,7 @@ class Play extends Phaser.Scene{
         this.load.image("ground", "./assets/ground.png")
         this.load.image("player", "./assets/player.png")
         this.load.image('sky', "./assets/starfield.png");
+        this.load.image("p1idle", "./assets/p1_idle.png")
     }
 
     create(){
@@ -22,7 +23,7 @@ class Play extends Phaser.Scene{
 
         //Player
         //this.player = this.physics.add.sprite(320, 400, "player")
-        this.player = new Player(this, 320, 400, "player")
+        this.player = new Player(this, 320, 400, "p1idle")
         this.player.setGravityY(1000)
 
         this.physics.add.collider(this.player, this.ground);
