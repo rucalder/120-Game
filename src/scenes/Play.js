@@ -12,6 +12,8 @@ class Play extends Phaser.Scene{
     }
 
     create(){
+        this.powerCall = 0
+        this.tracker = 1
 
         //this.customPipeline = this.game.renderer.addPipeline('Custom', new CustomPipeline2(this.game));
         //this.customPipeline.setFloat2('resolution', this.game.config.width, this.game.config.height);
@@ -29,10 +31,13 @@ class Play extends Phaser.Scene{
 
         this.physics.add.collider(this.player, this.ground);
 
-        this.power = new powerUp(this, 50, 400, "bullet")
-        this.power.setImmovable()
+        //this.power = new powerUp(this, 50, 400, "bullet")
+        //this.power.setImmovable()
 
-        this.physics.add.collider(this.player, this.power);
+        //this.physics.add.overlap(this.player, this.power);
+
+
+        this.canon = new Canon(this, 0, 360, "bullet")
 
 
         //Define keys
@@ -53,11 +58,27 @@ class Play extends Phaser.Scene{
     update(){
         this.player.update()
         this.sky.tilePositionX -= 2
-        this.power.update()
+        /*this.power.update()
         if(this.physics.overlap(this.player, this.power)){
-            this.power.callTimer(this.sky)
+            this.callTimer(this.sky)
             this.power.destroy()
         }
+        if(this.powerCall == 1){
+            this.sky.tilePositionX -= 1
+        }*/
+        this.canon.update()
+        //this.canonMove(this.canon)
+        //console.log(this.canon.y)
+    }
+
+
+    callTimer(){
+        this.powerCall = 1
+        this.timer = this.time.delayedCall(2000, () => {
+            this.powerCall = 0
+            this.timer.remove()
+        }, null, this);
+        
     }
 
 }
