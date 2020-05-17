@@ -8,6 +8,7 @@ class Play extends Phaser.Scene{
         this.load.image("player", "./assets/player.png")
         this.load.image('sky', "./assets/starfield.png");
         this.load.image("p1idle", "./assets/p1_idle.png")
+        this.load.image("bullet", "./assets/bulletSample.png")
     }
 
     create(){
@@ -28,6 +29,11 @@ class Play extends Phaser.Scene{
 
         this.physics.add.collider(this.player, this.ground);
 
+        this.power = new powerUp(this, 50, 400, "bullet")
+        this.power.setImmovable()
+
+        this.physics.add.collider(this.player, this.power);
+
 
         //Define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -47,6 +53,11 @@ class Play extends Phaser.Scene{
     update(){
         this.player.update()
         this.sky.tilePositionX -= 2
+        this.power.update()
+        if(this.physics.overlap(this.player, this.power)){
+            this.power.callTimer(this.sky)
+            this.power.destroy()
+        }
     }
 
 }
