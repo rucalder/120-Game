@@ -29,7 +29,8 @@ class Play2 extends Phaser.Scene{
         this.customPipeline;
 
         //adding background image
-        this.sky = this.add.image(400, 300, 'sky');
+        this.sky = this.add.tileSprite(0, 0, 800, 600, "sky").setOrigin(0,0);
+
 
         //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
@@ -117,7 +118,8 @@ class Play2 extends Phaser.Scene{
         var player = this.player;
         var player2 = this.player2;
 
-        this.sky.tilePositionX -= 2
+        //sky movement
+        this.sky.tilePositionX -=2;
 
         ///////////////////////player 1 controls/////////////////////////////////////
 
