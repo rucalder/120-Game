@@ -1,58 +1,13 @@
-var CustomPipeline2 = new Phaser.Class({
-
-    Extends: Phaser.Renderer.WebGL.Pipelines.TextureTintPipeline,
-
-    initialize:
-
-    function CustomPipeline2 (game)
-    {
-        Phaser.Renderer.WebGL.Pipelines.TextureTintPipeline.call(this, {
-            game: game,
-            renderer: game.renderer,
-            fragShader: [
-            "precision mediump float;",
-
-            "uniform float     time;",
-            "uniform vec2      resolution;",
-            "uniform sampler2D uMainSampler;",
-            "varying vec2 outTexCoord;",
-
-            "void main( void ) {",
-
-                "vec2 uv = outTexCoord;",
-                "//uv.y *= -1.0;",
-                "uv.y += (sin((uv.x + (time * 0.5)) * 10.0) * 0.1) + (sin((uv.x + (time * 0.2)) * 32.0) * 0.01);",
-                "vec4 texColor = texture2D(uMainSampler, uv);",
-                "gl_FragColor = texColor;",
-
-            "}"
-            ].join('\n')
-        });
-    } 
-
-});
-
-var GameScene = new Phaser.Class({
-
-    Extends: Phaser.Scene,
-
-    initialize:
-
-    function GameScene ()
-    {
-        Phaser.Scene.call(this, { key: 'gameScene', active: true });
-
-        this.player = null;
-        this.player2 = null;
-        this.cursors = null;
-        this.score = 0;
-        this.scoreText = null;
-        this.t = 0;
-        this.customPipeline;
-    },
+class Play2 extends Phaser.Scene{
+    constructor(){
+        super("playScene");
+    }
 
     preload()
     {
+        //this creates the wave effect however refer to the bottom of update for the code that enables the wave to move
+        this.customPipeline = this.game.renderer.addPipeline('Custom', new CustomPipeline2(this.game));
+        this.customPipeline.setFloat2('resolution', this.game.config.width, this.game.config.height);
         this.load.image('ground', "./assets/ground.png");
         this.load.image('sky', "./assets/starfield.png");
         this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 50, frameHeight: 51 });
@@ -61,16 +16,20 @@ var GameScene = new Phaser.Class({
         this.load.spritesheet('player2Left', "./assets/p2_LeftRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player2Right', "./assets/p2_RightRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player2Idle', "./assets/p2_Idle.png", { frameWidth: 50, frameHeight: 50 });
-    },
+    }
 
     create()
     {
-        //this creates the wave effect however refer to the bottom of update for the code that enables the wave to move
-        this.customPipeline = this.game.renderer.addPipeline('Custom', new CustomPipeline2(this.game));
-        this.customPipeline.setFloat2('resolution', this.game.config.width, this.game.config.height);
+        this.player = null;
+        this.player2 = null;
+        this.cursors = null;
+        this.score = 0;
+        this.scoreText = null;
+        this.t = 0;
+        this.customPipeline;
 
         //adding background image
-        this.add.image(400, 300, 'sky');
+        this.sky = this.add.image(400, 300, 'sky');
 
         //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
@@ -149,7 +108,7 @@ var GameScene = new Phaser.Class({
 
         //set camera to render the texture
         this.cameras.main.setRenderToTexture(this.customPipeline);
-    },
+    }
 
     update()
     {
@@ -157,6 +116,8 @@ var GameScene = new Phaser.Class({
         var keys = this.keys;
         var player = this.player;
         var player2 = this.player2;
+
+        this.sky.tilePositionX -= 2
 
         ///////////////////////player 1 controls/////////////////////////////////////
 
@@ -219,6 +180,6 @@ var GameScene = new Phaser.Class({
         this.customPipeline.setFloat1('time', this.t);
 
         this.t += 0.005
-    },
+    }
 
-});
+}

@@ -1,16 +1,19 @@
 let config = {
-    type: Phaser.CANVAS,
+    type: Phaser.WEBGL,
     mipmapFilter: 'LINEAR_MIPMAP_LINEAR',
-    width: 640,
-    height: 480,
-    scene: [Menu, Play],
+    width: 800,
+    height: 600,
+    scene: [Menu, Play2],
+    //scene: [Menu, Play],
     physics:{
         default: "arcade",
         arcade: {
-            debug: true
+            gravity: { y: 1000 },
+            debug: false
         }
-    }
-}
+    },
+};
+
 
 let game = new Phaser.Game(config);
 
