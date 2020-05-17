@@ -8,6 +8,7 @@ class Play2 extends Phaser.Scene{
         //this creates the wave effect however refer to the bottom of update for the code that enables the wave to move
         this.customPipeline = this.game.renderer.addPipeline('Custom', new CustomPipeline2(this.game));
         this.customPipeline.setFloat2('resolution', this.game.config.width, this.game.config.height);
+        //assets
         this.load.image('ground', "./assets/ground.png");
         this.load.image('sky', "./assets/starfield.png");
         this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 50, frameHeight: 51 });
@@ -31,12 +32,13 @@ class Play2 extends Phaser.Scene{
         //adding background image
         this.sky = this.add.tileSprite(0, 0, 800, 600, "sky").setOrigin(0,0);
 
-
         //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
-        //creating middle divide ground
+        //roof border
+        platforms.create(400, 32, 'ground').setScale(2).refreshBody();
+        //middle border 
         platforms.create(400, 300, 'ground').setScale(2).refreshBody();
-        //ground for bottom player
+        //bottom border
         platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 
         //creating player with physics
@@ -46,7 +48,6 @@ class Play2 extends Phaser.Scene{
         //how much character bounces when hitting the ground
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
-
         player2.setBounce(0.2);
         player2.setCollideWorldBounds(true);
 
