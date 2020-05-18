@@ -1,15 +1,16 @@
 let config = {
-    type: Phaser.CANVAS,
-    mipmapFilter: 'LINEAR_MIPMAP_LINEAR',
-    width: 640,
-    height: 480,
+    type: Phaser.WEBGL,
+    // width: 640,
+    // height: 480,
+    width: 800,
+    height: 600,
     //scene: [Menu, Play2],
-    scene: [Menu, Play],
-    physics:{
-        default: "arcade",
+    scene: [Menu, Play2],
+    physics: {
+        default: 'arcade',
         arcade: {
-            
-            debug: true
+            gravity: { y: 1000 },
+            debug: false
         }
     },
 };
@@ -23,7 +24,6 @@ function create(){
 
 // define game settings
 game.settings = {
-    obstacleSpeed: 1
 }
 
 //reserve keyboard vars

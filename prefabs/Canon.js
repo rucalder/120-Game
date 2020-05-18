@@ -31,5 +31,4 @@ class Canon extends Phaser.Physics.Arcade.Sprite{
         }
     }
 
-
 }

@@ -17,6 +17,8 @@ class Play2 extends Phaser.Scene{
         this.load.spritesheet('player2Left', "./assets/p2_LeftRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player2Right', "./assets/p2_RightRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player2Idle', "./assets/p2_Idle.png", { frameWidth: 50, frameHeight: 50 });
+        this.load.image("bullet", "./assets/bulletSample.png");
+        this.load.audio("bgmusic", "./assets/pirateGameSong.wav");
     }
 
     create()
@@ -24,10 +26,21 @@ class Play2 extends Phaser.Scene{
         this.player = null;
         this.player2 = null;
         this.cursors = null;
-        this.score = 0;
-        this.scoreText = null;
         this.t = 0;
         this.customPipeline;
+
+        //music
+        this.bgmusic = this.sound.add('bgmusic');
+        this.bgmusic.play({
+            volume: .5,
+            loop: true
+        })
+        //////////////////////////////////////////RUBEN CODE FROM PLAY///////////////////////////////////
+        // this.powerCall = 0
+        // this.tracker = 1
+        // this.gameOver = false
+        // this.level = 1
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 
         //adding background image
         this.sky = this.add.tileSprite(0, 0, 800, 600, "sky").setOrigin(0,0);
@@ -50,6 +63,13 @@ class Play2 extends Phaser.Scene{
         player.setCollideWorldBounds(true);
         player2.setBounce(0.2);
         player2.setCollideWorldBounds(true);
+
+        ////////////////////////////////////////////////////////RUBEN CODE///////////////////////////////////
+        // this.canon = new Canon(this, 0, 100, "bullet");
+        // this.bullets = this.physics.add.group();
+        // this.physics.add.overlap(this.player, this.bullets);
+        // this.physics.add.overlap(this.player2, this.bullets);
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
         this.anims.create({
@@ -93,8 +113,6 @@ class Play2 extends Phaser.Scene{
             repeat: -1
         });
 
-
-
         //controls for character
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -104,6 +122,30 @@ class Play2 extends Phaser.Scene{
         //collisions between player and platform
         this.physics.add.collider(player, platforms);
         this.physics.add.collider(player2, platforms);
+
+        ///////////////////////////////////////////////RUBEN CODE///////////////////////////////////////
+        //cannon timer event
+        // this.canonTimer = this.time.addEvent({
+        //     delay: Phaser.Math.Between(1000, 5000),                // ms
+        //     callback: () => {
+        //         this.canonFire();
+        //         this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
+        //    },
+        //     //args: [],
+        //     callbackScope: this,
+        //     loop: true
+        // });
+        // // game timer event
+        // this.gameTimer = this.time.addEvent({
+        //     delay: 1000,                // ms
+        //     callback: () => {
+        //         this.level += .1
+        //    },
+        //     //args: [],
+        //     callbackScope: this,
+        //     loop: true
+        // });
+        ////////////////////////////////////////////////////////////////////////////////////////////
 
         this.player = player;
         this.player2 = player2;
@@ -118,6 +160,18 @@ class Play2 extends Phaser.Scene{
         var keys = this.keys;
         var player = this.player;
         var player2 = this.player2;
+
+        ////////////////////////////////////////////////RUBEN CODE////////////////////////////////////////////
+        // if(this.gameOver == false){
+        //     this.player.update()
+        //     this.sky.tilePositionX -= this.level
+        //     this.canon.update()
+        // }
+        // if(this.physics.overlap(this.player, this.bullets)){
+        //     this.gameOver = true
+        //     this.gameOverScreen()
+        // }
+        //////////////////////////////////////////////////////////////////////////////////////////////////
 
         //sky movement
         this.sky.tilePositionX -=2;
@@ -185,4 +239,60 @@ class Play2 extends Phaser.Scene{
         this.t += 0.005
     }
 
+    ////////////////////////////////////////////////RUBEN CODE/////////////////////////////////////////////////
+    // gameOverScreen(){
+    //     this.canonTimer.remove()
+    //     this.player.setGravityY(0)
+    //     this.player.setVelocityY(0)
+    //     this.player.setImmovable()
+    //     let menuConfig = {
+    //         fontFamily: "Courier",
+    //         fontSize: "26px",
+    //         backgroundColor: "#8B008B",
+    //         color: "#FFFFFF",
+    //         align: "right",
+    //         padding: {
+    //             top: 5,
+    //             bottom: 5,
+    //         },
+    //         fixedWidth: 0
+    //     }
+
+    //     let centerX = game.config.width/2
+    //     let centerY = game.config.height/2
+
+    //     this.add.text(centerX, centerY - 100, 'GAME OVER', menuConfig).setOrigin(0.5);
+    //     let restart = this.add.text(centerX - 100, centerY, "Restart", menuConfig).setOrigin(0.5);
+    //     restart.setInteractive();
+    //     restart.on("pointerup", () =>{
+    //         this.time.now = 0
+    //         this.totalTime = 0
+    //         this.scene.restart("playScene");
+    //     })
+    //     let menu = this.add.text(centerX + 100, centerY, "Menu", menuConfig).setOrigin(0.5);
+    //     menu.setInteractive();
+    //     menu.on("pointerup", () =>{
+    //         this.time.now = 0
+    //         this.totalTime = 0
+    //         this.scene.start("menuScene");
+    //     })
+           
+    // }
+
+    // callTimer(){
+    //     this.powerCall = 1
+    //     this.timer = this.time.delayedCall(2000, () => {
+    //         this.powerCall = 0
+    //         this.timer.remove()
+    //     }, null, this);
+        
+    // }
+
+    // canonFire(){
+    //     var bull = this.physics.add.sprite(this.canon.x, this.canon.y, "bullet")
+    //     this.bullets.add(bull)
+    //     bull.setVelocityX(200)
+
+    // }
+    /////////////////////////////////////////////////////////////////////////////////////////
 }
