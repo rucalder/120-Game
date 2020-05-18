@@ -31,10 +31,10 @@ class Play2 extends Phaser.Scene{
 
         //music
         this.bgmusic = this.sound.add('bgmusic');
-        /*this.bgmusic.play({
+        this.bgmusic.play({
             volume: .5,
             loop: true
-        })*/
+        })
         
         this.powerCall = 0
         this.tracker = 1
