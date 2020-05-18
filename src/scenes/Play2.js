@@ -204,6 +204,7 @@ class Play2 extends Phaser.Scene{
         this.player2.setImmovable()
         this.anims.remove("p2_right")
         this.anims.remove("p1_right")
+        this.bgmusic.stop()
         
         let menuConfig = {
             fontFamily: "Courier",
