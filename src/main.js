@@ -1,14 +1,14 @@
 let config = {
-    type: Phaser.WEBGL,
+    type: Phaser.CANVAS,
     mipmapFilter: 'LINEAR_MIPMAP_LINEAR',
-    width: 800,
-    height: 600,
-    scene: [Menu, Play2],
-    //scene: [Menu, Play],
+    width: 640,
+    height: 480,
+    //scene: [Menu, Play2],
+    scene: [Menu, Play],
     physics:{
         default: "arcade",
         arcade: {
-            gravity: { y: 1000 },
+            
             debug: false
         }
     },

@@ -37,7 +37,7 @@ class Play extends Phaser.Scene{
         //this.physics.add.overlap(this.player, this.power);
 
 
-        this.canon = new Canon(this, 0, 360, "bullet")
+        this.canon = new Canon(this, 0, 300, "bullet")
 
 
         //Define keys
@@ -51,6 +51,19 @@ class Play extends Phaser.Scene{
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+
+
+        this.canonTimer = this.time.addEvent({
+            delay: Phaser.Math.Between(1000, 5000),                // ms
+            callback: () => {
+                this.canonFire();
+                this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
+           },
+            //args: [],
+            callbackScope: this,
+            loop: true
+        });
+        
         
     
     }
@@ -67,8 +80,7 @@ class Play extends Phaser.Scene{
             this.sky.tilePositionX -= 1
         }*/
         this.canon.update()
-        //this.canonMove(this.canon)
-        //console.log(this.canon.y)
+        
     }
 
 
@@ -79,6 +91,11 @@ class Play extends Phaser.Scene{
             this.timer.remove()
         }, null, this);
         
+    }
+
+    canonFire(){
+        var bull = this.physics.add.sprite(this.canon.x, this.canon.y, "bullet")
+        bull.setVelocityX(200)
     }
 
 }
