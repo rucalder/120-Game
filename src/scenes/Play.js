@@ -14,6 +14,8 @@ class Play extends Phaser.Scene{
     create(){
         this.powerCall = 0
         this.tracker = 1
+        this.gameOver = false
+        this.level = 1
 
         //this.customPipeline = this.game.renderer.addPipeline('Custom', new CustomPipeline2(this.game));
         //this.customPipeline.setFloat2('resolution', this.game.config.width, this.game.config.height);
@@ -38,6 +40,8 @@ class Play extends Phaser.Scene{
 
 
         this.canon = new Canon(this, 0, 300, "bullet")
+        this.bullets = this.physics.add.group()
+        this.physics.add.overlap(this.player, this.bullets)
 
 
         //Define keys
@@ -63,14 +67,32 @@ class Play extends Phaser.Scene{
             callbackScope: this,
             loop: true
         });
+
+        this.gameTimer = this.time.addEvent({
+            delay: 1000,                // ms
+            callback: () => {
+                this.level += .1
+           },
+            //args: [],
+            callbackScope: this,
+            loop: true
+        });
         
         
-    
     }
 
     update(){
-        this.player.update()
-        this.sky.tilePositionX -= 2
+        
+        if(this.gameOver == false){
+            this.player.update()
+            this.sky.tilePositionX -= this.level
+            this.canon.update()
+        }
+        if(this.physics.overlap(this.player, this.bullets)){
+            this.gameOver = true
+            this.gameOverScreen()
+        }
+        //console.log(this.gameTimer.getElapsedSeconds())
         /*this.power.update()
         if(this.physics.overlap(this.player, this.power)){
             this.callTimer(this.sky)
@@ -79,8 +101,47 @@ class Play extends Phaser.Scene{
         if(this.powerCall == 1){
             this.sky.tilePositionX -= 1
         }*/
-        this.canon.update()
         
+        
+    }
+
+    gameOverScreen(){
+        this.canonTimer.remove()
+        this.player.setGravityY(0)
+        this.player.setVelocityY(0)
+        this.player.setImmovable()
+        let menuConfig = {
+            fontFamily: "Courier",
+            fontSize: "26px",
+            backgroundColor: "#8B008B",
+            color: "#FFFFFF",
+            align: "right",
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 0
+        }
+
+        let centerX = game.config.width/2
+        let centerY = game.config.height/2
+
+        this.add.text(centerX, centerY - 100, 'GAME OVER', menuConfig).setOrigin(0.5);
+        let restart = this.add.text(centerX - 100, centerY, "Restart", menuConfig).setOrigin(0.5);
+        restart.setInteractive();
+        restart.on("pointerup", () =>{
+            this.time.now = 0
+            this.totalTime = 0
+            this.scene.restart("playScene");
+        })
+        let menu = this.add.text(centerX + 100, centerY, "Menu", menuConfig).setOrigin(0.5);
+        menu.setInteractive();
+        menu.on("pointerup", () =>{
+            this.time.now = 0
+            this.totalTime = 0
+            this.scene.start("menuScene");
+        })
+           
     }
 
 
@@ -95,7 +156,9 @@ class Play extends Phaser.Scene{
 
     canonFire(){
         var bull = this.physics.add.sprite(this.canon.x, this.canon.y, "bullet")
+        this.bullets.add(bull)
         bull.setVelocityX(200)
+
     }
 
 }

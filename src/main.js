@@ -9,7 +9,7 @@ let config = {
         default: "arcade",
         arcade: {
             
-            debug: false
+            debug: true
         }
     },
 };
@@ -23,7 +23,7 @@ function create(){
 
 // define game settings
 game.settings = {
-    
+    obstacleSpeed: 1
 }
 
 //reserve keyboard vars

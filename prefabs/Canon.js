@@ -18,13 +18,13 @@ class Canon extends Phaser.Physics.Arcade.Sprite{
 
     move(){
         if(this.y <= 400 && this.tracker == 0){
-            this.setVelocityY(100)
+            this.y += 2
         }
         if(this.y > 400){
             this.tracker = 1
         }
         if(this.y >= 300 && this.tracker == 1){
-            this.setVelocityY(-100)
+            this.y -= 2
         }
         if(this.y < 300){
             this.tracker = 0
