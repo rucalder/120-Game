@@ -1,4 +1,4 @@
-class Canon extends Phaser.Physics.Arcade.Sprite{
+class Canon2 extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, x, y, texture, frame){
         super(scene, x, y, texture, frame);
 
@@ -17,16 +17,16 @@ class Canon extends Phaser.Physics.Arcade.Sprite{
     }
 
     move(){
-        if(this.y <= 500 && this.tracker == 0){
+        if(this.y <= 250 && this.tracker == 0){
             this.y += 2
         }
-        if(this.y > 500){
+        if(this.y > 250){
             this.tracker = 1
         }
-        if(this.y >= 350 && this.tracker == 1){
+        if(this.y >= 100 && this.tracker == 1){
             this.y -= 2
         }
-        if(this.y < 350){
+        if(this.y < 100){
             this.tracker = 0
         }
     }
