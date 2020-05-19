@@ -1,3 +1,6 @@
+//this is an example of a game in which you can turn the shader on and off and alter how fast the wave distortion is: https://jerenaux.github.io/shaders-phaser/
+//this is the code for the game listed above: https://github.com/Jerenaux/shaders-phaser
+
 //this is a great website for learning about shaders (appart from the actual documentation through phaser)
 //https://thebookofshaders.com/
 //this is a tutorial on phasers website and an intro to using shaders: https://www.dynetisgames.com/2018/12/09/shaders-phaser-3/
