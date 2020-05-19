@@ -1,5 +1,6 @@
-//this is a great website for learning about shaders (appart from the actual documentation through phaser):
+//this is a great website for learning about shaders (appart from the actual documentation through phaser)
 //  https://www.gamefromscratch.com/post/2014/05/16/OpenGL-Shader-Programming-Resources-Round-up.aspx
+//this is a tutorial on phasers website and an intro to using shaders: https://www.dynetisgames.com/2018/12/09/shaders-phaser-3/
 var CustomPipeline2 = new Phaser.Class({
 
     Extends: Phaser.Renderer.WebGL.Pipelines.TextureTintPipeline,
