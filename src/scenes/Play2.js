@@ -171,14 +171,12 @@ class Play2 extends Phaser.Scene{
         });
 
         //cam2 affects assets with pipeline while cam 1 does not distort
-       //this.cameras.main.ignore([ this.gameOverScreen() ]);
-       //this.cameras.main.ignore([ restart, menu, gameOver ]);
 
         var cam1 = this.cameras.main;
         var cam2 = this.cameras.add(0, 0, 800, 600);
 
-        cam2.ignore([ sky, this.player, this.player2, platforms]);
-
+        cam2.ignore([ sky, this.player, this.player2, platforms, this.canon, this.canon2]);
+        //log to console to see which cam is ignoring the asset
         console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
         cam2.setRenderToTexture(this.customPipeline);
 
