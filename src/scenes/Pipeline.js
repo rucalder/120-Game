@@ -7,11 +7,20 @@
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+//vec2 uv = outTexCoord;
+//uv.y += (sin((uv.x + (time * 0.5)) * 10.0) * 0.1) + (sin((uv.x + (time * 0.2)) * 32.0) * 0.01);
+
 //we set the color of one pixel to the color of another pixel located elsewhere in the scene.
 //uv is the original coordinate of a pixel in the scene. The second line computes a new y coordinate
-//by applying a convoluted formula to it. The returned value depends on the time (more on that below)
+//by applying a convoluted formula to it. The returned value depends on the time
 //as well as the original x and y coordinate of the pixel. So far, nothing has changed yet, we simply 
 //computed a new location. The magic happens in the following line:
+
+//vec4 texColor = texture2D(uMainSampler, uv);
+
+//This basically fetches the color of the texture at the newly computed location, and use it to replace the color 
+//at the original location. The long formula above dictates which target pixel to use to replace the color of each original pixel.
+//The use of the sine and cosine functions provide the undulations. Feel free to try other formulas and see what effects you get.
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 var DistortPipeline = new Phaser.Class({
 
