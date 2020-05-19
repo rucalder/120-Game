@@ -71,10 +71,8 @@ class Play2 extends Phaser.Scene{
 
         
         this.canon = new Canon(this, 800, 200, "bullet");
-        this.canon2 = new Canon2(this, 800, 500, "bullet")
+        this.canon2 = new Canon2(this, 800, 500, "bullet");
         this.bullets = this.physics.add.group();
-        this.physics.add.overlap(this.player, this.bullets);
-        this.physics.add.overlap(this.player2, this.bullets);
         
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
@@ -175,7 +173,7 @@ class Play2 extends Phaser.Scene{
         var cam1 = this.cameras.main;
         var cam2 = this.cameras.add(0, 0, 800, 600);
 
-        cam2.ignore([ sky, this.player, this.player2, platforms, this.canon, this.canon2]);
+        cam2.ignore([ sky, this.player, this.player2, platforms, this.bullets]);
         //log to console to see which cam is ignoring the asset
         console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
         cam2.setRenderToTexture(this.customPipeline);
