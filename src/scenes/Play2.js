@@ -5,9 +5,6 @@ class Play2 extends Phaser.Scene{
 
     preload()
     {
-        //this creates the wave effect however refer to the bottom of update for the code that enables the wave to move
-        this.customPipeline = this.game.renderer.addPipeline('Custom', new CustomPipeline2(this.game));
-        this.customPipeline.setFloat2('resolution', this.game.config.width, this.game.config.height);
         //assets
         this.load.image('ground', "./assets/ground.png");
         this.load.image('sky', "./assets/starfield.png");
@@ -23,11 +20,18 @@ class Play2 extends Phaser.Scene{
 
     create()
     {
-        //this.player = null;
-        //this.player2 = null;
-        //this.cursors = null;
-        this.t = 0;
-        this.customPipeline;
+        //setting up the distortion pipeline
+        this.t = 0; // time variable for the distor shader
+        this.tIncrement = 0.005;
+        this.spotRadius = 0.3; // size of the spotlight in the spotlight shader
+        this.distortPipeline = this.game.renderer.addPipeline('Distort', new DistortPipeline(this.game));
+        // Pass the game resolution to the shader to use for position-based computations
+        this.distortPipeline.setFloat2('resolution', this.game.config.width, this.game.config.height);
+
+        this.renderMode = {
+            distort: true,
+        }
+        this.applyPipeline(); 
 
         //music
         this.bgmusic = this.sound.add('bgmusic');
@@ -167,8 +171,6 @@ class Play2 extends Phaser.Scene{
             loop: true
         });
 
-        //set camera to render the texture
-        this.cameras.main.setRenderToTexture(this.customPipeline);
     }
 
     update()
@@ -186,10 +188,9 @@ class Play2 extends Phaser.Scene{
         }
 
 
-        //This enables the wave to move
-        this.customPipeline.setFloat1('time', this.t);
-
-        this.t += 0.005
+        //update pipeline temporal aspect
+        this.t += this.tIncrement;    
+        if(this.renderMode.distort) this.distortPipeline.setFloat1('time', this.t);
     }
 
     
@@ -253,7 +254,12 @@ class Play2 extends Phaser.Scene{
         var bull = this.physics.add.sprite(canon.x, canon.y, "bullet")
         this.bullets.add(bull)
         bull.setVelocityX(-200)
-
+    }
+    // Apply the shader currently marked as true in `renderMode`
+    applyPipeline(){
+        if(this.renderMode.distort){
+            this.cameras.main.setRenderToTexture(this.distortPipeline);
+        }
     }
     
 }
