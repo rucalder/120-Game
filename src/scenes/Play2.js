@@ -47,8 +47,7 @@ class Play2 extends Phaser.Scene{
         
 
         //adding background image
-        this.sky = this.add.tileSprite(0, 0, 800, 600, "sky").setOrigin(0,0);
-
+        var sky = this.add.tileSprite(0, 0, 800, 600, "sky").setOrigin(0,0);
         //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
         //roof border
@@ -171,6 +170,18 @@ class Play2 extends Phaser.Scene{
             loop: true
         });
 
+        //cam2 affects assets with pipeline while cam 1 does not distort
+       //this.cameras.main.ignore([ this.gameOverScreen() ]);
+       //this.cameras.main.ignore([ restart, menu, gameOver ]);
+
+        var cam1 = this.cameras.main;
+        var cam2 = this.cameras.add(0, 0, 800, 600);
+
+        cam2.ignore([ sky, this.player, this.player2, platforms]);
+
+        console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
+        cam2.setRenderToTexture(this.customPipeline);
+
     }
 
     update()
@@ -178,7 +189,6 @@ class Play2 extends Phaser.Scene{
         if(this.gameOver == false){
             this.player.update()
             this.player2.update()
-            this.sky.tilePositionX += this.level
             this.canon.update()
             this.canon2.update()
         }
@@ -207,6 +217,7 @@ class Play2 extends Phaser.Scene{
         this.anims.remove("p1_right")
         this.bgmusic.stop()
         
+        
         let menuConfig = {
             fontFamily: "Courier",
             fontSize: "26px",
@@ -223,7 +234,7 @@ class Play2 extends Phaser.Scene{
         let centerX = game.config.width/2
         let centerY = game.config.height/2
 
-        this.add.text(centerX, centerY - 100, 'GAME OVER', menuConfig).setOrigin(0.5);
+        let gameOver = this.add.text(centerX, centerY - 100, 'GAME OVER', menuConfig).setOrigin(0.5);
         let restart = this.add.text(centerX - 100, centerY, "Restart", menuConfig).setOrigin(0.5);
         restart.setInteractive();
         restart.on("pointerup", () =>{
@@ -238,6 +249,8 @@ class Play2 extends Phaser.Scene{
             this.totalTime = 0
             this.scene.start("menuScene");
         })
+
+        this.cameras.main.ignore([ restart, menu, gameOver ]);
            
     }
 
