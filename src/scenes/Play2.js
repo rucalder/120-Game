@@ -178,6 +178,8 @@ class Play2 extends Phaser.Scene{
         console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
         cam2.setRenderToTexture(this.customPipeline);
 
+        this.createGUI();
+
     }
 
     update()
@@ -269,6 +271,15 @@ class Play2 extends Phaser.Scene{
         if(this.renderMode.distort){
             this.cameras.main.setRenderToTexture(this.distortPipeline);
         }
+    }
+
+    createGUI(){
+        var _this = this;
+        var gui = new dat.GUI({ width: 300 });
+        gui.add(this.renderMode, "distort").name('Distortion').listen().onChange(function(){
+            this.changeMode("distort");
+        }.bind(this));
+        gui.add(this,"tIncrement").name("Distortion intensity").min(0).max(0.1).step(0.005);
     }
     
 }
