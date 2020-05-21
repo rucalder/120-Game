@@ -11,6 +11,7 @@ class Play2 extends Phaser.Scene{
         this.load.image('p2_sky', "./assets/Sky2.png");
         this.load.image('bullet', "./assets/Ball.png");
         this.load.image('rum', "./assets/Beer.png");
+        this.load.image('tonic', "./assets/PowerUp_placeholder.png");
         this.load.audio("bgmusic", "./assets/pirateGameSong.wav");
         this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 100, frameHeight: 102 });
         this.load.spritesheet('player1Right', "./assets/p1_RightRun.png", { frameWidth: 100, frameHeight: 102 });
@@ -94,16 +95,17 @@ class Play2 extends Phaser.Scene{
         this.powerUps = this.physics.add.group();
 
         //number of power ups that will spawn
-        var maxObjects = 2;
+        var maxObjects = 4;
         for(var i = 0; i <= maxObjects; i++){
             var p1_powerUp_Rum = this.physics.add.sprite(p1_x, p1_y, "rum");
-            var p2_powerUp_Rum = this.physics.add.sprite(p2_x, p2_y, "rum");
+            var p2_powerUp_Rum = this.physics.add.sprite(p2_x, p2_y, "tonic");
+            p2_powerUp_Rum.setScale(2,2);
 
             this.powerUps.add(p1_powerUp_Rum);
             this.powerUps.add(p2_powerUp_Rum);
 
-            p1_powerUp_Rum.setRandomPosition(0, 100, game.config.width, p1_y);
-            p2_powerUp_Rum.setRandomPosition(0, game.config.height/2 + 64, p2_x, p2_y);
+            p1_powerUp_Rum.setRandomPosition(p1_x, p1_y, 0, 0);
+            p2_powerUp_Rum.setRandomPosition(p2_x, p2_y, 0, 0);
 
             //This would mean there is a 50 50 chance that either the rum or tonic will show up
             // if(Math.random() > 0.5) {
