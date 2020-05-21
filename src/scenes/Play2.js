@@ -28,8 +28,7 @@ class Play2 extends Phaser.Scene{
 
         //setting up the distortion pipeline
         this.t = 0; // time variable for the distor shader
-        this.tIncrement = 0.005;
-        this.spotRadius = 0.3; // size of the spotlight in the spotlight shader
+        this.tIncrement = 0.0005;
         this.distortPipeline = this.game.renderer.addPipeline('Distort', new DistortPipeline(this.game));
         // Pass the game resolution to the shader to use for position-based computations
         this.distortPipeline.setFloat2('resolution', this.game.config.width, this.game.config.height);
