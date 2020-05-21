@@ -152,9 +152,10 @@ class Play2 extends Phaser.Scene{
                 //added the code from the canon Fire function to be able to use the cam ignore 
                 //attribute so that duplicate bullets didn't show up
                 var bull = this.physics.add.sprite(this.canon.x, this.canon.y, "bullet")
+                bull.setScale(0.7,0.7)
                 this.bullets.add(bull)
                 bull.setVelocityX(-200)
-                cam2.ignore([ bull ]);
+                cam2.ignore([ bull ])
                 this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
             },
             //args: [],
@@ -167,9 +168,10 @@ class Play2 extends Phaser.Scene{
                 //added the code from the canon Fire function to be able to use the cam ignore
                 //attribute so that duplicate bullets didn't show up
                 var bull = this.physics.add.sprite(this.canon2.x, this.canon2.y, "bullet")
+                bull.setScale(0.7,0.7)
                 this.bullets.add(bull)
                 bull.setVelocityX(-200)
-                cam2.ignore([ bull ]);
+                cam2.ignore([ bull ])
                 this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
             },
             //args: [],
