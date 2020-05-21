@@ -193,7 +193,21 @@ class Play2 extends Phaser.Scene{
         //console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
         cam2.setRenderToTexture(this.customPipeline);
 
-        this.createGUI()
+
+        //clock to keep track of time for warp effect
+        this.clock = this.time.delayedCall(1000, () => {
+        }, null, this);
+        //making the warp increase over time
+        this.timer = this.time.addEvent({delay: 1000, callback: function(){
+            if(this.clock.getProgress() == 1){
+                if(this.tIncrement != .1){
+                    this.tIncrement += .001
+                }
+            }
+        }, callbackScope:this, loop: true });
+
+        //Graphical User Interface to test warp 
+        //this.createGUI()
         
     }
 
@@ -211,7 +225,6 @@ class Play2 extends Phaser.Scene{
             this.gameOver = true
             this.gameOverScreen()
         }
-
 
         //update pipeline temporal aspect
         this.t += this.tIncrement;    
