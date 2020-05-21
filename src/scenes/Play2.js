@@ -103,6 +103,8 @@ class Play2 extends Phaser.Scene{
             this.powerUps.add(p1_powerUp_Rum);
             this.powerUps.add(p2_powerUp_Rum);
 
+            //this spawns multiple items within the given game space
+            // first two coordinates are top left position of spawn space, and other two are width and height of spawn space
             p1_powerUp_Rum.setRandomPosition(0, 100, game.config.width, 150);
             p2_powerUp_Rum.setRandomPosition(0, 350, game.config.width, 150);
 
