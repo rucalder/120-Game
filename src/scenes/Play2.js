@@ -83,24 +83,54 @@ class Play2 extends Phaser.Scene{
         this.canon2 = new Canon2(this, 800, 500, "bullet");
         this.bullets = this.physics.add.group();
         
-
-
-        //create the rum group
-        //x position of rum spawn
-        var x = Phaser.Math.Between(0, game.config.width);
-        //y postion of rum spawn
+        ////////////////////////PowerUps/////////////////////////////////////////////////////////////////
+        //x position of pwerUp spawn
+        var p1_x = Phaser.Math.Between(0, game.config.width);
+        var p2_x = Phaser.Math.Between(0, game.config.width);
+        //y postion of powerUp spawn
         var p1_y = Phaser.Math.Between(game.config.height/2 - 64, 100);
         var p2_y = Phaser.Math.Between(game.config.height - 100, game.config.height/2 + 64);
+        //powerUps group
+        this.powerUps = this.physics.add.group();
 
-        this.rumGroup = this.physics.add.group();
+        //number of power ups that will spawn
+        var maxObjects = 2;
+        for(var i = 0; i <= maxObjects; i++){
+            var p1_powerUp_Rum = this.physics.add.sprite(p1_x, p1_y, "rum");
+            var p2_powerUp_Rum = this.physics.add.sprite(p2_x, p2_y, "rum");
+            this.powerUps.add(p1_powerUp_Rum);
+            this.powerUps.add(p2_powerUp_Rum);
+            p1_powerUp_Rum.setRandomPosition(0, 100, game.config.width, p1_y);
+            p2_powerUp_Rum.setRandomPosition(0, game.config.height/2 + 64, p2_x, p2_y);
 
-        var p1_rum = this.physics.add.sprite(x, p1_y, "rum");
-        var p2_rum = this.physics.add.sprite(x, p2_y, "rum");
-        this.rumGroup.add(p1_rum);
-        this.rumGroup.add(p2_rum);
-        
-        cam2.ignore([p1_rum, p2_rum]);
+            //This would mean there is a 50 50 chance that either the rum or tonic will show up
+            // if(Math.random() > 0.5) {
+            //     p1_powerUp.play('rum');
+            // } else {
+            //     p1_powerUp.play('tonic');
+            // }
+            // elif if(Math.random() > 0.5) {
+            //     p2_powerUp.play('rum');
+            // } else {
+            //     p2_powerUp.play('tonic');
+            // }
+            
+            //////////////////////////////////if you want to add bounce to the power ups///////////////////////////////////
+            //velocity of powerUps
+            // p1_powerUp_Rum.setVelocity(100, 100);
+            // p2_powerUp_Rum.setVelocity(100, 100);
 
+            //making powerUps collide with boundaries of the world
+            // p1_powerUp_Rum.setCollideWorldBounds(true);
+            // this.physics.add.collider(p1_powerUp_Rum, platforms);
+            // p1_powerUp_Rum.setBounce(.5);
+
+            // p2_powerUp_Rum.setCollideWorldBounds(true);
+            // this.physics.add.collider(p2_powerUp_Rum, platforms);
+            // p2_powerUp_Rum.setBounce(.5);
+
+            cam2.ignore([p1_powerUp_Rum, p2_powerUp_Rum]);
+        }
 
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
@@ -241,10 +271,18 @@ class Play2 extends Phaser.Scene{
             this.p1_sky.tilePositionX += this.level
             this.p2_sky.tilePositionX += this.level
         }
+        
+        //update on collision betwen player and bullets
         if(this.physics.overlap(this.player, this.bullets) || this.physics.overlap(this.player2, this.bullets)){
             this.gameOver = true
             this.gameOverScreen()
         }
+        
+        //update on collision between player and rum
+        if(this.physics.overlap(this.player, this.powerUps) || this.physics.overlap(this.player2, this.powerUps)){
+            
+        }
+
 
         //update pipeline temporal aspect
         this.t += this.tIncrement;    
