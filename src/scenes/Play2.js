@@ -152,7 +152,7 @@ class Play2 extends Phaser.Scene{
                 var bull = this.physics.add.sprite(this.canon.x, this.canon.y, "bullet")
                 bull.setScale(0.8,0.8)
                 this.bullets.add(bull)
-                bull.setVelocityX(-200)
+                bull.setVelocityX(-250)
                 cam2.ignore([ bull ])
                 this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
             },
@@ -168,7 +168,7 @@ class Play2 extends Phaser.Scene{
                 var bull = this.physics.add.sprite(this.canon2.x, this.canon2.y, "bullet")
                 bull.setScale(0.8,0.8)
                 this.bullets.add(bull)
-                bull.setVelocityX(-200)
+                bull.setVelocityX(-250)
                 cam2.ignore([ bull ])
                 this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
             },
