@@ -10,6 +10,7 @@ class Play2 extends Phaser.Scene{
         this.load.image('p1_sky', "./assets/Sky1.png");
         this.load.image('p2_sky', "./assets/Sky2.png");
         this.load.image('bullet', "./assets/Ball.png");
+        this.load.image('rum', "./assets/Beer.png");
         this.load.audio("bgmusic", "./assets/pirateGameSong.wav");
         this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player1Right', "./assets/p1_RightRun.png", { frameWidth: 50, frameHeight: 51 });
@@ -75,12 +76,26 @@ class Play2 extends Phaser.Scene{
         this.player2.setBounce(0.2);
         this.player2.setCollideWorldBounds(true);
 
-        
+        //create canons and the bullet group
         this.canon = new Canon(this, 800, 200, "bullet");
         this.canon2 = new Canon2(this, 800, 500, "bullet");
         this.bullets = this.physics.add.group();
         
+
+        //create the rum group
+        var x = Phaser.Math.Between(0, game.config.width);
+        var p1_y = Phaser.Math.Between(0, game.config.height/2);
+        var p2_y = Phaser.Math.Between(game.config.height/2, game.config.height);
+
+        this.rumGroup = this.physics.add.group();
+
+        var p1_rum = this.physics.add.sprite(x, p1_y, "rum");
+        var p2_rum = this.physics.add.sprite(x, p2_y, "rum");
+        this.rumGroup.add(p1_rum);
+        this.rumGroup.add(p2_rum);
         
+        cam2.ignore([p1_rum, p2_rum]);
+
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
         this.anims.create({
@@ -142,7 +157,6 @@ class Play2 extends Phaser.Scene{
         this.physics.add.collider(this.player, platforms);
         this.physics.add.collider(this.player2, platforms);
 
-        
         
         this.canonTimer = this.time.addEvent({
             delay: Phaser.Math.Between(1000, 5000),                // ms
