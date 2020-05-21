@@ -12,9 +12,9 @@ class Play2 extends Phaser.Scene{
         this.load.image('bullet', "./assets/Ball.png");
         this.load.image('rum', "./assets/Beer.png");
         this.load.audio("bgmusic", "./assets/pirateGameSong.wav");
-        this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 50, frameHeight: 51 });
-        this.load.spritesheet('player1Right', "./assets/p1_RightRun.png", { frameWidth: 50, frameHeight: 51 });
-        this.load.spritesheet('player1Idle', "./assets/p1_Idle.png", { frameWidth: 50, frameHeight: 50 });
+        this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 100, frameHeight: 102 });
+        this.load.spritesheet('player1Right', "./assets/p1_RightRun.png", { frameWidth: 100, frameHeight: 102 });
+        this.load.spritesheet('player1Idle', "./assets/p1_Idle.png", { frameWidth: 100, frameHeight: 100 });
         this.load.spritesheet('player2Left', "./assets/p2_LeftRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player2Right', "./assets/p2_RightRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player2Idle', "./assets/p2_Idle.png", { frameWidth: 50, frameHeight: 50 });
@@ -66,7 +66,9 @@ class Play2 extends Phaser.Scene{
 
         //creating player with physics
         this.player = new Player1(this, 100, 450, "player1Right")
+        this.player.setScale(0.5,0.5);
         this.player2 = new Player2(this, 100, 200, 'player2Right');
+        this.player2.setScale(0.5,0.5);
         this.player.setGravityY(1000)
         this.player2.setGravityY(1000)
 
