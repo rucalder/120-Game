@@ -82,10 +82,13 @@ class Play2 extends Phaser.Scene{
         this.bullets = this.physics.add.group();
         
 
+
         //create the rum group
+        //x position of rum spawn
         var x = Phaser.Math.Between(0, game.config.width);
-        var p1_y = Phaser.Math.Between(0, game.config.height/2);
-        var p2_y = Phaser.Math.Between(game.config.height/2, game.config.height);
+        //y postion of rum spawn
+        var p1_y = Phaser.Math.Between(game.config.height/2 - 64, 100);
+        var p2_y = Phaser.Math.Between(game.config.height - 100, game.config.height/2 + 64);
 
         this.rumGroup = this.physics.add.group();
 
@@ -95,6 +98,7 @@ class Play2 extends Phaser.Scene{
         this.rumGroup.add(p2_rum);
         
         cam2.ignore([p1_rum, p2_rum]);
+
 
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
@@ -166,7 +170,7 @@ class Play2 extends Phaser.Scene{
                 var bull = this.physics.add.sprite(this.canon.x, this.canon.y, "bullet")
                 bull.setScale(0.8,0.8)
                 this.bullets.add(bull)
-                bull.setVelocityX(-250)
+                bull.setVelocityX(-230)
                 cam2.ignore([ bull ])
                 this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
             },
@@ -182,7 +186,7 @@ class Play2 extends Phaser.Scene{
                 var bull = this.physics.add.sprite(this.canon2.x, this.canon2.y, "bullet")
                 bull.setScale(0.8,0.8)
                 this.bullets.add(bull)
-                bull.setVelocityX(-250)
+                bull.setVelocityX(-230)
                 cam2.ignore([ bull ])
                 this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
             },
