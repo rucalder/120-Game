@@ -7,17 +7,16 @@ class Play2 extends Phaser.Scene{
     {
         //assets
         this.load.image('ground', "./assets/ground.png");
-        this.load.image('sky', "./assets/starfield.png");
         this.load.image('p1_sky', "./assets/Sky1.png");
         this.load.image('p2_sky', "./assets/Sky2.png");
+        this.load.image('bullet', "./assets/Ball.png");
+        this.load.audio("bgmusic", "./assets/pirateGameSong.wav");
         this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player1Right', "./assets/p1_RightRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player1Idle', "./assets/p1_Idle.png", { frameWidth: 50, frameHeight: 50 });
         this.load.spritesheet('player2Left', "./assets/p2_LeftRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player2Right', "./assets/p2_RightRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player2Idle', "./assets/p2_Idle.png", { frameWidth: 50, frameHeight: 50 });
-        this.load.image("bullet", "./assets/bulletSample.png");
-        this.load.audio("bgmusic", "./assets/pirateGameSong.wav");
     }
 
     create()
