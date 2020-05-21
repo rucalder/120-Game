@@ -54,8 +54,8 @@ class Play2 extends Phaser.Scene{
 
         //adding background image
         //var sky = this.add.tileSprite(0, 0, 800, 600, "sky").setOrigin(0,0);
-        var p1_sky = this.add.tileSprite(0, 0, 800, 300, "p1_sky").setOrigin(0,0);
-        var p2_sky = this.add.tileSprite(0, 300, 800, 300, "p2_sky").setOrigin(0,0);
+        this.p1_sky = this.add.tileSprite(0, 0, 800, 300, "p1_sky").setOrigin(0,0);
+        this.p2_sky = this.add.tileSprite(0, 300, 800, 300, "p2_sky").setOrigin(0,0);
         //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
         //roof border
@@ -188,7 +188,7 @@ class Play2 extends Phaser.Scene{
         });
 
         //if cam2 ignores an asset it will be affected by the wave effect
-        cam2.ignore([ p1_sky, p2_sky, this.player, this.player2, platforms, this.canon, this.canon2]);
+        cam2.ignore([ this.p1_sky, this.p2_sky, this.player, this.player2, platforms, this.canon, this.canon2]);
         //log to console to see which cam is ignoring the asset
         //console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
         cam2.setRenderToTexture(this.customPipeline);
@@ -204,6 +204,8 @@ class Play2 extends Phaser.Scene{
             this.player2.update()
             this.canon.update()
             this.canon2.update()
+            this.p1_sky.tilePositionX += this.level
+            this.p2_sky.tilePositionX += this.level
         }
         if(this.physics.overlap(this.player, this.bullets) || this.physics.overlap(this.player2, this.bullets)){
             this.gameOver = true
