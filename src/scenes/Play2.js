@@ -20,7 +20,7 @@ class Play2 extends Phaser.Scene{
 
     create()
     {
-        //cam2 affects assets with pipeline while cam 1 does not distort
+        //initializing two cameras (one is affected by distort while the other isn't)
         var cam1 = this.cameras.main;
         var cam2 = this.cameras.add(0, 0, 800, 600);
 
@@ -183,8 +183,8 @@ class Play2 extends Phaser.Scene{
             loop: true
         });
 
-        //cam2 affects assets with pipeline while cam 1 does not distort
-        cam2.ignore([ sky, this.player, this.player2, platforms]);
+        //if cam2 ignores an asset it will be affected by the wave effect
+        cam2.ignore([ sky, this.player, this.player2, platforms, this.canon, this.canon2]);
         //log to console to see which cam is ignoring the asset
         console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
         cam2.setRenderToTexture(this.customPipeline);
