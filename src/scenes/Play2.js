@@ -8,6 +8,8 @@ class Play2 extends Phaser.Scene{
         //assets
         this.load.image('ground', "./assets/ground.png");
         this.load.image('sky', "./assets/starfield.png");
+        this.load.image('p1_sky', "./assets/Sky1.png");
+        this.load.image('p2_sky', "./assets/Sky2.png");
         this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player1Right', "./assets/p1_RightRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player1Idle', "./assets/p1_Idle.png", { frameWidth: 50, frameHeight: 50 });
@@ -51,7 +53,9 @@ class Play2 extends Phaser.Scene{
         
 
         //adding background image
-        var sky = this.add.tileSprite(0, 0, 800, 600, "sky").setOrigin(0,0);
+        //var sky = this.add.tileSprite(0, 0, 800, 600, "sky").setOrigin(0,0);
+        var p1_sky = this.add.tileSprite(0, 0, 800, 300, "p1_sky").setOrigin(0,0);
+        var p2_sky = this.add.tileSprite(0, 300, 800, 300, "p2_sky").setOrigin(0,0);
         //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
         //roof border
@@ -184,9 +188,9 @@ class Play2 extends Phaser.Scene{
         });
 
         //if cam2 ignores an asset it will be affected by the wave effect
-        cam2.ignore([ sky, this.player, this.player2, platforms, this.canon, this.canon2]);
+        cam2.ignore([ p1_sky, p2_sky, this.player, this.player2, platforms, this.canon, this.canon2]);
         //log to console to see which cam is ignoring the asset
-        console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
+        //console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
         cam2.setRenderToTexture(this.customPipeline);
 
         this.createGUI()
