@@ -201,7 +201,7 @@ class Play2 extends Phaser.Scene{
         this.clock = this.time.delayedCall(1000, () => {
         }, null, this);
         //making the warp increase over time
-        this.timer = this.time.addEvent({delay: 1000, callback: function(){
+        this.timer = this.time.addEvent({delay: 2000, callback: function(){
             if(this.clock.getProgress() == 1){
                 if(this.tIncrement != .1){
                     this.tIncrement += .0005
