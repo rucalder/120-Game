@@ -98,8 +98,10 @@ class Play2 extends Phaser.Scene{
         for(var i = 0; i <= maxObjects; i++){
             var p1_powerUp_Rum = this.physics.add.sprite(p1_x, p1_y, "rum");
             var p2_powerUp_Rum = this.physics.add.sprite(p2_x, p2_y, "rum");
+
             this.powerUps.add(p1_powerUp_Rum);
             this.powerUps.add(p2_powerUp_Rum);
+
             p1_powerUp_Rum.setRandomPosition(0, 100, game.config.width, p1_y);
             p2_powerUp_Rum.setRandomPosition(0, game.config.height/2 + 64, p2_x, p2_y);
 
@@ -132,6 +134,15 @@ class Play2 extends Phaser.Scene{
             cam2.ignore([p1_powerUp_Rum, p2_powerUp_Rum]);
         }
 
+        this.physics.add.collider(this.player, this.powerUps, function(player, powerUp){
+            powerUp.destroy();
+        });
+        this.physics.add.collider(this.player2, this.pwerUps, function(player, powerUp){
+            powerUp.destroy();
+        });
+
+        this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
+        this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp, null, this);
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
         this.anims.create({
@@ -368,6 +379,10 @@ class Play2 extends Phaser.Scene{
             this.changeMode("distort");
         }.bind(this));
         gui.add(this,"tIncrement").name("Distortion intensity").min(0).max(0.1).step(0.005);
+    }
+
+    pickPowerUp(player, powerUp){
+        powerUp.disableBody(true, true);
     }
     
 }
