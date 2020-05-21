@@ -95,17 +95,16 @@ class Play2 extends Phaser.Scene{
         this.powerUps = this.physics.add.group();
 
         //number of power ups that will spawn
-        var maxObjects = 4;
+        var maxObjects = 3;
         for(var i = 0; i <= maxObjects; i++){
             var p1_powerUp_Rum = this.physics.add.sprite(p1_x, p1_y, "rum");
-            var p2_powerUp_Rum = this.physics.add.sprite(p2_x, p2_y, "tonic");
-            p2_powerUp_Rum.setScale(2,2);
+            var p2_powerUp_Rum = this.physics.add.sprite(p2_x, p2_y, "rum");
 
             this.powerUps.add(p1_powerUp_Rum);
             this.powerUps.add(p2_powerUp_Rum);
 
-            p1_powerUp_Rum.setRandomPosition(p1_x, p1_y, 0, 0);
-            p2_powerUp_Rum.setRandomPosition(p2_x, p2_y, 0, 0);
+            p1_powerUp_Rum.setRandomPosition(0, 100, game.config.width, 150);
+            p2_powerUp_Rum.setRandomPosition(0, 350, game.config.width, 150);
 
             //This would mean there is a 50 50 chance that either the rum or tonic will show up
             // if(Math.random() > 0.5) {
