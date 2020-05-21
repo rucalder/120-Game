@@ -77,9 +77,7 @@ class Play2 extends Phaser.Scene{
 
         
         this.canon = new Canon(this, 800, 200, "bullet");
-        this.canon.setScale(0.7,0.7);
         this.canon2 = new Canon2(this, 800, 500, "bullet");
-        this.canon2.setScale(0.7,0.7)
         this.bullets = this.physics.add.group();
         
         
@@ -152,7 +150,7 @@ class Play2 extends Phaser.Scene{
                 //added the code from the canon Fire function to be able to use the cam ignore 
                 //attribute so that duplicate bullets didn't show up
                 var bull = this.physics.add.sprite(this.canon.x, this.canon.y, "bullet")
-                bull.setScale(0.7,0.7)
+                bull.setScale(0.8,0.8)
                 this.bullets.add(bull)
                 bull.setVelocityX(-200)
                 cam2.ignore([ bull ])
@@ -168,7 +166,7 @@ class Play2 extends Phaser.Scene{
                 //added the code from the canon Fire function to be able to use the cam ignore
                 //attribute so that duplicate bullets didn't show up
                 var bull = this.physics.add.sprite(this.canon2.x, this.canon2.y, "bullet")
-                bull.setScale(0.7,0.7)
+                bull.setScale(0.8,0.8)
                 this.bullets.add(bull)
                 bull.setVelocityX(-200)
                 cam2.ignore([ bull ])
