@@ -20,6 +20,10 @@ class Play2 extends Phaser.Scene{
 
     create()
     {
+        //cam2 affects assets with pipeline while cam 1 does not distort
+        var cam1 = this.cameras.main;
+        var cam2 = this.cameras.add(0, 0, 800, 600);
+
         //setting up the distortion pipeline
         this.t = 0; // time variable for the distor shader
         this.tIncrement = 0.005;
@@ -73,6 +77,7 @@ class Play2 extends Phaser.Scene{
         this.canon = new Canon(this, 800, 200, "bullet");
         this.canon2 = new Canon2(this, 800, 500, "bullet");
         this.bullets = this.physics.add.group();
+        
         
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
@@ -140,7 +145,12 @@ class Play2 extends Phaser.Scene{
         this.canonTimer = this.time.addEvent({
             delay: Phaser.Math.Between(1000, 5000),                // ms
             callback: () => {
-                this.canonFire(this.canon);
+                //added the code from the canon Fire function to be able to use the cam ignore 
+                //attribute so that duplicate bullets didn't show up
+                var bull = this.physics.add.sprite(this.canon.x, this.canon.y, "bullet")
+                this.bullets.add(bull)
+                bull.setVelocityX(-200)
+                cam2.ignore([ bull ]);
                 this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
             },
             //args: [],
@@ -150,7 +160,12 @@ class Play2 extends Phaser.Scene{
          this.canonTimer2 = this.time.addEvent({
             delay: Phaser.Math.Between(1000, 5000),                // ms
             callback: () => {
-                this.canonFire(this.canon2);
+                //added the code from the canon Fire function to be able to use the cam ignore
+                //attribute so that duplicate bullets didn't show up
+                var bull = this.physics.add.sprite(this.canon2.x, this.canon2.y, "bullet")
+                this.bullets.add(bull)
+                bull.setVelocityX(-200)
+                cam2.ignore([ bull ]);
                 this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
             },
             //args: [],
@@ -169,17 +184,13 @@ class Play2 extends Phaser.Scene{
         });
 
         //cam2 affects assets with pipeline while cam 1 does not distort
-
-        var cam1 = this.cameras.main;
-        var cam2 = this.cameras.add(0, 0, 800, 600);
-
-        cam2.ignore([ sky, this.player, this.player2, platforms, this.bullets]);
+        cam2.ignore([ sky, this.player, this.player2, platforms]);
         //log to console to see which cam is ignoring the asset
         console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
         cam2.setRenderToTexture(this.customPipeline);
 
-        this.createGUI();
-
+        this.createGUI()
+        
     }
 
     update()
