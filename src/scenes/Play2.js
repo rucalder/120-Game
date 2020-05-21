@@ -196,14 +196,14 @@ class Play2 extends Phaser.Scene{
         cam2.setRenderToTexture(this.customPipeline);
 
 
-        //clock to keep track of time for warp effect
+        //delay to warp increase effect
         this.clock = this.time.delayedCall(1000, () => {
         }, null, this);
         //making the warp increase over time
         this.timer = this.time.addEvent({delay: 1000, callback: function(){
             if(this.clock.getProgress() == 1){
                 if(this.tIncrement != .1){
-                    this.tIncrement += .001
+                    this.tIncrement += .0005
                 }
             }
         }, callbackScope:this, loop: true });
