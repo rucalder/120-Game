@@ -118,8 +118,6 @@ class Play2 extends Phaser.Scene{
                 powerUp_Rum.setRandomPosition(0, 350, game.config.width, 150);
             }
 
-
-
             //This would mean there is a 50 50 chance that either the rum or tonic will show up
             // if(Math.random() > 0.5) {
             //     p1_powerUp.play('rum');
