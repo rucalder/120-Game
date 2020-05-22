@@ -85,12 +85,17 @@ class Play2 extends Phaser.Scene{
         this.bullets = this.physics.add.group();
         
         ////////////////////////PowerUps/////////////////////////////////////////////////////////////////
-        //x position of pwerUp spawn
-        var p1_x = Phaser.Math.Between(0, game.config.width);
-        var p2_x = Phaser.Math.Between(0, game.config.width);
-        //y postion of powerUp spawn
-        var p1_y = Phaser.Math.Between(game.config.height/2 - 64, 100);
-        var p2_y = Phaser.Math.Between(game.config.height - 100, game.config.height/2 + 64);
+
+        // //x position of pwerUp spawn
+        // var p1_x = Phaser.Math.Between(0, game.config.width);
+        // var p2_x = Phaser.Math.Between(0, game.config.width);
+        // //y postion of powerUp spawn
+        // var p1_y = Phaser.Math.Between(game.config.height/2 - 64, 100);
+        // var p2_y = Phaser.Math.Between(game.config.height - 100, game.config.height/2 + 64);
+
+        var powerUp_x = Phaser.Math.Between(0, game.config.widht)
+        var powerUp_y = Phaser.Math.Between(100, 250 || 350, 500);
+
         //powerUps group
         this.powerUps = this.physics.add.group();
 
@@ -101,16 +106,19 @@ class Play2 extends Phaser.Scene{
         this.timer = this.time.addEvent({delay: powerUp_delay, callback: function(){
             for(var i = 0; i <= maxObjects; i++){
 
-            var p1_powerUp_Rum = this.physics.add.sprite(p1_x, p1_y, "rum");               
-            var p2_powerUp_Rum = this.physics.add.sprite(p2_x, p2_y, "rum");
+            var powerUp_Rum = this.physics.add.sprite(powerUp_x, powerUp_y, "rum");               
 
-            this.powerUps.add(p1_powerUp_Rum);
-            this.powerUps.add(p2_powerUp_Rum);
+            this.powerUps.add(powerUp_Rum);
 
             //this spawns multiple items within the given game space
             //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
-            p1_powerUp_Rum.setRandomPosition(0, 100, game.config.width, 150);
-            p2_powerUp_Rum.setRandomPosition(0, 350, game.config.width, 150);
+            if(Math.random() > 0.5) {
+                powerUp_Rum.setRandomPosition(0, 100, game.config.width, 150);
+            } else{
+                powerUp_Rum.setRandomPosition(0, 350, game.config.width, 150);
+            }
+
+
 
             //This would mean there is a 50 50 chance that either the rum or tonic will show up
             // if(Math.random() > 0.5) {
@@ -138,7 +146,7 @@ class Play2 extends Phaser.Scene{
             // this.physics.add.collider(p2_powerUp_Rum, platforms);
             // p2_powerUp_Rum.setBounce(.5);
 
-            cam2.ignore([p1_powerUp_Rum, p2_powerUp_Rum]);
+            cam2.ignore([powerUp_Rum]);
             }
             
         }, callbackScope:this, loop: true });
