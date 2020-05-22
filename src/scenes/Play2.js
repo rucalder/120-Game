@@ -11,7 +11,7 @@ class Play2 extends Phaser.Scene{
         this.load.image('p2_sky', "./assets/Sky2.png");
         this.load.image('bullet', "./assets/Ball.png");
         this.load.image('rum', "./assets/Beer.png");
-        this.load.image('tonic', "./assets/PowerUp_placeholder.png");
+        this.load.image('test_tonic', "./assets/PowerUp_placeholder.png");
         this.load.audio("bgmusic", "./assets/pirateGameSong.wav");
         this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 100, frameHeight: 102 });
         this.load.spritesheet('player1Right', "./assets/p1_RightRun.png", { frameWidth: 100, frameHeight: 102 });
@@ -19,6 +19,7 @@ class Play2 extends Phaser.Scene{
         this.load.spritesheet('player2Left', "./assets/p2_LeftRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player2Right', "./assets/p2_RightRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player2Idle', "./assets/p2_Idle.png", { frameWidth: 50, frameHeight: 50 });
+        this.load.spritesheet('power-up', "./assets/powerup_spritesheet.png", { frameWidth: 64, frameHeight: 64});
     }
 
     create()
@@ -85,13 +86,33 @@ class Play2 extends Phaser.Scene{
         this.bullets = this.physics.add.group();
         
         ////////////////////////PowerUps/////////////////////////////////////////////////////////////////
-
-        // //x position of pwerUp spawn
-        // var p1_x = Phaser.Math.Between(0, game.config.width);
-        // var p2_x = Phaser.Math.Between(0, game.config.width);
-        // //y postion of powerUp spawn
-        // var p1_y = Phaser.Math.Between(game.config.height/2 - 64, 100);
-        // var p2_y = Phaser.Math.Between(game.config.height - 100, game.config.height/2 + 64);
+        this.anims.create({
+            key:'rum',
+            frames: this.anims.generateFrameNumbers("power-up", {
+                start: 0,
+                end: 0
+            }),
+            frameRate: 10,
+            repeat: -1
+        })
+        this.anims.create({
+            key:'tonic',
+            frames: this.anims.generateFrameNumbers("power-up", {
+                start: 1,
+                end: 2
+            }),
+            frameRate: 10,
+            repeat: -1
+        })
+        this.anims.create({
+            key:'orange',
+            frames: this.anims.generateFrameNumbers("power-up", {
+                start: 3,
+                end: 3
+            }),
+            frameRate: 10,
+            repeat: -1
+        })
 
         var powerUp_x = Phaser.Math.Between(0, game.config.widht)
         var powerUp_y = Phaser.Math.Between(100, 250 || 350, 500);
@@ -101,54 +122,48 @@ class Play2 extends Phaser.Scene{
 
         //number of power ups that will spawn
         var maxObjects = 1;
-
-        var powerUp_delay = Phaser.Math.Between(5000, 10000);
+        var powerUp_delay = Phaser.Math.Between(5000, 15000);
         this.timer = this.time.addEvent({delay: powerUp_delay, callback: function(){
             for(var i = 0; i <= maxObjects; i++){
+                var powerUp = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);      
 
-            var powerUp_Rum = this.physics.add.sprite(powerUp_x, powerUp_y, "rum");               
-
-            this.powerUps.add(powerUp_Rum);
-
-            //this spawns multiple items within the given game space
-            //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
-            if(Math.random() > 0.5) {
-                powerUp_Rum.setRandomPosition(0, 100, game.config.width, 150);
-            } else{
-                powerUp_Rum.setRandomPosition(0, 350, game.config.width, 150);
-            }
-
-            //This would mean there is a 50 50 chance that either the rum or tonic will show up
-            // if(Math.random() > 0.5) {
-            //     p1_powerUp.play('rum');
-            // } else {
-            //     p1_powerUp.play('tonic');
-            // }
-            // elif if(Math.random() > 0.5) {
-            //     p2_powerUp.play('rum');
-            // } else {
-            //     p2_powerUp.play('tonic');
-            // }
-            
-            //////////////////////////////////if you want to add bounce to the power ups///////////////////////////////////
-            //velocity of powerUps
-            // p1_powerUp_Rum.setVelocity(100, 100);
-            // p2_powerUp_Rum.setVelocity(100, 100);
-
-            //making powerUps collide with boundaries of the world
-            // p1_powerUp_Rum.setCollideWorldBounds(true);
-            // this.physics.add.collider(p1_powerUp_Rum, platforms);
-            // p1_powerUp_Rum.setBounce(.5);
-
-            // p2_powerUp_Rum.setCollideWorldBounds(true);
-            // this.physics.add.collider(p2_powerUp_Rum, platforms);
-            // p2_powerUp_Rum.setBounce(.5);
-
-            cam2.ignore([powerUp_Rum]);
+                this.powerUps.add(powerUp);
+                cam2.ignore([powerUp]);
+                //this spawns multiple items within the given game space
+                //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
+                if(Math.random() > 0.5) {
+                    powerUp.setRandomPosition(0, 100, game.config.width, 150);
+                    if(Math.random() < 1 && Math.random() > .6) {
+                        powerUp.play('rum');
+                        console.log('p1_rum');
+                    } 
+                    else if (Math.random() < .6 && Math.random() > .3) {
+                        powerUp.play('tonic');
+                        console.log('p1_toinc');
+                    }
+                    else{
+                        powerUp.play('orange');
+                        console.log('p1_orange');
+                    }
+                } 
+                else{
+                    powerUp.setRandomPosition(0, 350, game.config.width, 150);
+                    if(Math.random() < 1 && Math.random() > .6) {
+                        powerUp.play('rum');
+                        console.log('p1_rum');
+                    } 
+                    else if (Math.random() < .6 && Math.random() > .3) {
+                        powerUp.play('tonic');
+                        console.log('p2_toinc');
+                    }
+                    else{
+                        powerUp.play('orange');
+                        console.log('p2_orange');
+                    }
+                }
             }
             
         }, callbackScope:this, loop: true });
-
 
         this.physics.add.collider(this.player, this.powerUps, function(player, powerUp){
             powerUp.destroy();
@@ -159,6 +174,7 @@ class Play2 extends Phaser.Scene{
 
         this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
         this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp, null, this);
+
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
         this.anims.create({
