@@ -61,16 +61,21 @@ class Play2 extends Phaser.Scene{
         var platforms = this.physics.add.staticGroup();
         //roof border
         platforms.create(400, 32, 'ground').setScale(2).refreshBody();
+        //invisible top ground
+        platforms.create(400, 272, 'ground').setScale(2,1).refreshBody().setVisible(false);
         //middle border 
-        platforms.create(400, 300, 'ground').setScale(2).refreshBody();
+        platforms.create(400, 300, 'ground').setScale(2,1).refreshBody();
+        //invisible ground
+        platforms.create(400, 530, 'ground').setScale(2).refreshBody().setVisible(false);
         //bottom border
         platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+       
 
         //creating player with physics
         this.player = new Player1(this, 100, 450, "player1Right")
         this.player.setScale(0.5,0.5);
         this.player2 = new Player2(this, 100, 200, 'player2Right');
-        this.player2.setScale(0.5,0.5);
+        //this.player2.setScale(0.5,0.5);
         this.player.setGravityY(1000)
         this.player2.setGravityY(1000)
 
@@ -86,6 +91,10 @@ class Play2 extends Phaser.Scene{
         this.bullets = this.physics.add.group();
         
         ////////////////////////PowerUps/////////////////////////////////////////////////////////////////
+        //testing powerup placement
+        //upper power up bound is (0, 240) - (0, 90)
+        //lower power up bound is (0,480) - (0,330)
+
         this.anims.create({
             key:'rum',
             frames: this.anims.generateFrameNumbers("power-up", {
@@ -115,7 +124,7 @@ class Play2 extends Phaser.Scene{
         })
 
         var powerUp_x = Phaser.Math.Between(0, game.config.widht)
-        var powerUp_y = Phaser.Math.Between(100, 250 || 350, 500);
+        var powerUp_y = Phaser.Math.Between(90, 240 || 330, 480);
 
         //powerUps group
         this.powerUps = this.physics.add.group();
@@ -132,7 +141,7 @@ class Play2 extends Phaser.Scene{
                 //this spawns multiple items within the given game space
                 //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
                 if(Math.random() > 0.5) {
-                    powerUp.setRandomPosition(0, 100, game.config.width, 150);
+                    powerUp.setRandomPosition(0, 90, game.config.width, 150);
                     if(Math.random() < 1 && Math.random() > .6) {
                         powerUp.play('rum');
                         console.log('p1_rum');
@@ -147,7 +156,7 @@ class Play2 extends Phaser.Scene{
                     }
                 } 
                 else{
-                    powerUp.setRandomPosition(0, 350, game.config.width, 150);
+                    powerUp.setRandomPosition(0, 330, game.config.width, 150);
                     if(Math.random() < 1 && Math.random() > .6) {
                         powerUp.play('rum');
                         console.log('p1_rum');
