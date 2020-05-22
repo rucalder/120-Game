@@ -95,16 +95,20 @@ class Play2 extends Phaser.Scene{
         this.powerUps = this.physics.add.group();
 
         //number of power ups that will spawn
-        var maxObjects = 3;
-        for(var i = 0; i <= maxObjects; i++){
-            var p1_powerUp_Rum = this.physics.add.sprite(p1_x, p1_y, "rum");
+        var maxObjects = 1;
+
+        var powerUp_delay = Phaser.Math.Between(5000, 10000);
+        this.timer = this.time.addEvent({delay: powerUp_delay, callback: function(){
+            for(var i = 0; i <= maxObjects; i++){
+
+            var p1_powerUp_Rum = this.physics.add.sprite(p1_x, p1_y, "rum");               
             var p2_powerUp_Rum = this.physics.add.sprite(p2_x, p2_y, "rum");
 
             this.powerUps.add(p1_powerUp_Rum);
             this.powerUps.add(p2_powerUp_Rum);
 
             //this spawns multiple items within the given game space
-            // first two coordinates are top left position of spawn space, and other two are width and height of spawn space
+            //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
             p1_powerUp_Rum.setRandomPosition(0, 100, game.config.width, 150);
             p2_powerUp_Rum.setRandomPosition(0, 350, game.config.width, 150);
 
@@ -135,7 +139,10 @@ class Play2 extends Phaser.Scene{
             // p2_powerUp_Rum.setBounce(.5);
 
             cam2.ignore([p1_powerUp_Rum, p2_powerUp_Rum]);
-        }
+            }
+            
+        }, callbackScope:this, loop: true });
+
 
         this.physics.add.collider(this.player, this.powerUps, function(player, powerUp){
             powerUp.destroy();
