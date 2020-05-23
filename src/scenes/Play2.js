@@ -177,15 +177,12 @@ class Play2 extends Phaser.Scene{
             
         }, callbackScope:this, loop: true });
 
-        this.physics.add.overlap(this.player, this.powerUps, function(player, powerUp){
-            powerUp.destroy();
-        });
-        this.physics.add.overlap(this.player2, this.pwerUps, function(player, powerUp){
-            powerUp.destroy();
-        });
-
         this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
         this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp, null, this);
+
+        //player and bullets collision
+        this.physics.add.overlap(this.player, this.bullets, this.pickPowerUp, null, this);
+        this.physics.add.overlap(this.player2, this.bullets, this.pickPowerUp, null, this);
 
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
@@ -320,32 +317,20 @@ class Play2 extends Phaser.Scene{
     update()
     {   
         if(this.gameOver == false){
-            this.player.update()
-            this.player2.update()
-            this.canon.update()
-            this.canon2.update()
+            this.player.update();
+            this.player2.update();
+            this.canon.update();
+            this.canon2.update();
             this.p1_sky.tilePositionX += this.level
             this.p2_sky.tilePositionX += this.level
         }
         
         //update on collision betwen player and bullets
-        if(this.physics.overlap(this.player, this.bullets)){
-            this.player.damage(34);
-            this.physics.add.overlap(this.player, this.bullets, this.pickPowerUp, null, this);
-            if(this.player.alive == false && this.player2.alive == false){
-                this.gameOver = true;
-                this.gameOverScreen();
-            } 
-        }
-
-        if(this.physics.overlap(this.player2, this.bullets)){
-            this.player2.damage(34);
-            this.physics.add.overlap(this.player2, this.bullets, this.pickPowerUp, null, this);
-            if(this.player2.alive == false && this.player.alive == false){
-                this.gameOver = true;
-                this.gameOverScreen();
-            } 
-        }
+        if(this.player.alive == false && this.player2.alive == false){
+            this.gameOver = true;
+            this.gameOverScreen();
+        } 
+        
 
         //update pipeline temporal aspect
         this.t += this.tIncrement;    
@@ -435,6 +420,7 @@ class Play2 extends Phaser.Scene{
 
     pickPowerUp(player, powerUp){
         powerUp.disableBody(true, true);
+        player.damage(34);
     }
 
     fadePicture() {
