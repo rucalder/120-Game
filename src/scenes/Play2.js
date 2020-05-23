@@ -434,7 +434,7 @@ class Play2 extends Phaser.Scene{
     }
 
     pickPowerUp(player, powerUp){
-        powerUp.disableBody(false, true);
+        powerUp.disableBody(true, true);
     }
 
     fadePicture() {
