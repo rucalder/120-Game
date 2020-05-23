@@ -177,10 +177,10 @@ class Play2 extends Phaser.Scene{
             
         }, callbackScope:this, loop: true });
 
-        this.physics.add.collider(this.player, this.powerUps, function(player, powerUp){
+        this.physics.add.overlap(this.player, this.powerUps, function(player, powerUp){
             powerUp.destroy();
         });
-        this.physics.add.collider(this.player2, this.pwerUps, function(player, powerUp){
+        this.physics.add.overlap(this.player2, this.pwerUps, function(player, powerUp){
             powerUp.destroy();
         });
 
@@ -293,6 +293,7 @@ class Play2 extends Phaser.Scene{
         });
 
         //if cam2 ignores an asset it will be affected by the wave effect
+        this.cameras.main.ignore([ this.player.hp, this.player2.hp ]);
         cam2.ignore([ this.p1_sky, this.p2_sky, this.player, this.player2, platforms, this.canon, this.canon2]);
         //log to console to see which cam is ignoring the asset
         //console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
@@ -328,16 +329,23 @@ class Play2 extends Phaser.Scene{
         }
         
         //update on collision betwen player and bullets
-        if(this.physics.overlap(this.player, this.bullets) || this.physics.overlap(this.player2, this.bullets)){
-            this.gameOver = true
-            this.gameOverScreen()
-        }
-        
-        //update on collision between player and rum
-        if(this.physics.overlap(this.player, this.powerUps) || this.physics.overlap(this.player2, this.powerUps)){
-            
+        if(this.physics.overlap(this.player, this.bullets)){
+            this.player.damage(34);
+            this.physics.add.overlap(this.player, this.bullets, this.pickPowerUp, null, this);
+            if(this.player.alive == false && this.player2.alive == false){
+                this.gameOver = true;
+                this.gameOverScreen();
+            } 
         }
 
+        if(this.physics.overlap(this.player2, this.bullets)){
+            this.player2.damage(34);
+            this.physics.add.overlap(this.player2, this.bullets, this.pickPowerUp, null, this);
+            if(this.player2.alive == false && this.player.alive == false){
+                this.gameOver = true;
+                this.gameOverScreen();
+            } 
+        }
 
         //update pipeline temporal aspect
         this.t += this.tIncrement;    
@@ -426,7 +434,7 @@ class Play2 extends Phaser.Scene{
     }
 
     pickPowerUp(player, powerUp){
-        powerUp.disableBody(true, true);
+        powerUp.disableBody(false, true);
     }
 
     fadePicture() {
