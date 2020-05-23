@@ -17,7 +17,7 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
         if (keyA.isDown && this.x >= 0){
             this.x -= 4;
         }
-        if (keyD.isDown && this.x <= 640){
+        if (keyD.isDown && this.x <= 800){
             this.x += 4;
             
         }
