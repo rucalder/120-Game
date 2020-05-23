@@ -101,8 +101,9 @@ class Play2 extends Phaser.Scene{
                 start: 0,
                 end: 0
             }),
-            frameRate: 10,
-            repeat: -1
+            frameRate: 1,
+            repeat: 4,
+            hideOnComplete: true
         })
         this.anims.create({
             key:'tonic',
@@ -111,7 +112,8 @@ class Play2 extends Phaser.Scene{
                 end: 2
             }),
             frameRate: 10,
-            repeat: -1
+            repeat: 4,
+            hideOnComplete: true
         })
         this.anims.create({
             key:'orange',
@@ -119,8 +121,9 @@ class Play2 extends Phaser.Scene{
                 start: 3,
                 end: 3
             }),
-            frameRate: 10,
-            repeat: -1
+            frameRate: 1,
+            repeat: 4,
+            hideOnComplete: true
         })
 
         var powerUp_x = Phaser.Math.Between(0, game.config.widht)
@@ -424,6 +427,12 @@ class Play2 extends Phaser.Scene{
 
     pickPowerUp(player, powerUp){
         powerUp.disableBody(true, true);
+    }
+
+    fadePicture() {
+
+        game.add.tween(picture).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
+    
     }
     
 }
