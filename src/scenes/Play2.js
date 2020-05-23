@@ -181,8 +181,8 @@ class Play2 extends Phaser.Scene{
         this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp, null, this);
 
         //player and bullets collision
-        this.physics.add.overlap(this.player, this.bullets, this.pickPowerUp, null, this);
-        this.physics.add.overlap(this.player2, this.bullets, this.pickPowerUp, null, this);
+        this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
+        this.physics.add.overlap(this.player2, this.bullets, this.playerHit, null, this);
 
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
@@ -420,6 +420,10 @@ class Play2 extends Phaser.Scene{
 
     pickPowerUp(player, powerUp){
         powerUp.disableBody(true, true);
+    }
+
+    playerHit(player, bullet){
+        bullet.disableBody(true, true);
         player.damage(34);
     }
 
