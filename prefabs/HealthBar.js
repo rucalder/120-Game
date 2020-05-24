@@ -38,15 +38,22 @@ class HealthBar {
         this.bar.fillRect(this.x, this.y, 80, 16);
 
         //  Health
-
+        //fill the bar white
         this.bar.fillStyle(0xffffff);
         this.bar.fillRect(this.x + 2, this.y + 2, 76, 12);
 
-        if (this.value < 30)
+        //this is the color red
+        if (this.value <= 34)
         {
             this.bar.fillStyle(0xff0000);
         }
-        else
+        //yellow
+        else if (this.value > 34 && this.value <= 66)
+        {
+            this.bar.fillStyle(0xffff00);
+        }
+        //green
+        else if (this.value > 66)
         {
             this.bar.fillStyle(0x00ff00);
         }
