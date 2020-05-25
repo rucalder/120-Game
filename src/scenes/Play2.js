@@ -112,7 +112,7 @@ class Play2 extends Phaser.Scene{
                 end: 2
             }),
             frameRate: 10,
-            repeat: 4,
+            repeat: 8,
             hideOnComplete: true
         })
         this.anims.create({
@@ -126,6 +126,7 @@ class Play2 extends Phaser.Scene{
             hideOnComplete: true
         })
 
+
         var powerUp_x = Phaser.Math.Between(0, game.config.widht)
         var powerUp_y = Phaser.Math.Between(90, 240 || 330, 480);
 
@@ -134,6 +135,7 @@ class Play2 extends Phaser.Scene{
 
         //number of power ups that will spawn
         var maxObjects = 1;
+        //delay between spawn time
         var powerUp_delay = Phaser.Math.Between(5000, 15000);
         this.timer = this.time.addEvent({delay: powerUp_delay, callback: function(){
             for(var i = 0; i <= maxObjects; i++){
@@ -330,7 +332,6 @@ class Play2 extends Phaser.Scene{
             this.gameOver = true;
             this.gameOverScreen();
         } 
-        
 
         //update pipeline temporal aspect
         this.t += this.tIncrement;    
@@ -420,6 +421,7 @@ class Play2 extends Phaser.Scene{
 
     pickPowerUp(player, powerUp){
         powerUp.disableBody(true, true);
+
     }
 
     playerHit(player, bullet){
