@@ -31,7 +31,7 @@ class Play2 extends Phaser.Scene{
         this.renderMode = {
             distort: true,
         }
-        this.applyPipeline(); 
+        //this.applyPipeline(); 
 
         //music
         this.bgmusic = this.sound.add('bgmusic');
@@ -47,7 +47,7 @@ class Play2 extends Phaser.Scene{
         
 
         //adding background image
-        var sky = this.add.tileSprite(0, 0, 800, 600, "sky").setOrigin(0,0);
+        this.sky = this.add.tileSprite(0, 0, 800, 600, "sky").setOrigin(0,0);
         //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
         //roof border
@@ -173,9 +173,9 @@ class Play2 extends Phaser.Scene{
         var cam1 = this.cameras.main;
         var cam2 = this.cameras.add(0, 0, 800, 600);
 
-        cam2.ignore([ sky, this.player, this.player2, platforms, this.bullets]);
+        cam2.ignore([ this.sky, this.player, this.player2, platforms, this.bullets]);
         //log to console to see which cam is ignoring the asset
-        console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
+        console.log('sky', this.sky.willRender(cam1), this.sky.willRender(cam2));
         cam2.setRenderToTexture(this.customPipeline);
 
         this.createGUI();
@@ -189,6 +189,7 @@ class Play2 extends Phaser.Scene{
             this.player2.update()
             this.canon.update()
             this.canon2.update()
+            this.sky.tilePositionX += this.level
         }
         if(this.physics.overlap(this.player, this.bullets) || this.physics.overlap(this.player2, this.bullets)){
             this.gameOver = true
