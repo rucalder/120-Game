@@ -138,8 +138,8 @@ class Play2 extends Phaser.Scene{
         //delay between spawn time
         var powerUp_delay = Phaser.Math.Between(5000, 15000);
         this.timer = this.time.addEvent({delay: powerUp_delay, callback: function(){
-            for(var i = 0; i <= maxObjects; i++){
-                var powerUp = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);      
+            var powerUp = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5); 
+            for(var i = 0; i <= maxObjects; i++){     
 
                 this.powerUps.add(powerUp);
                 cam2.ignore([powerUp]);
