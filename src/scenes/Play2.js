@@ -112,7 +112,7 @@ class Play2 extends Phaser.Scene{
                 end: 2
             }),
             frameRate: 10,
-            repeat: 8,
+            repeat: 10,
             hideOnComplete: true
         })
         this.anims.create({
