@@ -257,7 +257,7 @@ class Play2 extends Phaser.Scene{
             if(Math.random() > 0.5) {
                 powerUp_rum.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
                 powerUp_tonic.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
-                powerUp_tonic.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
+                powerUp_orange.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
 
                 if(Math.random() < 1 && Math.random() > .6) {
                     powerUp_rum.play('rum').setVisible(true).setInteractive();
@@ -268,7 +268,6 @@ class Play2 extends Phaser.Scene{
                     console.log('p1_toinc');
                 }
                 else{
-                    powerUp_orange.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
                     powerUp_orange.play('orange').setVisible(true).setInteractive();
                     console.log('p1_orange');
                 }
