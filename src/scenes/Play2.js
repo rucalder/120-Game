@@ -89,113 +89,6 @@ class Play2 extends Phaser.Scene{
         this.canon = new Canon(this, 800, 200, "bullet");
         this.canon2 = new Canon2(this, 800, 500, "bullet");
         this.bullets = this.physics.add.group();
-        
-        ////////////////////////PowerUps/////////////////////////////////////////////////////////////////
-        //testing powerup placement
-        //upper power up bound is (0, 240) - (0, 90)
-        //lower power up bound is (0,480) - (0,330)
-
-        this.anims.create({
-            key:'rum',
-            frames: this.anims.generateFrameNumbers("power-up", {
-                start: 0,
-                end: 0
-            }),
-            frameRate: 1,
-            repeat: 4,
-            hideOnComplete: true
-        })
-        this.anims.create({
-            key:'tonic',
-            frames: this.anims.generateFrameNumbers("power-up", {
-                start: 1,
-                end: 2
-            }),
-            frameRate: 10,
-            repeat: 10,
-            hideOnComplete: true
-        })
-        this.anims.create({
-            key:'orange',
-            frames: this.anims.generateFrameNumbers("power-up", {
-                start: 3,
-                end: 3
-            }),
-            frameRate: 1,
-            repeat: 4,
-            hideOnComplete: true
-        })
-
-        var powerUp_x = Phaser.Math.Between(0, game.config.widht)
-        var powerUp_y = Phaser.Math.Between(90, 240 || 330, 480);
-
-        //powerUps group
-        this.powerUps = this.physics.add.group();
-
-        var powerUp_rum = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5); 
-        var powerUp_tonic = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
-        var powerUp_orange = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
-
-        //delay between spawn time
-        var powerUp_delay = Phaser.Math.Between(5000, 15000);
-        this.timer = this.time.addEvent({delay: powerUp_delay, callback: function(){  
-
-            this.powerUps.add(powerUp_rum);
-            this.powerUps.add(powerUp_tonic);
-            this.powerUps.add(powerUp_orange);
-
-            cam2.ignore([powerUp_rum, powerUp_tonic, powerUp_orange]);
-            //this spawns multiple items within the given game space
-            //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
-            if(Math.random() > 0.5) {
-                powerUp_rum.setRandomPosition(0, 90, game.config.width, 150).setVisible(false).removeInteractive();
-                powerUp_tonic.setRandomPosition(0, 90, game.config.width, 150).setVisible(false).removeInteractive();
-                powerUp_orange.setRandomPosition(0, 90, game.config.width, 150).setVisible(false).removeInteractive();
-                if(Math.random() < 1 && Math.random() > .6) {
-                    powerUp_rum.play('rum').setVisible(true).setInteractive();
-                    console.log('p1_rum');
-                } 
-                else if (Math.random() < .6 && Math.random() > .3) {
-                    powerUp_tonic.play('tonic').setVisible(true).setInteractive();
-                    console.log('p1_toinc');
-                }
-                else{
-                    powerUp_orange.play('orange').setVisible(true).setInteractive();
-                    console.log('p1_orange');
-                }
-            } 
-            else{
-                powerUp_rum.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
-                powerUp_tonic.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
-                powerUp_orange.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
-                if(Math.random() < 1 && Math.random() > .6) {
-                    powerUp_rum.play('rum').setVisible(true).setInteractive();
-                    console.log('p1_rum');
-                } 
-                else if (Math.random() < .6 && Math.random() > .3) {
-                    powerUp_tonic.play('tonic').setVisible(true).setInteractive();
-                    console.log('p2_toinc');
-                }
-                else{
-                    powerUp_orange.play('orange').setVisible(true).setInteractive();
-                    console.log('p2_orange');
-                }
-            }
-            
-        }, callbackScope:this, loop: true });
-
-        this.physics.add.overlap(this.player, powerUp_rum, this.pickPowerUp_rum, null, this);
-        this.physics.add.overlap(this.player2, powerUp_rum, this.pickPowerUp_rum, null, this);
-
-        this.physics.add.overlap(this.player, powerUp_tonic, this.pickPowerUp_tonic, null, this);
-        this.physics.add.overlap(this.player2, powerUp_tonic, this.pickPowerUp_tonic, null, this);
-
-        this.physics.add.overlap(this.player, powerUp_orange, this.pickPowerUp_orange, null, this);
-        this.physics.add.overlap(this.player2, powerUp_orange, this.pickPowerUp_orange, null, this);
-
-        //player and bullets collision
-        this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
-        this.physics.add.overlap(this.player2, this.bullets, this.playerHit, null, this);
 
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
@@ -322,8 +215,112 @@ class Play2 extends Phaser.Scene{
             }
         }, callbackScope:this, loop: true });
 
-        //Graphical User Interface to test warp 
-        //this.createGUI()
+        ////////////////////////PowerUps/////////////////////////////////////////////////////////////////
+        //testing powerup placement
+        //upper power up bound is (0, 240) - (0, 90)
+        //lower power up bound is (0,480) - (0,330)
+
+        this.anims.create({
+            key:'rum',
+            frames: this.anims.generateFrameNumbers("power-up", {
+                start: 0,
+                end: 0
+            }),
+            frameRate: 1,
+            repeat: 4,
+            hideOnComplete: true
+        })
+        this.anims.create({
+            key:'tonic',
+            frames: this.anims.generateFrameNumbers("power-up", {
+                start: 1,
+                end: 2
+            }),
+            frameRate: 10,
+            repeat: 10,
+            hideOnComplete: true
+        })
+        this.anims.create({
+            key:'orange',
+            frames: this.anims.generateFrameNumbers("power-up", {
+                start: 3,
+                end: 3
+            }),
+            frameRate: 1,
+            repeat: 4,
+            hideOnComplete: true
+        })
+
+        var powerUp_x = Phaser.Math.Between(0, game.config.widht)
+        var powerUp_y = Phaser.Math.Between(90, 240 || 330, 480);
+
+        //powerUps group
+        this.powerUps = this.physics.add.group();
+
+        var powerUp_rum = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5); 
+        var powerUp_tonic = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
+        var powerUp_orange = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
+
+        //delay between spawn time
+        var powerUp_delay = Phaser.Math.Between(5000, 15000);
+        this.timer = this.time.addEvent({delay: powerUp_delay, callback: function(){  
+
+            this.powerUps.add(powerUp_rum);
+            this.powerUps.add(powerUp_tonic);
+            this.powerUps.add(powerUp_orange);
+
+            cam2.ignore([powerUp_rum, powerUp_tonic, powerUp_orange]);
+            //this spawns multiple items within the given game space
+            //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
+            if(Math.random() > 0.5) {
+                powerUp_rum.setRandomPosition(0, 90, game.config.width, 150).setVisible(false).removeInteractive();
+                powerUp_tonic.setRandomPosition(0, 90, game.config.width, 150).setVisible(false).removeInteractive();
+                powerUp_orange.setRandomPosition(0, 90, game.config.width, 150).setVisible(false).removeInteractive();
+                if(Math.random() < 1 && Math.random() > .6) {
+                    powerUp_rum.play('rum').setVisible(true).setInteractive();
+                    console.log('p1_rum');
+                } 
+                else if (Math.random() < .6 && Math.random() > .3) {
+                    powerUp_tonic.play('tonic').setVisible(true).setInteractive();
+                    console.log('p1_toinc');
+                }
+                else{
+                    powerUp_orange.play('orange').setVisible(true).setInteractive();
+                    console.log('p1_orange');
+                }
+            } 
+            else{
+                powerUp_rum.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
+                powerUp_tonic.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
+                powerUp_orange.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
+                if(Math.random() < 1 && Math.random() > .6) {
+                    powerUp_rum.play('rum').setVisible(true).setInteractive();
+                    console.log('p1_rum');
+                } 
+                else if (Math.random() < .6 && Math.random() > .3) {
+                    powerUp_tonic.play('tonic').setVisible(true).setInteractive();
+                    console.log('p2_toinc');
+                }
+                else{
+                    powerUp_orange.play('orange').setVisible(true).setInteractive();
+                    console.log('p2_orange');
+                }
+            }
+            
+        }, callbackScope:this, loop: true });
+
+        this.physics.add.overlap(this.player, powerUp_rum, this.pickPowerUp_rum, null, this);
+        this.physics.add.overlap(this.player2, powerUp_rum, this.pickPowerUp_rum, null, this);
+
+        this.physics.add.overlap(this.player, powerUp_tonic, this.pickPowerUp_tonic, null, this);
+        this.physics.add.overlap(this.player2, powerUp_tonic, this.pickPowerUp_tonic, null, this);
+
+        this.physics.add.overlap(this.player, powerUp_orange, this.pickPowerUp_orange, null, this);
+        this.physics.add.overlap(this.player2, powerUp_orange, this.pickPowerUp_orange, null, this);
+
+        //player and bullets collision
+        this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
+        this.physics.add.overlap(this.player2, this.bullets, this.playerHit, null, this);
         
     }
 
@@ -432,14 +429,17 @@ class Play2 extends Phaser.Scene{
 
     pickPowerUp_rum(player, powerUp){
         powerUp.disableBody(true, true);
+        console.log('rum collision');
     }
 
     pickPowerUp_tonic(player, powerUp){
         powerUp.disableBody(true, true);
+        console.log('tonic collision');
     }
 
     pickPowerUp_orange(player, powerUp){
         powerUp.disableBody(true, true);
+        console.log('orange collision');
     }
 
     playerHit(player, bullet){
