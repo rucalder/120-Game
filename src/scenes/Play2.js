@@ -126,22 +126,19 @@ class Play2 extends Phaser.Scene{
             hideOnComplete: true
         })
 
-
         var powerUp_x = Phaser.Math.Between(0, game.config.widht)
         var powerUp_y = Phaser.Math.Between(90, 240 || 330, 480);
 
         //powerUps group
         this.powerUps = this.physics.add.group();
 
-        //number of power ups that will spawn
-        var maxObjects = 1;
+        var powerUp_rum = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5); 
+        var powerUp_tonic = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
+        var powerUp_orange = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
+
         //delay between spawn time
         var powerUp_delay = Phaser.Math.Between(5000, 15000);
         this.timer = this.time.addEvent({delay: powerUp_delay, callback: function(){  
-                
-            var powerUp_rum = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5); 
-            var powerUp_tonic = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
-            var powerUp_orange = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
 
             this.powerUps.add(powerUp_rum);
             this.powerUps.add(powerUp_tonic);
@@ -187,8 +184,14 @@ class Play2 extends Phaser.Scene{
             
         }, callbackScope:this, loop: true });
 
-        this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
-        this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp, null, this);
+        this.physics.add.overlap(this.player, powerUp_rum, this.pickPowerUp_rum, null, this);
+        this.physics.add.overlap(this.player2, powerUp_rum, this.pickPowerUp_rum, null, this);
+
+        this.physics.add.overlap(this.player, powerUp_tonic, this.pickPowerUp_tonic, null, this);
+        this.physics.add.overlap(this.player2, powerUp_tonic, this.pickPowerUp_tonic, null, this);
+
+        this.physics.add.overlap(this.player, powerUp_orange, this.pickPowerUp_orange, null, this);
+        this.physics.add.overlap(this.player2, powerUp_orange, this.pickPowerUp_orange, null, this);
 
         //player and bullets collision
         this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
@@ -427,9 +430,16 @@ class Play2 extends Phaser.Scene{
         gui.add(this,"tIncrement").name("Distortion intensity").min(0).max(0.1).step(0.005);
     }
 
-    pickPowerUp(player, powerUp){
+    pickPowerUp_rum(player, powerUp){
         powerUp.disableBody(true, true);
+    }
 
+    pickPowerUp_tonic(player, powerUp){
+        powerUp.disableBody(true, true);
+    }
+
+    pickPowerUp_orange(player, powerUp){
+        powerUp.disableBody(true, true);
     }
 
     playerHit(player, bullet){
