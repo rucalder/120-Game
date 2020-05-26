@@ -255,7 +255,9 @@ class Play2 extends Phaser.Scene{
         var powerUp_y = Phaser.Math.Between(90, 240 || 330, 480);
 
         //powerUps group
-        this.powerUps = this.physics.add.group();
+        this.powerUps_rum = this.physics.add.group();
+        this.powerUps_tonic = this.physics.add.group();
+        this.powerUps_orange = this.physics.add.group();
 
         var powerUp_rum = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5); 
         var powerUp_tonic = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
@@ -265,9 +267,9 @@ class Play2 extends Phaser.Scene{
         var powerUp_delay = Phaser.Math.Between(5000, 15000);
         this.timer = this.time.addEvent({delay: powerUp_delay, callback: function(){  
 
-            this.powerUps.add(powerUp_rum);
-            this.powerUps.add(powerUp_tonic);
-            this.powerUps.add(powerUp_orange);
+            this.powerUps_rum.add(powerUp_rum);
+            this.powerUps_tonic.add(powerUp_tonic);
+            this.powerUps_orange.add(powerUp_orange);
 
             cam2.ignore([powerUp_rum, powerUp_tonic, powerUp_orange]);
             //this spawns multiple items within the given game space
@@ -275,7 +277,8 @@ class Play2 extends Phaser.Scene{
             if(Math.random() > 0.5) {
                 powerUp_rum.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
                 powerUp_tonic.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
-                powerUp_orange.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
+                powerUp_tonic.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
+
                 if(Math.random() < 1 && Math.random() > .6) {
                     powerUp_rum.play('rum').setVisible(true).setInteractive();
                     console.log('p1_rum');
@@ -285,6 +288,7 @@ class Play2 extends Phaser.Scene{
                     console.log('p1_toinc');
                 }
                 else{
+                    powerUp_orange.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
                     powerUp_orange.play('orange').setVisible(true).setInteractive();
                     console.log('p1_orange');
                 }
@@ -293,6 +297,7 @@ class Play2 extends Phaser.Scene{
                 powerUp_rum.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
                 powerUp_tonic.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
                 powerUp_orange.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
+
                 if(Math.random() < 1 && Math.random() > .6) {
                     powerUp_rum.play('rum').setVisible(true).setInteractive();
                     console.log('p1_rum');
@@ -310,14 +315,14 @@ class Play2 extends Phaser.Scene{
         }, callbackScope:this, loop: true });
 
         //collisions between players and powerUps
-        this.physics.add.overlap(this.player, powerUp_rum, this.pickPowerUp_rum, null, this);
-        this.physics.add.overlap(this.player2, powerUp_rum, this.pickPowerUp_rum, null, this);
+        this.physics.add.overlap(this.player, this.powerUps_rum, this.pickPowerUp_rum, null, this);
+        this.physics.add.overlap(this.player2, this.powerUps_rum, this.pickPowerUp_rum, null, this);
 
-        this.physics.add.overlap(this.player, powerUp_tonic, this.pickPowerUp_tonic, null, this);
-        this.physics.add.overlap(this.player2, powerUp_tonic, this.pickPowerUp_tonic, null, this);
+        this.physics.add.overlap(this.player, this.powerUps_tonic, this.pickPowerUp_tonic, null, this);
+        this.physics.add.overlap(this.player2, this.powerUps_tonic, this.pickPowerUp_tonic, null, this);
 
-        this.physics.add.overlap(this.player, powerUp_orange, this.pickPowerUp_orange, null, this);
-        this.physics.add.overlap(this.player2, powerUp_orange, this.pickPowerUp_orange, null, this);
+        this.physics.add.overlap(this.player, this.powerUps_orange, this.pickPowerUp_orange, null, this);
+        this.physics.add.overlap(this.player2, this.powerUps_orange, this.pickPowerUp_orange, null, this);
 
         //player and bullets collision
         this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
