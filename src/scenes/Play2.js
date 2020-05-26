@@ -446,11 +446,4 @@ class Play2 extends Phaser.Scene{
         bullet.disableBody(true, true);
         player.damage(34);
     }
-
-    fadePicture() {
-
-        game.add.tween(picture).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true);
-    
-    }
-    
 }
