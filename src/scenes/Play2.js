@@ -273,9 +273,9 @@ class Play2 extends Phaser.Scene{
             //this spawns multiple items within the given game space
             //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
             if(Math.random() > 0.5) {
-                powerUp_rum.setRandomPosition(0, 90, game.config.width, 150).setVisible(false).removeInteractive();
-                powerUp_tonic.setRandomPosition(0, 90, game.config.width, 150).setVisible(false).removeInteractive();
-                powerUp_orange.setRandomPosition(0, 90, game.config.width, 150).setVisible(false).removeInteractive();
+                powerUp_rum.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
+                powerUp_tonic.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
+                powerUp_orange.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
                 if(Math.random() < 1 && Math.random() > .6) {
                     powerUp_rum.play('rum').setVisible(true).setInteractive();
                     console.log('p1_rum');
@@ -309,6 +309,7 @@ class Play2 extends Phaser.Scene{
             
         }, callbackScope:this, loop: true });
 
+        //collisions between players and powerUps
         this.physics.add.overlap(this.player, powerUp_rum, this.pickPowerUp_rum, null, this);
         this.physics.add.overlap(this.player2, powerUp_rum, this.pickPowerUp_rum, null, this);
 
@@ -435,6 +436,7 @@ class Play2 extends Phaser.Scene{
     pickPowerUp_tonic(player, powerUp){
         powerUp.disableBody(true, true);
         console.log('tonic collision');
+        player.tonic();
     }
 
     pickPowerUp_orange(player, powerUp){

@@ -46,4 +46,10 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
         this.setImmovable();
         this.setVisible(false);
     }
+
+    tonic(){
+        if(this.hp.value < 100){
+            this.damage(-34);
+        }
+    }
 }
