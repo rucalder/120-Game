@@ -245,53 +245,57 @@ class Play2 extends Phaser.Scene{
 
         //delay between spawn time
         var powerUp_delay = Phaser.Math.Between(5000, 15000);
-        this.timer = this.time.addEvent({delay: powerUp_delay, callback: function(){  
 
-            this.powerUps_rum.add(powerUp_rum);
-            this.powerUps_tonic.add(powerUp_tonic);
-            this.powerUps_orange.add(powerUp_orange);
+        this.time.addEvent({
+            delay: powerUp_delay,
+            callback: ()=>{
+                this.powerUps_rum.add(powerUp_rum);
+                this.powerUps_tonic.add(powerUp_tonic);
+                this.powerUps_orange.add(powerUp_orange);
 
-            cam2.ignore([powerUp_rum, powerUp_tonic, powerUp_orange]);
-            //this spawns multiple items within the given game space
-            //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
-            if(Math.random() > 0.5) {
-                powerUp_rum.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
-                powerUp_tonic.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
-                powerUp_orange.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
+                cam2.ignore([powerUp_rum, powerUp_tonic, powerUp_orange]);
+                //this spawns multiple items within the given game space
+                //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
+                if(Math.random() > 0.5) {
+                    powerUp_rum.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
+                    powerUp_tonic.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
+                    powerUp_orange.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
 
-                if(Math.random() < 1 && Math.random() > .6) {
-                    powerUp_rum.play('rum').setVisible(true).setInteractive();
-                    console.log('p1_rum');
+                    if(Math.random() < 1 && Math.random() > .6) {
+                        powerUp_rum.play('rum').setVisible(true).setInteractive();
+                        console.log('p1_rum');
+                    } 
+                    else if (Math.random() < .6 && Math.random() > .3) {
+                        powerUp_tonic.play('tonic').setVisible(true).setInteractive();
+                        console.log('p1_toinc');
+                    }
+                    else{
+                        powerUp_orange.play('orange').setVisible(true).setInteractive();
+                        console.log('p1_orange');
+                    }
                 } 
-                else if (Math.random() < .6 && Math.random() > .3) {
-                    powerUp_tonic.play('tonic').setVisible(true).setInteractive();
-                    console.log('p1_toinc');
-                }
                 else{
-                    powerUp_orange.play('orange').setVisible(true).setInteractive();
-                    console.log('p1_orange');
-                }
-            } 
-            else{
-                powerUp_rum.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
-                powerUp_tonic.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
-                powerUp_orange.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
+                    powerUp_rum.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
+                    powerUp_tonic.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
+                    powerUp_orange.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
 
-                if(Math.random() < 1 && Math.random() > .6) {
-                    powerUp_rum.play('rum').setVisible(true).setInteractive();
-                    console.log('p1_rum');
-                } 
-                else if (Math.random() < .6 && Math.random() > .3) {
-                    powerUp_tonic.play('tonic').setVisible(true).setInteractive();
-                    console.log('p2_toinc');
+                    if(Math.random() < 1 && Math.random() > .6) {
+                        powerUp_rum.play('rum').setVisible(true).setInteractive();
+                        console.log('p1_rum');
+                    } 
+                    else if (Math.random() < .6 && Math.random() > .3) {
+                        powerUp_tonic.play('tonic').setVisible(true).setInteractive();
+                        console.log('p2_toinc');
+                    }
+                    else{
+                        powerUp_orange.play('orange').setVisible(true).setInteractive();
+                        console.log('p2_orange');
+                    }
                 }
-                else{
-                    powerUp_orange.play('orange').setVisible(true).setInteractive();
-                    console.log('p2_orange');
-                }
-            }
+            },
+            loop: true
+        })
             
-        }, callbackScope:this, loop: true });
 
         //collisions between players and powerUps
         this.physics.add.overlap(this.player, this.powerUps_rum, this.pickPowerUp_rum, null, this);
