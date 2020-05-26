@@ -195,26 +195,6 @@ class Play2 extends Phaser.Scene{
             loop: true
         });
 
-        //if cam2 ignores an asset it will be affected by the wave effect
-        this.cameras.main.ignore([ this.player.hp, this.player2.hp ]);
-        cam2.ignore([ this.p1_sky, this.p2_sky, this.player, this.player2, platforms, this.canon, this.canon2]);
-        //log to console to see which cam is ignoring the asset
-        //console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
-        cam2.setRenderToTexture(this.customPipeline);
-
-
-        //delay to warp increase effect
-        this.clock = this.time.delayedCall(1000, () => {
-        }, null, this);
-        //making the warp increase over time
-        this.timer = this.time.addEvent({delay: 2000, callback: function(){
-            if(this.clock.getProgress() == 1){
-                if(this.tIncrement != .1){
-                    this.tIncrement += .0005
-                }
-            }
-        }, callbackScope:this, loop: true });
-
         ////////////////////////PowerUps/////////////////////////////////////////////////////////////////
         //testing powerup placement
         //upper power up bound is (0, 240) - (0, 90)
@@ -328,6 +308,26 @@ class Play2 extends Phaser.Scene{
         this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
         this.physics.add.overlap(this.player2, this.bullets, this.playerHit, null, this);
         
+
+        //if cam2 ignores an asset it will be affected by the wave effect
+        this.cameras.main.ignore([ this.player.hp, this.player2.hp ]);
+        cam2.ignore([ this.p1_sky, this.p2_sky, this.player, this.player2, platforms, this.canon, this.canon2]);
+        //log to console to see which cam is ignoring the asset
+        //console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
+        cam2.setRenderToTexture(this.customPipeline);
+
+
+        //delay to warp increase effect
+        this.clock = this.time.delayedCall(1000, () => {
+        }, null, this);
+        //making the warp increase over time
+        this.timer = this.time.addEvent({delay: 2000, callback: function(){
+            if(this.clock.getProgress() == 1){
+                if(this.tIncrement != .1){
+                    this.tIncrement += .0005
+                }
+            }
+        }, callbackScope:this, loop: true });
     }
 
     update()
