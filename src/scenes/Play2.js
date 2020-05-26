@@ -137,43 +137,51 @@ class Play2 extends Phaser.Scene{
         var maxObjects = 1;
         //delay between spawn time
         var powerUp_delay = Phaser.Math.Between(5000, 15000);
-        this.timer = this.time.addEvent({delay: powerUp_delay, callback: function(){
-            var powerUp = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5); 
-            for(var i = 0; i <= maxObjects; i++){     
+        this.timer = this.time.addEvent({delay: powerUp_delay, callback: function(){  
+                
+            var powerUp_rum = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5); 
+            var powerUp_tonic = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
+            var powerUp_orange = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
 
-                this.powerUps.add(powerUp);
-                cam2.ignore([powerUp]);
-                //this spawns multiple items within the given game space
-                //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
-                if(Math.random() > 0.5) {
-                    powerUp.setRandomPosition(0, 90, game.config.width, 150);
-                    if(Math.random() < 1 && Math.random() > .6) {
-                        powerUp.play('rum');
-                        console.log('p1_rum');
-                    } 
-                    else if (Math.random() < .6 && Math.random() > .3) {
-                        powerUp.play('tonic');
-                        console.log('p1_toinc');
-                    }
-                    else{
-                        powerUp.play('orange');
-                        console.log('p1_orange');
-                    }
+            this.powerUps.add(powerUp_rum);
+            this.powerUps.add(powerUp_tonic);
+            this.powerUps.add(powerUp_orange);
+
+            cam2.ignore([powerUp_rum, powerUp_tonic, powerUp_orange]);
+            //this spawns multiple items within the given game space
+            //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
+            if(Math.random() > 0.5) {
+                powerUp_rum.setRandomPosition(0, 90, game.config.width, 150).setVisible(false).removeInteractive();
+                powerUp_tonic.setRandomPosition(0, 90, game.config.width, 150).setVisible(false).removeInteractive();
+                powerUp_orange.setRandomPosition(0, 90, game.config.width, 150).setVisible(false).removeInteractive();
+                if(Math.random() < 1 && Math.random() > .6) {
+                    powerUp_rum.play('rum').setVisible(true).setInteractive();
+                    console.log('p1_rum');
                 } 
+                else if (Math.random() < .6 && Math.random() > .3) {
+                    powerUp_tonic.play('tonic').setVisible(true).setInteractive();
+                    console.log('p1_toinc');
+                }
                 else{
-                    powerUp.setRandomPosition(0, 330, game.config.width, 150);
-                    if(Math.random() < 1 && Math.random() > .6) {
-                        powerUp.play('rum');
-                        console.log('p1_rum');
-                    } 
-                    else if (Math.random() < .6 && Math.random() > .3) {
-                        powerUp.play('tonic');
-                        console.log('p2_toinc');
-                    }
-                    else{
-                        powerUp.play('orange');
-                        console.log('p2_orange');
-                    }
+                    powerUp_orange.play('orange').setVisible(true).setInteractive();
+                    console.log('p1_orange');
+                }
+            } 
+            else{
+                powerUp_rum.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
+                powerUp_tonic.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
+                powerUp_orange.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
+                if(Math.random() < 1 && Math.random() > .6) {
+                    powerUp_rum.play('rum').setVisible(true).setInteractive();
+                    console.log('p1_rum');
+                } 
+                else if (Math.random() < .6 && Math.random() > .3) {
+                    powerUp_tonic.play('tonic').setVisible(true).setInteractive();
+                    console.log('p2_toinc');
+                }
+                else{
+                    powerUp_orange.play('orange').setVisible(true).setInteractive();
+                    console.log('p2_orange');
                 }
             }
             
