@@ -261,7 +261,7 @@ class Play2 extends Phaser.Scene{
                     powerUp_tonic.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
                     powerUp_orange.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
 
-                    if(Math.random() < 1 && Math.random() > .6) {
+                    if(Math.random() > .6) {
                         powerUp_rum.play('rum').setVisible(true).setInteractive();
                         console.log('p1_rum');
                     } 
@@ -279,7 +279,7 @@ class Play2 extends Phaser.Scene{
                     powerUp_tonic.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
                     powerUp_orange.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
 
-                    if(Math.random() < 1 && Math.random() > .6) {
+                    if(Math.random() > .6) {
                         powerUp_rum.play('rum').setVisible(true).setInteractive();
                         console.log('p1_rum');
                     } 
@@ -295,7 +295,6 @@ class Play2 extends Phaser.Scene{
             },
             loop: true
         })
-            
 
         //collisions between players and powerUps
         this.physics.add.overlap(this.player, this.powerUps_rum, this.pickPowerUp_rum, null, this);
