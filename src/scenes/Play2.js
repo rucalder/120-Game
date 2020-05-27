@@ -292,12 +292,12 @@ class Play2 extends Phaser.Scene{
                     this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_rum, null, this);
                 }
                 else if(prob == 1){
-                    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_rum, null, this);
-                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_rum, null, this);
+                    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_tonic, null, this);
+                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_tonic, null, this);
                 }
                 else if(prob == 2){
-                    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_rum, null, this);
-                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_rum, null, this);
+                    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_orange, null, this);
+                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_orange, null, this);
                 }
                 else if(prob == 3){
                     this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_rum, null, this);
