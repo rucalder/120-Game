@@ -245,69 +245,69 @@ class Play2 extends Phaser.Scene{
         this.time.addEvent({
             delay: powerUp_delay,
             callback: ()=>{
-                var powerUp = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5); 
+                //random chance
+                this.prob = Phaser.Math.Between(0, 5);
 
-                //one in three chance of occuring
-                var prob = Phaser.Math.Between(0, 5);
+                var powerUp = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
 
                 this.powerUps.add(powerUp);
 
                 cam2.ignore([powerUp]);
                 //this spawns multiple items within the given game space
                 //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
-                if(prob == 0) {
+                if(this.prob == 0) {
                     console.log('top');
                     powerUp.play('rum').setRandomPosition(0, 90, game.config.width/2, 150);
                     console.log('rum');
                 } 
-                else if (prob == 1) {
+                else if (this.prob == 1) {
                     console.log('top');
                     powerUp.play('tonic').setRandomPosition(0, 90, game.config.width/2, 150);
                     console.log('tonic');
                 }
-                else if (prob == 2){
+                else if (this.prob == 2){
                     console.log('top');
                     powerUp.play('orange').setRandomPosition(0, 90, game.config.width/2, 150);
                     console.log('orange');
                 }
-                else if(prob == 3) {
+                else if(this.prob == 3) {
                     console.log('bottom');
                     powerUp.play('rum').setRandomPosition(0, 330, game.config.width/2, 150);
                     console.log('rum');
                 } 
-                else if (prob == 4) {
+                else if (this.prob == 4) {
                     console.log('bottom');
                     powerUp.play('tonic').setRandomPosition(0, 330, game.config.width/2, 150);
                     console.log('tonic');
                 }
-                else if (prob == 5){
+                else if (this.prob == 5){
                     console.log('bottom');
                     powerUp.play('orange').setRandomPosition(0, 330, game.config.width/2, 150);
                     console.log('orange');
                 }
 
                 //collisions between players and powerUps
-                if(prob == 0){
+                if(this.prob == 0){
                     this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_rum, null, this);
                     this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_rum, null, this);
                 }
-                else if(prob == 1){
+                else if(this.prob == 1){
                     this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_tonic, null, this);
                     this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_tonic, null, this);
                 }
-                else if(prob == 2){
+                else if(this.prob == 2){
                     this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_orange, null, this);
                     this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_orange, null, this);
                 }
-                else if(prob == 3){
+                else if(this.prob == 3){
                     this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_rum, null, this);
                     this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_rum, null, this);
                 }
-                else if(prob == 4){
+                else if(this.prob == 4){
                     this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_tonic, null, this);
                     this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_tonic, null, this);
                 }
-                else if(prob == 5){
+                else if(this.prob == 5){
                     this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_orange, null, this);
                     this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_orange, null, this);
                 }
