@@ -8,9 +8,6 @@ class Canon extends Phaser.Physics.Arcade.Sprite{
         this.tracker = 0
     }
 
-    creeate(){
-        //this.tracker = 1
-    }
 
     update(){
         this.move()
