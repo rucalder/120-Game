@@ -159,49 +159,6 @@ class Play2 extends Phaser.Scene{
         this.physics.add.collider(this.player2, platforms);
 
         
-        this.canonTimer = this.time.addEvent({
-            delay: Phaser.Math.Between(1000, 5000),                // ms
-            callback: () => {
-                //added the code from the canon Fire function to be able to use the cam ignore 
-                //attribute so that duplicate bullets didn't show up
-                var bull = this.physics.add.sprite(this.canon.x, this.canon.y, "bullet")
-                bull.setScale(0.8,0.8)
-                this.bullets.add(bull)
-                bull.setVelocityX(-230)
-                cam2.ignore([ bull ])
-                this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
-            },
-            //args: [],
-            callbackScope: this,
-            loop: true
-         });
-         this.canonTimer2 = this.time.addEvent({
-            delay: Phaser.Math.Between(1000, 5000),                // ms
-            callback: () => {
-                //added the code from the canon Fire function to be able to use the cam ignore
-                //attribute so that duplicate bullets didn't show up
-                var bull = this.physics.add.sprite(this.canon2.x, this.canon2.y, "bullet")
-                bull.setScale(0.8,0.8)
-                this.bullets.add(bull)
-                bull.setVelocityX(-230)
-                cam2.ignore([ bull ])
-                this.canonTimer2.delay = Phaser.Math.Between(1000, 3000)
-            },
-            //args: [],
-            callbackScope: this,
-            loop: true
-         });
-         // game timer event
-        this.gameTimer = this.time.addEvent({
-                delay: 1000,                // ms
-                callback: () => {
-                this.level += .1
-            },
-            //args: [],
-            callbackScope: this,
-            loop: true
-        });
-
         ////////////////////////PowerUps/////////////////////////////////////////////////////////////////
         //testing powerup placement
         //upper power up bound is (0, 240) - (0, 90)
@@ -244,11 +201,8 @@ class Play2 extends Phaser.Scene{
         //powerUps group
         this.powerUps = this.physics.add.group();
 
-        //delay between spawn time
-        var powerUp_delay = Phaser.Math.Between(5000, 15000);
-
         this.powerUp_timer = this.time.addEvent({
-            delay: powerUp_delay,
+            delay: Phaser.Math.Between(5000, 15000),
             callback: ()=>{
                 //random chance
                 this.prob = Phaser.Math.Between(0, 5);
@@ -303,6 +257,50 @@ class Play2 extends Phaser.Scene{
                 
                 this.powerUp_timer.delay = Phaser.Math.Between(5000, 15000);
             },
+            callbackScope: this,
+            loop: true
+        });
+
+//////////////////////////////////////////////////////canons/////////////////////////////////////////////////
+        this.canonTimer = this.time.addEvent({
+            delay: Phaser.Math.Between(1000, 5000),                // ms
+            callback: () => {
+                //added the code from the canon Fire function to be able to use the cam ignore 
+                //attribute so that duplicate bullets didn't show up
+                var bull = this.physics.add.sprite(this.canon.x, this.canon.y, "bullet")
+                bull.setScale(0.8,0.8)
+                this.bullets.add(bull)
+                bull.setVelocityX(-230)
+                cam2.ignore([ bull ])
+                this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
+            },
+            //args: [],
+            callbackScope: this,
+            loop: true
+         });
+         this.canonTimer2 = this.time.addEvent({
+            delay: Phaser.Math.Between(1000, 5000),                // ms
+            callback: () => {
+                //added the code from the canon Fire function to be able to use the cam ignore
+                //attribute so that duplicate bullets didn't show up
+                var bull = this.physics.add.sprite(this.canon2.x, this.canon2.y, "bullet")
+                bull.setScale(0.8,0.8)
+                this.bullets.add(bull)
+                bull.setVelocityX(-230)
+                cam2.ignore([ bull ])
+                this.canonTimer2.delay = Phaser.Math.Between(1000, 3000)
+            },
+            //args: [],
+            callbackScope: this,
+            loop: true
+         });
+         // game timer event
+        this.gameTimer = this.time.addEvent({
+                delay: 1000,                // ms
+                callback: () => {
+                this.level += .1
+            },
+            //args: [],
             callbackScope: this,
             loop: true
         });
