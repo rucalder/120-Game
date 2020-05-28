@@ -248,48 +248,50 @@ class Play2 extends Phaser.Scene{
                 //random chance
                 this.prob = Phaser.Math.Between(0, 5);
 
-                var powerUp = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
+                var powerUp_rum = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
+                var powerUp_tonic = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
+                var powerUp_orange = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
 
-                this.powerUps.add(powerUp);
+                //this.powerUps.add(powerUp);
 
-                cam2.ignore([powerUp]);
+                cam2.ignore([powerUp_rum, powerUp_tonic, powerUp_orange]);
                 //this spawns multiple items within the given game space
                 //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
                 if(this.prob == 0) {
                     console.log('top');
-                    powerUp.play('rum').setRandomPosition(0, 90, game.config.width/2, 150);
+                    powerUp_rum.play('rum').setRandomPosition(0, 90, game.config.width/2, 150);
                     console.log('rum');
-                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_rum, null, this);
+                    this.physics.add.overlap(this.player2, this.powerUp_rum, this.pickPowerUp_rum, null, this);
                 } 
                 else if (this.prob == 1) {
                     console.log('top');
-                    powerUp.play('tonic').setRandomPosition(0, 90, game.config.width/2, 150);
+                    powerUp_tonic.play('tonic').setRandomPosition(0, 90, game.config.width/2, 150);
                     console.log('tonic');
-                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_tonic, null, this);
+                    this.physics.add.overlap(this.player2, this.powerUp_tonic, this.pickPowerUp_tonic, null, this);
                 }
                 else if (this.prob == 2){
                     console.log('top');
-                    powerUp.play('orange').setRandomPosition(0, 90, game.config.width/2, 150);
+                    powerUp_orange.play('orange').setRandomPosition(0, 90, game.config.width/2, 150);
                     console.log('orange');
-                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_orange, null, this);
+                    this.physics.add.overlap(this.player2, this.powerUp_orange, this.pickPowerUp_orange, null, this);
                 }
                 else if(this.prob == 3) {
                     console.log('bottom');
-                    powerUp.play('rum').setRandomPosition(0, 330, game.config.width/2, 150);
+                    powerUp_rum.play('rum').setRandomPosition(0, 330, game.config.width/2, 150);
                     console.log('rum');
-                    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_rum, null, this);
+                    this.physics.add.overlap(this.player, this.powerUp_rum, this.pickPowerUp_rum, null, this);
                 } 
                 else if (this.prob == 4) {
                     console.log('bottom');
-                    powerUp.play('tonic').setRandomPosition(0, 330, game.config.width/2, 150);
+                    powerUp_tonic.play('tonic').setRandomPosition(0, 330, game.config.width/2, 150);
                     console.log('tonic');
-                    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_tonic, null, this);
+                    this.physics.add.overlap(this.player, this.powerUp_tonic, this.pickPowerUp_tonic, null, this);
                 }
                 else if (this.prob == 5){
                     console.log('bottom');
-                    powerUp.play('orange').setRandomPosition(0, 330, game.config.width/2, 150);
+                    powerUp_orange.play('orange').setRandomPosition(0, 330, game.config.width/2, 150);
                     console.log('orange');
-                    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_orange, null, this);
+                    this.physics.add.overlap(this.player, powerUp_orange, this.pickPowerUp_orange, null, this);
                 }
                 
             },
@@ -325,6 +327,7 @@ class Play2 extends Phaser.Scene{
     update()
     {   
         if(this.gameOver == false){
+            console.log('update');
             this.player.update();
             this.player2.update();
             this.canon.update();
