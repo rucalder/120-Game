@@ -259,57 +259,37 @@ class Play2 extends Phaser.Scene{
                     console.log('top');
                     powerUp.play('rum').setRandomPosition(0, 90, game.config.width/2, 150);
                     console.log('rum');
+                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_rum, null, this);
                 } 
                 else if (this.prob == 1) {
                     console.log('top');
                     powerUp.play('tonic').setRandomPosition(0, 90, game.config.width/2, 150);
                     console.log('tonic');
+                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_tonic, null, this);
                 }
                 else if (this.prob == 2){
                     console.log('top');
                     powerUp.play('orange').setRandomPosition(0, 90, game.config.width/2, 150);
                     console.log('orange');
+                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_orange, null, this);
                 }
                 else if(this.prob == 3) {
                     console.log('bottom');
                     powerUp.play('rum').setRandomPosition(0, 330, game.config.width/2, 150);
                     console.log('rum');
+                    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_rum, null, this);
                 } 
                 else if (this.prob == 4) {
                     console.log('bottom');
                     powerUp.play('tonic').setRandomPosition(0, 330, game.config.width/2, 150);
                     console.log('tonic');
+                    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_tonic, null, this);
                 }
                 else if (this.prob == 5){
                     console.log('bottom');
                     powerUp.play('orange').setRandomPosition(0, 330, game.config.width/2, 150);
                     console.log('orange');
-                }
-
-                //collisions between players and powerUps
-                if(this.prob == 0){
-                    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_rum, null, this);
-                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_rum, null, this);
-                }
-                else if(this.prob == 1){
-                    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_tonic, null, this);
-                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_tonic, null, this);
-                }
-                else if(this.prob == 2){
                     this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_orange, null, this);
-                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_orange, null, this);
-                }
-                else if(this.prob == 3){
-                    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_rum, null, this);
-                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_rum, null, this);
-                }
-                else if(this.prob == 4){
-                    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_tonic, null, this);
-                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_tonic, null, this);
-                }
-                else if(this.prob == 5){
-                    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp_orange, null, this);
-                    this.physics.add.overlap(this.player2, this.powerUps, this.pickPowerUp_orange, null, this);
                 }
                 
             },
