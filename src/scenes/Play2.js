@@ -92,6 +92,11 @@ class Play2 extends Phaser.Scene{
         this.canon2 = new Canon2(this, 800, 500, "bullet");
         this.bullets = this.physics.add.group();
 
+        this.powerUps_rum = this.physics.add.group();
+        this.powerUps_tonic = this.physics.add.group();
+        this.powerUps_orange = this.physics.add.group();
+        
+
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
         this.anims.create({
@@ -180,7 +185,7 @@ class Play2 extends Phaser.Scene{
                 this.bullets.add(bull)
                 bull.setVelocityX(-230)
                 cam2.ignore([ bull ])
-                this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
+                this.canonTimer2.delay = Phaser.Math.Between(1000, 3000)
             },
             //args: [],
             callbackScope: this,
@@ -242,7 +247,7 @@ class Play2 extends Phaser.Scene{
         //delay between spawn time
         var powerUp_delay = Phaser.Math.Between(5000, 15000);
 
-        this.time.addEvent({
+        this.powerUp_timer = this.time.addEvent({
             delay: powerUp_delay,
             callback: ()=>{
                 //random chance
@@ -261,31 +266,33 @@ class Play2 extends Phaser.Scene{
                     console.log('top');
                     powerUp_rum.play('rum').setRandomPosition(0, 90, game.config.width/2, 150);
                     console.log('rum');
-                    this.physics.add.overlap(this.player2, this.powerUp_rum, this.pickPowerUp_rum, null, this);
+                    this.physics.add.overlap(this.player2, powerUp_rum, this.pickPowerUp_rum, null, this);
                 } 
                 else if (this.prob == 1) {
                     console.log('top');
                     powerUp_tonic.play('tonic').setRandomPosition(0, 90, game.config.width/2, 150);
                     console.log('tonic');
-                    this.physics.add.overlap(this.player2, this.powerUp_tonic, this.pickPowerUp_tonic, null, this);
+                    this.physics.add.overlap(this.player2, powerUp_tonic, this.pickPowerUp_tonic, null, this);
+
                 }
                 else if (this.prob == 2){
                     console.log('top');
                     powerUp_orange.play('orange').setRandomPosition(0, 90, game.config.width/2, 150);
                     console.log('orange');
-                    this.physics.add.overlap(this.player2, this.powerUp_orange, this.pickPowerUp_orange, null, this);
+                    this.physics.add.overlap(this.player2, powerUp_orange, this.pickPowerUp_orange, null, this);
+
                 }
                 else if(this.prob == 3) {
                     console.log('bottom');
                     powerUp_rum.play('rum').setRandomPosition(0, 330, game.config.width/2, 150);
                     console.log('rum');
-                    this.physics.add.overlap(this.player, this.powerUp_rum, this.pickPowerUp_rum, null, this);
+                    this.physics.add.overlap(this.player, powerUp_rum, this.pickPowerUp_rum, null, this);
                 } 
                 else if (this.prob == 4) {
                     console.log('bottom');
                     powerUp_tonic.play('tonic').setRandomPosition(0, 330, game.config.width/2, 150);
                     console.log('tonic');
-                    this.physics.add.overlap(this.player, this.powerUp_tonic, this.pickPowerUp_tonic, null, this);
+                    this.physics.add.overlap(this.player, powerUp_tonic, this.pickPowerUp_tonic, null, this);
                 }
                 else if (this.prob == 5){
                     console.log('bottom');
@@ -294,9 +301,11 @@ class Play2 extends Phaser.Scene{
                     this.physics.add.overlap(this.player, powerUp_orange, this.pickPowerUp_orange, null, this);
                 }
                 
+                this.powerUp_timer.delay = Phaser.Math.Between(5000, 15000);
             },
+            callbackScope: this,
             loop: true
-        })
+        });
 
         //player and bullets collision
         this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
@@ -351,6 +360,7 @@ class Play2 extends Phaser.Scene{
     gameOverScreen(){
         this.canonTimer.remove()
         this.canonTimer2.remove()
+        this.powerUp_timer.remove()
         this.player.setGravityY(0)
         this.player.setVelocityY(0)
         this.player.setImmovable()
