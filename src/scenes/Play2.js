@@ -273,6 +273,9 @@ class Play2 extends Phaser.Scene{
                 bull.setVelocityX(-230)
                 cam2.ignore([ bull ])
                 this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
+                //player and bullets collision
+                this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
+                this.physics.add.overlap(this.player2, this.bullets, this.playerHit, null, this);
             },
             //args: [],
             callbackScope: this,
@@ -289,6 +292,9 @@ class Play2 extends Phaser.Scene{
                 bull.setVelocityX(-230)
                 cam2.ignore([ bull ])
                 this.canonTimer2.delay = Phaser.Math.Between(1000, 3000)
+                //player and bullets collision
+                this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
+                this.physics.add.overlap(this.player2, this.bullets, this.playerHit, null, this);
             },
             //args: [],
             callbackScope: this,
@@ -304,10 +310,6 @@ class Play2 extends Phaser.Scene{
             callbackScope: this,
             loop: true
         });
-
-        //player and bullets collision
-        this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
-        this.physics.add.overlap(this.player2, this.bullets, this.playerHit, null, this);
         
 
         //if cam2 ignores an asset it will be affected by the wave effect
@@ -453,6 +455,7 @@ class Play2 extends Phaser.Scene{
     }
 
     playerHit(player, bullet){
+        console.log('playerHit');
         bullet.disableBody(true, true);
         player.damage(34);
     }
