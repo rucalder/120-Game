@@ -285,8 +285,8 @@ class Play2 extends Phaser.Scene{
                 cam2.ignore([ bull ])
                 this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
                 //player and bullets collision
-                this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
-                this.physics.add.overlap(this.player2, this.bullets, this.playerHit, null, this);
+                this.physics.add.overlap(this.player, bull, this.playerHit, null, this);
+                this.physics.add.overlap(this.player2, bull, this.playerHit, null, this);
             },
             //args: [],
             callbackScope: this,
@@ -304,8 +304,8 @@ class Play2 extends Phaser.Scene{
                 cam2.ignore([ bull ])
                 this.canonTimer2.delay = Phaser.Math.Between(1000, 3000)
                 //player and bullets collision
-                this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
-                this.physics.add.overlap(this.player2, this.bullets, this.playerHit, null, this);
+                this.physics.add.overlap(this.player, bull, this.playerHit, null, this);
+                this.physics.add.overlap(this.player2, bull, this.playerHit, null, this);
             },
             //args: [],
             callbackScope: this,
