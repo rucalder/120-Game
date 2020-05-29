@@ -249,19 +249,19 @@ class Play2 extends Phaser.Scene{
                 }
                 else if(this.prob == 3) {
                     console.log('bottom');
-                    powerUp_rum.play('rum').setRandomPosition(0, 330, game.config.width/2, 150);
+                    powerUp_rum.play('rum').setRandomPosition(0, 300, game.config.width/2, 150);
                     console.log('rum');
                     this.physics.add.overlap(this.player, powerUp_rum, this.pickPowerUp_rum, null, this);
                 } 
                 else if (this.prob == 4) {
                     console.log('bottom');
-                    powerUp_tonic.play('tonic').setRandomPosition(0, 330, game.config.width/2, 150);
+                    powerUp_tonic.play('tonic').setRandomPosition(0, 300, game.config.width/2, 150);
                     console.log('tonic');
                     this.physics.add.overlap(this.player, powerUp_tonic, this.pickPowerUp_tonic, null, this);
                 }
                 else if (this.prob == 5){
                     console.log('bottom');
-                    powerUp_orange.play('orange').setRandomPosition(0, 330, game.config.width/2, 150);
+                    powerUp_orange.play('orange').setRandomPosition(0, 300, game.config.width/2, 150);
                     console.log('orange');
                     this.physics.add.overlap(this.player, powerUp_orange, this.pickPowerUp_orange, null, this);
                 }
