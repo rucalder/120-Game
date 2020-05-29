@@ -356,7 +356,7 @@ class Play2 extends Phaser.Scene{
         }
         
         //update on collision betwen player and bullets
-        if(this.player.alive == false && this.player2.alive == false){
+        if(this.player.alive == false || this.player2.alive == false){
             this.gameOver = true;
             this.gameOverScreen();
         } 
