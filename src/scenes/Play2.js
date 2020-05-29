@@ -20,6 +20,7 @@ class Play2 extends Phaser.Scene{
         this.load.spritesheet('player2Left', "./assets/p2_LeftRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player2Right', "./assets/p2_RightRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player2Idle', "./assets/p2_Idle.png", { frameWidth: 50, frameHeight: 50 });
+        this.load.spritesheet('player2Anim', "./assets/PirateGirlWalk.png", {frameWidth: 102, frameHeight: 102});
         this.load.spritesheet('power-up', "./assets/rum.png", { frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('power-up', "./assets/tonic.png", { frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('power-up', "./assets/orange.png", { frameWidth: 64, frameHeight: 64});
@@ -78,7 +79,7 @@ class Play2 extends Phaser.Scene{
         this.player = new Player1(this, 100, 450, "player1Right")
         this.player.setScale(0.5,0.5);
         this.player2 = new Player2(this, 100, 200, 'player2Right');
-        //this.player2.setScale(0.5,0.5);
+        this.player2.setScale(0.5,0.5);
         this.player.setGravityY(1000)
         this.player2.setGravityY(1000)
 
@@ -122,24 +123,35 @@ class Play2 extends Phaser.Scene{
         //////////////////////////Player 2 Animations////////////////////////////////////////
 
         this.anims.create({
-            key: 'p2_left',
-            frames: this.anims.generateFrameNumbers('player2Left'),
+            key:'p2_left',
+            frames: this.anims.generateFrameNumbers("player2Anim", {
+                start: 1,
+                end: 4
+            }),
             frameRate: 10,
-            repeat: -1
+            repeat: -1,
         });
 
         this.anims.create({
-            key: 'p2_turn',
-            frames: this.anims.generateFrameNumbers('player2Idle'),
-            frameRate: 20
+            key:'p2_turn',
+            frames: this.anims.generateFrameNumbers("player2Anim", {
+                start: 0,
+                end: 0
+            }),
+            frameRate: 10,
+            repeat: -1,
+        });   
+        
+        this.anims.create({
+            key:'p2_right',
+            frames: this.anims.generateFrameNumbers("player2Anim", {
+                start: 5,
+                end: 8
+            }),
+            frameRate: 10,
+            repeat: -1,
         });
 
-        this.anims.create({
-            key: 'p2_right',
-            frames: this.anims.generateFrameNumbers('player2Right'),
-            frameRate: 10,
-            repeat: -1
-        });
 
         //controls for character
         //Define keys
