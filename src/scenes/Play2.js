@@ -119,7 +119,6 @@ class Play2 extends Phaser.Scene{
             frameRate: 10,
             repeat: -1
         });
-        this.player.play("p1_right")
         //////////////////////////Player 2 Animations////////////////////////////////////////
 
         this.anims.create({
@@ -141,7 +140,6 @@ class Play2 extends Phaser.Scene{
             frameRate: 10,
             repeat: -1
         });
-        this.player2.play("p2_right")
 
         //controls for character
         //Define keys
@@ -350,6 +348,28 @@ class Play2 extends Phaser.Scene{
             this.gameOver = true;
             this.gameOverScreen();
         } 
+
+        if (keyLEFT.isDown){
+            this.player.anims.play("p1_left", true);
+        }
+        else if(keyRIGHT.isDown){
+            this.player.anims.play("p1_right", true);
+        }
+        else
+        {
+            this.player.anims.play('p1_turn');
+        }
+
+        if (keyA.isDown){
+            this.player2.anims.play("p2_left", true);
+        }
+        else if(keyD.isDown){
+            this.player2.anims.play("p2_right", true);
+        }
+        else
+        {
+            this.player2.anims.play('p2_turn');
+        }
 
         //update pipeline temporal aspect
         this.t += this.tIncrement;    
