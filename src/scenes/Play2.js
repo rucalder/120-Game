@@ -19,7 +19,9 @@ class Play2 extends Phaser.Scene{
         this.load.spritesheet('player2Left', "./assets/p2_LeftRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player2Right', "./assets/p2_RightRun.png", { frameWidth: 50, frameHeight: 51 });
         this.load.spritesheet('player2Idle', "./assets/p2_Idle.png", { frameWidth: 50, frameHeight: 50 });
-        this.load.spritesheet('power-up', "./assets/powerup_spritesheet.png", { frameWidth: 64, frameHeight: 64});
+        this.load.spritesheet('power-up', "./assets/rum.png", { frameWidth: 64, frameHeight: 64});
+        this.load.spritesheet('power-up', "./assets/tonic.png", { frameWidth: 64, frameHeight: 64});
+        this.load.spritesheet('power-up', "./assets/orange.png", { frameWidth: 64, frameHeight: 64});
     }
 
     create()
@@ -90,6 +92,11 @@ class Play2 extends Phaser.Scene{
         this.canon2 = new Canon2(this, 800, 500, "bullet");
         this.bullets = this.physics.add.group();
 
+        this.powerUps_rum = this.physics.add.group();
+        this.powerUps_tonic = this.physics.add.group();
+        this.powerUps_orange = this.physics.add.group();
+        
+
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
         this.anims.create({
@@ -152,49 +159,6 @@ class Play2 extends Phaser.Scene{
         this.physics.add.collider(this.player2, platforms);
 
         
-        this.canonTimer = this.time.addEvent({
-            delay: Phaser.Math.Between(1000, 5000),                // ms
-            callback: () => {
-                //added the code from the canon Fire function to be able to use the cam ignore 
-                //attribute so that duplicate bullets didn't show up
-                var bull = this.physics.add.sprite(this.canon.x, this.canon.y, "bullet")
-                bull.setScale(0.8,0.8)
-                this.bullets.add(bull)
-                bull.setVelocityX(-230)
-                cam2.ignore([ bull ])
-                this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
-            },
-            //args: [],
-            callbackScope: this,
-            loop: true
-         });
-         this.canonTimer2 = this.time.addEvent({
-            delay: Phaser.Math.Between(1000, 5000),                // ms
-            callback: () => {
-                //added the code from the canon Fire function to be able to use the cam ignore
-                //attribute so that duplicate bullets didn't show up
-                var bull = this.physics.add.sprite(this.canon2.x, this.canon2.y, "bullet")
-                bull.setScale(0.8,0.8)
-                this.bullets.add(bull)
-                bull.setVelocityX(-230)
-                cam2.ignore([ bull ])
-                this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
-            },
-            //args: [],
-            callbackScope: this,
-            loop: true
-         });
-         // game timer event
-        this.gameTimer = this.time.addEvent({
-                delay: 1000,                // ms
-                callback: () => {
-                this.level += .1
-            },
-            //args: [],
-            callbackScope: this,
-            loop: true
-        });
-
         ////////////////////////PowerUps/////////////////////////////////////////////////////////////////
         //testing powerup placement
         //upper power up bound is (0, 240) - (0, 90)
@@ -235,80 +199,117 @@ class Play2 extends Phaser.Scene{
         var powerUp_y = Phaser.Math.Between(90, 240 || 330, 480);
 
         //powerUps group
-        this.powerUps_rum = this.physics.add.group();
-        this.powerUps_tonic = this.physics.add.group();
-        this.powerUps_orange = this.physics.add.group();
+        this.powerUps = this.physics.add.group();
 
-        var powerUp_rum = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5); 
-        var powerUp_tonic = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
-        var powerUp_orange = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
-
-        //delay between spawn time
-        var powerUp_delay = Phaser.Math.Between(5000, 15000);
-
-        this.time.addEvent({
-            delay: powerUp_delay,
+        this.powerUp_timer = this.time.addEvent({
+            delay: Phaser.Math.Between(5000, 15000),
             callback: ()=>{
-                this.powerUps_rum.add(powerUp_rum);
-                this.powerUps_tonic.add(powerUp_tonic);
-                this.powerUps_orange.add(powerUp_orange);
+                //random chance
+                this.prob = Phaser.Math.Between(0, 5);
+
+                var powerUp_rum = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
+                var powerUp_tonic = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
+                var powerUp_orange = this.physics.add.sprite(powerUp_x, powerUp_y, "power-up").setScale(0.5,0.5);
+
+                //this.powerUps.add(powerUp);
 
                 cam2.ignore([powerUp_rum, powerUp_tonic, powerUp_orange]);
                 //this spawns multiple items within the given game space
                 //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
-                if(Math.random() > 0.5) {
-                    powerUp_rum.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
-                    powerUp_tonic.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
-                    powerUp_orange.setRandomPosition(0, 90, game.config.width, 150).setVisible(true).removeInteractive();
-
-                    if(Math.random() > .6) {
-                        powerUp_rum.play('rum').setVisible(true).setInteractive();
-                        console.log('p1_rum');
-                    } 
-                    else if (Math.random() < .6 && Math.random() > .3) {
-                        powerUp_tonic.play('tonic').setVisible(true).setInteractive();
-                        console.log('p1_toinc');
-                    }
-                    else{
-                        powerUp_orange.play('orange').setVisible(true).setInteractive();
-                        console.log('p1_orange');
-                    }
+                if(this.prob == 0) {
+                    console.log('top');
+                    powerUp_rum.play('rum').setRandomPosition(0, 90, game.config.width/2, 150);
+                    console.log('rum');
+                    this.physics.add.overlap(this.player2, powerUp_rum, this.pickPowerUp_rum, null, this);
                 } 
-                else{
-                    powerUp_rum.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
-                    powerUp_tonic.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
-                    powerUp_orange.setRandomPosition(0, 330, game.config.width, 150).setVisible(false).removeInteractive();
+                else if (this.prob == 1) {
+                    console.log('top');
+                    powerUp_tonic.play('tonic').setRandomPosition(0, 90, game.config.width/2, 150);
+                    console.log('tonic');
+                    this.physics.add.overlap(this.player2, powerUp_tonic, this.pickPowerUp_tonic, null, this);
 
-                    if(Math.random() > .6) {
-                        powerUp_rum.play('rum').setVisible(true).setInteractive();
-                        console.log('p1_rum');
-                    } 
-                    else if (Math.random() < .6 && Math.random() > .3) {
-                        powerUp_tonic.play('tonic').setVisible(true).setInteractive();
-                        console.log('p2_toinc');
-                    }
-                    else{
-                        powerUp_orange.play('orange').setVisible(true).setInteractive();
-                        console.log('p2_orange');
-                    }
                 }
+                else if (this.prob == 2){
+                    console.log('top');
+                    powerUp_orange.play('orange').setRandomPosition(0, 90, game.config.width/2, 150);
+                    console.log('orange');
+                    this.physics.add.overlap(this.player2, powerUp_orange, this.pickPowerUp_orange, null, this);
+
+                }
+                else if(this.prob == 3) {
+                    console.log('bottom');
+                    powerUp_rum.play('rum').setRandomPosition(0, 330, game.config.width/2, 150);
+                    console.log('rum');
+                    this.physics.add.overlap(this.player, powerUp_rum, this.pickPowerUp_rum, null, this);
+                } 
+                else if (this.prob == 4) {
+                    console.log('bottom');
+                    powerUp_tonic.play('tonic').setRandomPosition(0, 330, game.config.width/2, 150);
+                    console.log('tonic');
+                    this.physics.add.overlap(this.player, powerUp_tonic, this.pickPowerUp_tonic, null, this);
+                }
+                else if (this.prob == 5){
+                    console.log('bottom');
+                    powerUp_orange.play('orange').setRandomPosition(0, 330, game.config.width/2, 150);
+                    console.log('orange');
+                    this.physics.add.overlap(this.player, powerUp_orange, this.pickPowerUp_orange, null, this);
+                }
+                
+                this.powerUp_timer.delay = Phaser.Math.Between(5000, 15000);
             },
+            callbackScope: this,
             loop: true
-        })
+        });
 
-        //collisions between players and powerUps
-        this.physics.add.overlap(this.player, this.powerUps_rum, this.pickPowerUp_rum, null, this);
-        this.physics.add.overlap(this.player2, this.powerUps_rum, this.pickPowerUp_rum, null, this);
-
-        this.physics.add.overlap(this.player, this.powerUps_tonic, this.pickPowerUp_tonic, null, this);
-        this.physics.add.overlap(this.player2, this.powerUps_tonic, this.pickPowerUp_tonic, null, this);
-
-        this.physics.add.overlap(this.player, this.powerUps_orange, this.pickPowerUp_orange, null, this);
-        this.physics.add.overlap(this.player2, this.powerUps_orange, this.pickPowerUp_orange, null, this);
-
-        //player and bullets collision
-        this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
-        this.physics.add.overlap(this.player2, this.bullets, this.playerHit, null, this);
+//////////////////////////////////////////////////////canons/////////////////////////////////////////////////
+        this.canonTimer = this.time.addEvent({
+            delay: Phaser.Math.Between(1000, 5000),                // ms
+            callback: () => {
+                //added the code from the canon Fire function to be able to use the cam ignore 
+                //attribute so that duplicate bullets didn't show up
+                var bull = this.physics.add.sprite(this.canon.x, this.canon.y, "bullet")
+                bull.setScale(0.8,0.8)
+                this.bullets.add(bull)
+                bull.setVelocityX(-230)
+                cam2.ignore([ bull ])
+                this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
+                //player and bullets collision
+                this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
+                this.physics.add.overlap(this.player2, this.bullets, this.playerHit, null, this);
+            },
+            //args: [],
+            callbackScope: this,
+            loop: true
+         });
+         this.canonTimer2 = this.time.addEvent({
+            delay: Phaser.Math.Between(1000, 5000),                // ms
+            callback: () => {
+                //added the code from the canon Fire function to be able to use the cam ignore
+                //attribute so that duplicate bullets didn't show up
+                var bull = this.physics.add.sprite(this.canon2.x, this.canon2.y, "bullet")
+                bull.setScale(0.8,0.8)
+                this.bullets.add(bull)
+                bull.setVelocityX(-230)
+                cam2.ignore([ bull ])
+                this.canonTimer2.delay = Phaser.Math.Between(1000, 3000)
+                //player and bullets collision
+                this.physics.add.overlap(this.player, this.bullets, this.playerHit, null, this);
+                this.physics.add.overlap(this.player2, this.bullets, this.playerHit, null, this);
+            },
+            //args: [],
+            callbackScope: this,
+            loop: true
+         });
+         // game timer event
+        this.gameTimer = this.time.addEvent({
+                delay: 1000,                // ms
+                callback: () => {
+                this.level += .1
+            },
+            //args: [],
+            callbackScope: this,
+            loop: true
+        });
         
 
         //if cam2 ignores an asset it will be affected by the wave effect
@@ -335,6 +336,7 @@ class Play2 extends Phaser.Scene{
     update()
     {   
         if(this.gameOver == false){
+            console.log('update');
             this.player.update();
             this.player2.update();
             this.canon.update();
@@ -358,6 +360,7 @@ class Play2 extends Phaser.Scene{
     gameOverScreen(){
         this.canonTimer.remove()
         this.canonTimer2.remove()
+        this.powerUp_timer.remove()
         this.player.setGravityY(0)
         this.player.setVelocityY(0)
         this.player.setImmovable()
@@ -452,6 +455,7 @@ class Play2 extends Phaser.Scene{
     }
 
     playerHit(player, bullet){
+        console.log('playerHit');
         bullet.disableBody(true, true);
         player.damage(34);
     }
