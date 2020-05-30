@@ -40,8 +40,10 @@ class Play2 extends Phaser.Scene{
         this.distortPipeline.setFloat2('resolution', this.game.config.width, this.game.config.height);
 
         this.renderMode = {
-            distort: true,
+            none: false,
+            distort: true
         }
+
         this.applyPipeline(); 
 
         //music
@@ -171,10 +173,6 @@ class Play2 extends Phaser.Scene{
 
         
         ////////////////////////PowerUps/////////////////////////////////////////////////////////////////
-        //testing powerup placement
-        //upper power up bound is (0, 240) - (0, 90)
-        //lower power up bound is (0,480) - (0,330)
-
         this.anims.create({
             key:'rum',
             frames: this.anims.generateFrameNumbers("power-up", {
@@ -227,22 +225,25 @@ class Play2 extends Phaser.Scene{
                 cam2.ignore([powerUp_rum, powerUp_tonic, powerUp_orange]);
                 //this spawns multiple items within the given game space
                 //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
+                //testing powerup placement
+                //upper power up bound is (0, 240) - (0, 90)
+                //lower power up bound is (0,480) - (0,330)
                 if(this.prob == 0) {
                     console.log('top');
-                    powerUp_rum.play('rum').setRandomPosition(0, 90, game.config.width/2, 150);
+                    powerUp_rum.play('rum').setRandomPosition(0, 118, game.config.width/2, 150);
                     console.log('rum');
                     this.physics.add.overlap(this.player2, powerUp_rum, this.pickPowerUp_rum, null, this);
                 } 
                 else if (this.prob == 1) {
                     console.log('top');
-                    powerUp_tonic.play('tonic').setRandomPosition(0, 90, game.config.width/2, 150);
+                    powerUp_tonic.play('tonic').setRandomPosition(0, 118, game.config.width/2, 150);
                     console.log('tonic');
                     this.physics.add.overlap(this.player2, powerUp_tonic, this.pickPowerUp_tonic, null, this);
 
                 }
                 else if (this.prob == 2){
                     console.log('top');
-                    powerUp_orange.play('orange').setRandomPosition(0, 90, game.config.width/2, 150);
+                    powerUp_orange.play('orange').setRandomPosition(0, 118, game.config.width/2, 150);
                     console.log('orange');
                     this.physics.add.overlap(this.player2, powerUp_orange, this.pickPowerUp_orange, null, this);
 
@@ -342,6 +343,7 @@ class Play2 extends Phaser.Scene{
                 }
             }
         }, callbackScope:this, loop: true });
+
     }
 
     update()
@@ -459,11 +461,25 @@ class Play2 extends Phaser.Scene{
         if(this.renderMode.distort){
             this.cameras.main.setRenderToTexture(this.distortPipeline);
         }
+        else if(this.renderMode.none){
+            this.cameras.main.clearRenderToTexture();
+        }
+    }
+
+    changeMode(m){
+        for(var mode in this.renderMode){
+            this.renderMode[mode] = false;
+        }
+        this.renderMode[m] = true;
+        this.applyPipeline();
     }
 
     createGUI(){
         var _this = this;
         var gui = new dat.GUI({ width: 300 });
+        gui.add(this.renderMode, "none").name('No shader').listen().onChange(function(){
+            this.changeMode("none");
+        }.bind(this));
         gui.add(this.renderMode, "distort").name('Distortion').listen().onChange(function(){
             this.changeMode("distort");
         }.bind(this));
@@ -478,12 +494,19 @@ class Play2 extends Phaser.Scene{
     pickPowerUp_tonic(player, powerUp){
         powerUp.disableBody(true, true);
         console.log('tonic collision');
-        player.tonic();
+        var _this = this;
+        //get rid of distortion
+        this.changeMode("none");
+        //distort after 5 seconds
+        this.warpTimer = this.time.addEvent({delay: 5000, callback: function(){
+            this.changeMode("distort");
+        }, callbackScope:this, loop: false});
     }
 
     pickPowerUp_orange(player, powerUp){
         powerUp.disableBody(true, true);
         console.log('orange collision');
+        player.orange();
     }
 
     playerHit(player, bullet){
