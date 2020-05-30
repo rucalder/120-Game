@@ -13,8 +13,11 @@ class Play2 extends Phaser.Scene{
         this.load.image('bullet', "./assets/Ball.png");
         this.load.image('rum', "./assets/Beer.png");
         this.load.image('test_tonic', "./assets/PowerUp_placeholder.png");
+
         this.load.audio("bgmusic", "./assets/pirateGameSong.wav");
         this.load.audio("tonicSound", "./assets/tonicSound.wav");
+        this.load.audio("orangeSound", "./assets/orangeSound.wav");
+
         this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 100, frameHeight: 102 });
         this.load.spritesheet('player1Right', "./assets/p1_RightRun.png", { frameWidth: 100, frameHeight: 102 });
         this.load.spritesheet('player1Idle', "./assets/p1_Idle.png", { frameWidth: 100, frameHeight: 100 });
@@ -515,6 +518,11 @@ class Play2 extends Phaser.Scene{
     pickPowerUp_orange(player, powerUp){
         powerUp.disableBody(true, true);
         console.log('orange collision');
+        this.orangeSound = this.sound.add('orangeSound');
+        this.orangeSound.play({
+            volume: .5,
+            loop: false
+        });
         player.orange();
     }
 
