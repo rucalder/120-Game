@@ -14,6 +14,7 @@ class Play2 extends Phaser.Scene{
         this.load.image('rum', "./assets/Beer.png");
         this.load.image('test_tonic', "./assets/PowerUp_placeholder.png");
         this.load.audio("bgmusic", "./assets/pirateGameSong.wav");
+        this.load.audio("tonicSound", "./assets/tonicSound.wav");
         this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 100, frameHeight: 102 });
         this.load.spritesheet('player1Right', "./assets/p1_RightRun.png", { frameWidth: 100, frameHeight: 102 });
         this.load.spritesheet('player1Idle', "./assets/p1_Idle.png", { frameWidth: 100, frameHeight: 100 });
@@ -487,18 +488,26 @@ class Play2 extends Phaser.Scene{
     }
 
     pickPowerUp_rum(player, powerUp){
+        //this.player = player;
         powerUp.disableBody(true, true);
         console.log('rum collision');
+        this.stopPlayer = this.time.addEvent({delay: 5000, callback: function(){
+        }, callbackScope:this, loop: false});
     }
 
     pickPowerUp_tonic(player, powerUp){
         powerUp.disableBody(true, true);
         console.log('tonic collision');
+        this.tonicSound = this.sound.add('tonicSound');
+        this.tonicSound.play({
+            volume: .5,
+            loop: false
+        });
         var _this = this;
         //get rid of distortion
         this.changeMode("none");
         //distort after 5 seconds
-        this.warpTimer = this.time.addEvent({delay: 5000, callback: function(){
+        this.warpTimer = this.time.addEvent({delay: 4000, callback: function(){
             this.changeMode("distort");
         }, callbackScope:this, loop: false});
     }

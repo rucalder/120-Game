@@ -50,5 +50,5 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
         if(this.hp.value < 100){
             this.damage(-34);
         }
-     }
+    }
 }
