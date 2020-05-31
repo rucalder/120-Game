@@ -17,6 +17,7 @@ class Play2 extends Phaser.Scene{
         this.load.audio("bgmusic", "./assets/pirateGameSong.wav");
         this.load.audio("tonicSound", "./assets/tonicSound.wav");
         this.load.audio("orangeSound", "./assets/orangeSound.wav");
+        this.load.audio("jumpSound", "./assets/jump.wav");
 
         this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 100, frameHeight: 102 });
         this.load.spritesheet('player1Right', "./assets/p1_RightRun.png", { frameWidth: 100, frameHeight: 102 });
@@ -387,6 +388,14 @@ class Play2 extends Phaser.Scene{
         else
         {
             this.player2.anims.play('p2_turn');
+        }
+
+        if((keyW.isDown && this.player2.body.touching.down) || (keyUP.isDown && this.player.body.touching.down)){
+            this.jumpSound = this.sound.add('jumpSound');
+            this.jumpSound.play({
+            volume: .5,
+            loop: false
+        })
         }
 
         //update pipeline temporal aspect
