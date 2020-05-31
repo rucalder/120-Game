@@ -30,6 +30,7 @@ class Play2 extends Phaser.Scene{
         this.load.spritesheet('power-up', "./assets/rum.png", { frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('power-up', "./assets/tonic.png", { frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('power-up', "./assets/orange.png", { frameWidth: 64, frameHeight: 64});
+        this.load.spritesheet('canon', "./assets/Cannon.png", {frameWidth: 77, frameHeight: 77});
     }
 
     create()
@@ -95,18 +96,7 @@ class Play2 extends Phaser.Scene{
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
         this.player2.setBounce(0.2);
-        this.player2.setCollideWorldBounds(true);
-
-        //create canons and the bullet group
-        this.canon = new Canon(this, 800, 200, "bullet");
-        this.canon2 = new Canon2(this, 800, 500, "bullet");
-        this.bullets = this.physics.add.group();
-
-        this.powerUps_rum = this.physics.add.group();
-        this.powerUps_tonic = this.physics.add.group();
-        this.powerUps_orange = this.physics.add.group();
-        
-
+        this.player2.setCollideWorldBounds(true);        
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
         this.anims.create({
@@ -179,6 +169,10 @@ class Play2 extends Phaser.Scene{
 
         
         ////////////////////////PowerUps/////////////////////////////////////////////////////////////////
+        this.powerUps_rum = this.physics.add.group();
+        this.powerUps_tonic = this.physics.add.group();
+        this.powerUps_orange = this.physics.add.group();
+
         this.anims.create({
             key:'rum',
             frames: this.anims.generateFrameNumbers("power-up", {
@@ -280,15 +274,42 @@ class Play2 extends Phaser.Scene{
         });
 
 //////////////////////////////////////////////////////canons/////////////////////////////////////////////////
+        //create canons and the bullet group
+        this.canon = new Canon(this, 800, 200, "canon");
+        this.canon2 = new Canon2(this, 800, 500, "canon");
+        this.bullets = this.physics.add.group();
+
+        this.anims.create({
+            key:'canonFire',
+            frames: this.anims.generateFrameNumbers("canon", {
+                start: 0,
+                end: 3
+            }),
+            frameRate: 10,
+            repeat: 0,
+        });
+
+        this.anims.create({
+            key:'canonIdle',
+            frames: this.anims.generateFrameNumbers("canon", {
+                start: 0,
+                end: 0
+            }),
+            frameRate: 10,
+            repeat: -1,
+        });
+
         this.canonTimer = this.time.addEvent({
             delay: Phaser.Math.Between(1000, 5000),                // ms
             callback: () => {
                 //added the code from the canon Fire function to be able to use the cam ignore 
                 //attribute so that duplicate bullets didn't show up
+                this.canon.play("canonIdle");
                 var bull = this.physics.add.sprite(this.canon.x, this.canon.y, "bullet")
                 bull.setScale(0.8,0.8)
                 this.bullets.add(bull)
-                bull.setVelocityX(-230)
+                bull.setVelocityX(-230) 
+                this.canon.play("canonFire");
                 cam2.ignore([ bull ])
                 this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
                 //player and bullets collision
@@ -304,10 +325,12 @@ class Play2 extends Phaser.Scene{
             callback: () => {
                 //added the code from the canon Fire function to be able to use the cam ignore
                 //attribute so that duplicate bullets didn't show up
+                this.canon2.play("canonIdle");
                 var bull = this.physics.add.sprite(this.canon2.x, this.canon2.y, "bullet")
                 bull.setScale(0.8,0.8)
                 this.bullets.add(bull)
                 bull.setVelocityX(-230)
+                this.canon2.play("canonFire");
                 cam2.ignore([ bull ])
                 this.canonTimer2.delay = Phaser.Math.Between(1000, 3000)
                 //player and bullets collision
@@ -467,8 +490,9 @@ class Play2 extends Phaser.Scene{
 
     canonFire(canon){
         var bull = this.physics.add.sprite(canon.x, canon.y, "bullet")
-        this.bullets.add(bull)
-        bull.setVelocityX(-200)
+        this.bullets.add(bull);
+        bull.setVelocityX(-200);
+        canon.play('canonFire');        
     }
     // Apply the shader currently marked as true in `renderMode`
     applyPipeline(){
