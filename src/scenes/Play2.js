@@ -288,7 +288,7 @@ class Play2 extends Phaser.Scene{
             key:'canonFire',
             frames: this.anims.generateFrameNumbers("canon", {
                 start: 0,
-                end: 3
+                end: 4
             }),
             frameRate: 10,
             repeat: 0,
