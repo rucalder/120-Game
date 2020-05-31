@@ -19,6 +19,8 @@ class Play2 extends Phaser.Scene{
         this.load.audio("orangeSound", "./assets/orangeSound.wav");
         this.load.audio("jumpSound", "./assets/jump.wav");
         this.load.audio("rumSound", "./assets/rumSound.wav");
+        this.load.audio("cannonSound", "./assets/cannonSound.wav");
+
 
         this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 100, frameHeight: 102 });
         this.load.spritesheet('player1Right', "./assets/p1_RightRun.png", { frameWidth: 100, frameHeight: 102 });
@@ -59,6 +61,9 @@ class Play2 extends Phaser.Scene{
             volume: .5,
             loop: true
         })
+
+        //cannon sound
+        this.cannonSound = this.sound.add('cannonSound');
         
         this.powerCall = 0
         this.tracker = 1
@@ -310,6 +315,10 @@ class Play2 extends Phaser.Scene{
                 this.bullets.add(bull)
                 bull.setVelocityX(-230) 
                 this.canon.play("canonFire");
+                this.cannonSound.play({
+                    volume: .8,
+                    loop: false
+                });
                 cam2.ignore([ bull ])
                 this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
                 //player and bullets collision
@@ -331,6 +340,10 @@ class Play2 extends Phaser.Scene{
                 this.bullets.add(bull)
                 bull.setVelocityX(-230)
                 this.canon2.play("canonFire");
+                this.cannonSound.play({
+                    volume: .8,
+                    loop: false
+                });
                 cam2.ignore([ bull ])
                 this.canonTimer2.delay = Phaser.Math.Between(1000, 3000)
                 //player and bullets collision
