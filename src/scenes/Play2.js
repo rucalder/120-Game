@@ -18,6 +18,7 @@ class Play2 extends Phaser.Scene{
         this.load.audio("tonicSound", "./assets/tonicSound.wav");
         this.load.audio("orangeSound", "./assets/orangeSound.wav");
         this.load.audio("jumpSound", "./assets/jump.wav");
+        this.load.audio("rumSound", "./assets/rumSound.wav");
 
         this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 100, frameHeight: 102 });
         this.load.spritesheet('player1Right', "./assets/p1_RightRun.png", { frameWidth: 100, frameHeight: 102 });
@@ -502,6 +503,11 @@ class Play2 extends Phaser.Scene{
     pickPowerUp_rum(player, powerUp){
         //this.player = player;
         powerUp.disableBody(true, true);
+        this.rumSound = this.sound.add('rumSound');
+        this.rumSound.play({
+            volume: .8,
+            loop: false
+        });
         console.log('rum collision');
         this.stopPlayer = this.time.addEvent({delay: 5000, callback: function(){
         }, callbackScope:this, loop: false});
