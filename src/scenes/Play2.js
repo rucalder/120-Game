@@ -509,7 +509,9 @@ class Play2 extends Phaser.Scene{
             loop: false
         });
         console.log('rum collision');
+        player.setGravityY(500)
         this.stopPlayer = this.time.addEvent({delay: 5000, callback: function(){
+            player.setGravityY(1000)
         }, callbackScope:this, loop: false});
     }
 
