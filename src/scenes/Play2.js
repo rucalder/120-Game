@@ -553,7 +553,8 @@ class Play2 extends Phaser.Scene{
             this.player.setGravityY(500);
         }
         this.stopPlayer = this.time.addEvent({delay: 5000, callback: function(){
-            player.setGravityY(1000)
+            this.player.setGravityY(1000);
+            this.player2.setGravity(1000);
         }, callbackScope:this, loop: false});
     }
 
