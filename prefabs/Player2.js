@@ -46,9 +46,9 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
         this.setVisible(false);
     }
 
-    tonic(){
+    orange(){
         if(this.hp.value < 100){
             this.damage(-34);
         }
-     }
+    }
 }
