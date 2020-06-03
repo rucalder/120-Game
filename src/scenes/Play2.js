@@ -44,10 +44,10 @@ class Play2 extends Phaser.Scene{
 
         //music
         this.bgmusic = this.sound.add('bgmusic');
-        this.bgmusic.play({
+        /*this.bgmusic.play({
             volume: .5,
             loop: true
-        })
+        })*/
         
         this.powerCall = 0
         this.tracker = 1
@@ -61,14 +61,20 @@ class Play2 extends Phaser.Scene{
         this.p2_sky = this.add.tileSprite(0, 300, 800, 300, "p2_sky").setOrigin(0,0);
         //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
+
+        /*this.ground1 = this.physics.add.sprite(400, 272, "ground")
+        this.ground1.setImmovable()
+
+        this.ground2 = this.physics.add.sprite(400, 530, "ground")
+        this.ground2.setImmovable()*/
         //roof border
         platforms.create(400, 32, 'ground').setScale(2).refreshBody();
         //invisible top ground
-        platforms.create(400, 272, 'ground').setScale(2,1).refreshBody().setVisible(false);
+        platforms.create(400, 272, 'ground').setScale(2,1).refreshBody()//.setVisible(false);
         //middle border 
         platforms.create(400, 300, 'ground').setScale(2,1).refreshBody();
         //invisible ground
-        platforms.create(400, 530, 'ground').setScale(2).refreshBody().setVisible(false);
+        platforms.create(400, 530, 'ground').setScale(2).refreshBody()//.setVisible(false);
         //bottom border
         platforms.create(400, 568, 'ground').setScale(2).refreshBody();
        
