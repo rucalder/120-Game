@@ -180,7 +180,7 @@ class Play2 extends Phaser.Scene{
             fixedWidth: 100
         }
         this.totalTime = 0;
-        this.add.text(360, 5, "Time: ", this.scoreConfig);
+        this.timeText = this.add.text(360, 5, "Time: ", this.scoreConfig);
         this.time1 = this.add.text(450, 5, this.totalTime, this.scoreConfig);
 
 
@@ -396,7 +396,7 @@ class Play2 extends Phaser.Scene{
 
         //if cam2 ignores an asset it will be affected by the wave effect
         this.cameras.main.ignore([ this.player.hp, this.player2.hp ]);
-        cam2.ignore([ this.p1_sky, this.player, this.player2, platforms, this.canon, this.canon2, this.p1_ship]);
+        cam2.ignore([ this.p1_sky, this.player, this.player2, platforms, this.canon, this.canon2, this.p1_ship, this.time1, this.timeText]);
         //log to console to see which cam is ignoring the asset
         //console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
         cam2.setRenderToTexture(this.customPipeline);
