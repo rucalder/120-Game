@@ -161,6 +161,28 @@ class Play2 extends Phaser.Scene{
             repeat: -1,
         });
 
+        //TIME
+        this.clock1 = this.time.delayedCall(99999999999999999, () => {
+            
+        }, null, this);
+
+        //Score display
+        this.scoreConfig = {
+            fontFamily: "Courier",
+            fontSize: "28px",
+            //backgroundColor: "#F3B141",
+            color: "#FFFFFF",
+            align: "right",
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.totalTime = 0;
+        this.add.text(360, 5, "Time: ", this.scoreConfig);
+        this.time1 = this.add.text(450, 5, this.totalTime, this.scoreConfig);
+
 
         //controls for character
         //Define keys
@@ -403,6 +425,7 @@ class Play2 extends Phaser.Scene{
             this.canon.update();
             this.canon2.update();
             this.p1_sky.tilePositionX += this.level
+            this.time1.text = this.clock1.getElapsedSeconds();
         }
         
         //update on collision betwen player and bullets
