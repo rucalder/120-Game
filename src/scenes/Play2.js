@@ -57,10 +57,10 @@ class Play2 extends Phaser.Scene{
 
         //music
         this.bgmusic = this.sound.add('bgmusic');
-        this.bgmusic.play({
+        /*this.bgmusic.play({
             volume: .5,
             loop: true
-        })
+        })*/
 
         //cannon sound
         this.cannonSound = this.sound.add('cannonSound');
@@ -77,14 +77,20 @@ class Play2 extends Phaser.Scene{
         this.p1_ship = this.add.tileSprite(0, 0, 800, 600, "ship").setOrigin(0,0);
         //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
+
+        /*this.ground1 = this.physics.add.sprite(400, 272, "ground")
+        this.ground1.setImmovable()
+
+        this.ground2 = this.physics.add.sprite(400, 530, "ground")
+        this.ground2.setImmovable()*/
         //roof border
         platforms.create(400, 32, 'ground').setScale(2).refreshBody().setVisible(false);
         //invisible top ground
-        //platforms.create(400, 272, 'ground').setScale(2,1).refreshBody().setVisible(false);
+        platforms.create(400, 272, 'ground').setScale(2,1).refreshBody().setVisible(false);
         //middle border 
         platforms.create(400, 300, 'ground').setScale(2,1).refreshBody().setVisible(false);
         //invisible ground
-        platforms.create(400, 530, 'ground').setScale(2).refreshBody().setVisible(false);
+        platforms.create(400, 530, 'ground').setScale(2).refreshBody()//.setVisible(false);
         //bottom border
         platforms.create(400, 568, 'ground').setScale(2).refreshBody().setVisible(false);
        
@@ -154,6 +160,28 @@ class Play2 extends Phaser.Scene{
             frameRate: 10,
             repeat: -1,
         });
+
+        //TIME
+        this.clock1 = this.time.delayedCall(99999999999999999, () => {
+            
+        }, null, this);
+
+        //Score display
+        this.scoreConfig = {
+            fontFamily: "Courier",
+            fontSize: "28px",
+            //backgroundColor: "#F3B141",
+            color: "#FFFFFF",
+            align: "right",
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.totalTime = 0;
+        this.timeText = this.add.text(360, 5, "Time: ", this.scoreConfig);
+        this.time1 = this.add.text(450, 5, this.totalTime, this.scoreConfig);
 
 
         //controls for character
@@ -368,7 +396,7 @@ class Play2 extends Phaser.Scene{
 
         //if cam2 ignores an asset it will be affected by the wave effect
         this.cameras.main.ignore([ this.player.hp, this.player2.hp ]);
-        cam2.ignore([ this.p1_sky, this.player, this.player2, platforms, this.canon, this.canon2, this.p1_ship]);
+        cam2.ignore([ this.p1_sky, this.player, this.player2, platforms, this.canon, this.canon2, this.p1_ship, this.time1, this.timeText]);
         //log to console to see which cam is ignoring the asset
         //console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
         cam2.setRenderToTexture(this.customPipeline);
@@ -397,6 +425,7 @@ class Play2 extends Phaser.Scene{
             this.canon.update();
             this.canon2.update();
             this.p1_sky.tilePositionX += this.level
+            this.time1.text = this.clock1.getElapsedSeconds();
         }
         
         //update on collision betwen player and bullets
