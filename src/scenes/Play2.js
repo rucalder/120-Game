@@ -90,7 +90,7 @@ class Play2 extends Phaser.Scene{
         //middle border 
         platforms.create(400, 300, 'ground').setScale(2,1).refreshBody().setVisible(false);
         //invisible ground
-        platforms.create(400, 530, 'ground').setScale(2).refreshBody()//.setVisible(false);
+        platforms.create(400, 530, 'ground').setScale(2).refreshBody().setVisible(false);
         //bottom border
         platforms.create(400, 568, 'ground').setScale(2).refreshBody().setVisible(false);
        
@@ -395,8 +395,8 @@ class Play2 extends Phaser.Scene{
         
 
         //if cam2 ignores an asset it will be affected by the wave effect
-        this.cameras.main.ignore([ this.player.hp, this.player2.hp ]);
-        cam2.ignore([ this.p1_sky, this.player, this.player2, platforms, this.canon, this.canon2, this.p1_ship, this.time1, this.timeText]);
+        this.cameras.main.ignore([ this.player.hp, this.player2.hp, this.time1, this.timeText]);
+        cam2.ignore([ this.p1_sky, this.player, this.player2, platforms, this.canon, this.canon2, this.p1_ship]);
         //log to console to see which cam is ignoring the asset
         //console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
         cam2.setRenderToTexture(this.customPipeline);
