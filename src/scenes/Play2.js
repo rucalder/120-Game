@@ -60,7 +60,7 @@ class Play2 extends Phaser.Scene{
         /*this.bgmusic.play({
             volume: .5,
             loop: true
-        })
+        })*/
 
         //cannon sound
         this.cannonSound = this.sound.add('cannonSound');
@@ -86,7 +86,7 @@ class Play2 extends Phaser.Scene{
         //roof border
         platforms.create(400, 32, 'ground').setScale(2).refreshBody().setVisible(false);
         //invisible top ground
-        //platforms.create(400, 272, 'ground').setScale(2,1).refreshBody().setVisible(false);
+        platforms.create(400, 272, 'ground').setScale(2,1).refreshBody().setVisible(false);
         //middle border 
         platforms.create(400, 300, 'ground').setScale(2,1).refreshBody().setVisible(false);
         //invisible ground
