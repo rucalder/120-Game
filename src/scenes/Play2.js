@@ -621,6 +621,12 @@ class Play2 extends Phaser.Scene{
             loop: false
         });
         player.orange();
+        if(player == this.player){
+            
+        }
+        else{
+            
+        }
     }
 
     playerHit(player, bullet){
@@ -628,31 +634,17 @@ class Play2 extends Phaser.Scene{
         bullet.disableBody(true, true);
         player.damage(34);
         if(player == this.player){
-            var p1_lives = 3;
             var p1_live = this.p1_lives.getFirstAlive();
             if (p1_live)
             {
                 p1_live.destroy();
-                p1_lives--;
-            }
-
-            if (p1_lives < 1)
-            {
-                player.alive == false;
             }
         }
         else{
             var p2_live = this.p2_lives.getFirstAlive();
-            var p2_lives = 3;
             if (p2_live)
             {
                 p2_live.destroy();
-                p2_lives--;
-            }
-
-            if (p2_lives < 1)
-            {
-                player.alive == false;
             }
         }
     }
