@@ -57,10 +57,10 @@ class Play2 extends Phaser.Scene{
 
         //music
         this.bgmusic = this.sound.add('bgmusic');
-        /*this.bgmusic.play({
+        this.bgmusic.play({
             volume: .5,
             loop: true
-        })*/
+        })
 
         //cannon sound
         this.cannonSound = this.sound.add('cannonSound');
@@ -583,7 +583,7 @@ class Play2 extends Phaser.Scene{
         }
         this.stopPlayer = this.time.addEvent({delay: 5000, callback: function(){
             this.player.setGravityY(1000);
-            this.player2.setGravity(1000);
+            this.player2.setGravityY(1000);
         }, callbackScope:this, loop: false});
     }
 
