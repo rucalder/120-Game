@@ -11,8 +11,7 @@ class Play2 extends Phaser.Scene{
         this.load.image('ship', "./assets/PirateShip.png");
         this.load.image('p2_sky', "./assets/Sky2.png");
         this.load.image('bullet', "./assets/Ball.png");
-        this.load.image('rum', "./assets/Beer.png");
-        this.load.image('test_tonic', "./assets/PowerUp_placeholder.png");
+        this.load.image('hearts', "./assets/Heart.png");
 
         this.load.audio("bgmusic", "./assets/pirateGameSong.wav");
         this.load.audio("tonicSound", "./assets/tonicSound.wav");
@@ -20,7 +19,6 @@ class Play2 extends Phaser.Scene{
         this.load.audio("jumpSound", "./assets/jump.wav");
         this.load.audio("rumSound", "./assets/rumSound.wav");
         this.load.audio("cannonSound", "./assets/cannonSound.wav");
-
 
         this.load.spritesheet('player1Left', "./assets/p1_LeftRun.png", { frameWidth: 100, frameHeight: 102 });
         this.load.spritesheet('player1Right', "./assets/p1_RightRun.png", { frameWidth: 100, frameHeight: 102 });
@@ -78,11 +76,6 @@ class Play2 extends Phaser.Scene{
         //physics for interaction with ground
         var platforms = this.physics.add.staticGroup();
 
-        /*this.ground1 = this.physics.add.sprite(400, 272, "ground")
-        this.ground1.setImmovable()
-
-        this.ground2 = this.physics.add.sprite(400, 530, "ground")
-        this.ground2.setImmovable()*/
         //roof border
         platforms.create(400, 32, 'ground').setScale(2).refreshBody().setVisible(false);
         //invisible top ground
@@ -93,7 +86,6 @@ class Play2 extends Phaser.Scene{
         platforms.create(400, 530, 'ground').setScale(2).refreshBody().setVisible(false);
         //bottom border
         platforms.create(400, 568, 'ground').setScale(2).refreshBody().setVisible(false);
-       
 
         //creating player with physics
         this.player = new Player1(this, 100, 450, "player1Right")
@@ -107,7 +99,24 @@ class Play2 extends Phaser.Scene{
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
         this.player2.setBounce(0.2);
-        this.player2.setCollideWorldBounds(true);        
+        this.player2.setCollideWorldBounds(true);    
+        
+        //craeting hearts for health
+        this.p1_lives = this.add.group();
+
+        for (var i = 0; i < 3; i++) 
+        {
+            var p1_heart = this.p1_lives.create(50 + (30 * i), 350, 'hearts').setScale(2,2);
+            this.p1_lives.add(p1_heart);
+        }
+        
+        this.p2_lives = this.add.group();
+
+        for (var i = 0; i < 3; i++) 
+        {
+            var p2_heart = this.p2_lives.create(50 + (30 * i), 100, 'hearts').setScale(2,2);
+            this.p2_lives.add(p2_heart);
+        }
 
         //////////////////////////Player 1 Animations////////////////////////////////////////
         this.anims.create({
@@ -396,7 +405,7 @@ class Play2 extends Phaser.Scene{
 
         //if cam2 ignores an asset it will be affected by the wave effect
         this.cameras.main.ignore([ this.player.hp, this.player2.hp, this.time1, this.timeText]);
-        cam2.ignore([ this.p1_sky, this.player, this.player2, platforms, this.canon, this.canon2, this.p1_ship]);
+        cam2.ignore([ this.p1_sky, this.player, this.player2, platforms, this.canon, this.canon2, this.p1_ship, this.p1_lives, this.p2_lives]);
         //log to console to see which cam is ignoring the asset
         //console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
         cam2.setRenderToTexture(this.customPipeline);
@@ -567,7 +576,6 @@ class Play2 extends Phaser.Scene{
     }
 
     pickPowerUp_rum(player, powerUp){
-        //this.player = player;
         powerUp.disableBody(true, true);
         this.rumSound = this.sound.add('rumSound');
         this.rumSound.play({
@@ -619,5 +627,33 @@ class Play2 extends Phaser.Scene{
         console.log('playerHit');
         bullet.disableBody(true, true);
         player.damage(34);
+        if(player == this.player){
+            var p1_lives = 3;
+            var p1_live = this.p1_lives.getFirstAlive();
+            if (p1_live)
+            {
+                p1_live.destroy();
+                p1_lives--;
+            }
+
+            if (p1_lives < 1)
+            {
+                player.alive == false;
+            }
+        }
+        else{
+            var p2_live = this.p2_lives.getFirstAlive();
+            var p2_lives = 3;
+            if (p2_live)
+            {
+                p2_live.destroy();
+                p2_lives--;
+            }
+
+            if (p2_lives < 1)
+            {
+                player.alive == false;
+            }
+        }
     }
 }

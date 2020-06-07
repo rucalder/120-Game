@@ -3,6 +3,7 @@ class HealthBar {
     constructor (scene, x, y, frame)
     {
         this.bar = new Phaser.GameObjects.Graphics(scene);
+        this.bar.setVisible(false);
 
         this.x = x;
         this.y = y;
