@@ -15,6 +15,7 @@ class Play2 extends Phaser.Scene{
         this.load.image('shadow', "./assets/Shadow.png");
 
         this.load.audio("bgmusic", "./assets/pirateGameSong.wav");
+        this.load.audio("hit", "./assets/hit.wav");
         this.load.audio("tonicSound", "./assets/tonicSound.wav");
         this.load.audio("orangeSound", "./assets/orangeSound.wav");
         this.load.audio("jumpSound", "./assets/jump.wav");
@@ -609,10 +610,10 @@ class Play2 extends Phaser.Scene{
         });
         console.log('rum collision');
         if(player == this.player){
-            this.player2.setGravityY(500);
+            this.player2.setGravityY(50);
         }
         else{
-            this.player.setGravityY(500);
+            this.player.setGravityY(50);
         }
         this.stopPlayer = this.time.addEvent({delay: 5000, callback: function(){
             this.player.setGravityY(1000);
@@ -682,15 +683,22 @@ class Play2 extends Phaser.Scene{
     }
 
 
+
     playerHit(player, bullet){
         console.log('playerHit');
         bullet.disableBody(true, true);
         player.damage(34);
         if(player == this.player){
             var p1_live = this.p1_lives.getFirstAlive();
+            
             if (p1_live)
             {
                 p1_live.destroy();
+                this.hit = this.sound.add('hit');
+                this.hit.play({
+                    volume: .5,
+                    loop: false
+                });
                 this.p1life--
             }
         }
@@ -699,6 +707,11 @@ class Play2 extends Phaser.Scene{
             if (p2_live)
             {
                 p2_live.destroy();
+                this.hit = this.sound.add('hit');
+                this.hit.play({
+                    volume: .5,
+                    loop: false
+                });
                 this.p2life--
             }
         }

@@ -28,12 +28,12 @@ class Menu extends Phaser.Scene{
         let centerY = game.config.height/2;
         let textSpacer = 64;
 
-        this.add.text(centerX, centerY - textSpacer, "Temp", menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - textSpacer, "SICKMATES", menuConfig).setOrigin(0.5);
         this.add.text(centerX, centerY, "Press -> to start", menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = "#00FF00";
         menuConfig.color = "#000";
 
-        this.add.text(20, 20, "Temp Menu");
+        //this.add.text(20, 20, "SICKMATES");
         //this.scene.start("playScene");
 
         //define keys
@@ -42,25 +42,11 @@ class Menu extends Phaser.Scene{
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-          // easy mode
-          game.settings = {
-            spaceshipSpeed: 3,
-            gameTimer1: 60000,
-            gameTimer2: 60000    
-          }
-          //this.sound.play('sfx_select');
-          this.scene.start("playScene");    
-        }
+        
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-          // hard mode
-          game.settings = {
-            spaceshipSpeed: 4,
-            gameTimer1: 45000,
-            gameTimer2: 45000    
-          }
+          
           //this.sound.play('sfx_select');
-          this.scene.start("playScene");    
+          this.scene.start("instructions1");    
         }
       }
 
