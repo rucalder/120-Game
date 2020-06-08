@@ -38,7 +38,7 @@ class Play2 extends Phaser.Scene{
     create()
     {
         //initializing two cameras (one is affected by distort while the other isn't)
-        var cam1 = this.cameras.main;
+        this.cam1 = this.cameras.main;
         this.cam2 = this.cameras.add(0, 0, 800, 600);
 
         //setting up the distortion pipeline
@@ -540,9 +540,12 @@ class Play2 extends Phaser.Scene{
         restart.on("pointerup", () =>{
             this.time.now = 0
             this.totalTime = 0
-            this.cameras.main.setAlpha(0)
-            //this.cam2.destroy()
-            this.scene.restart("playScene")
+            this.cameras.main.destroy()
+            this.cam2.destroy()
+            this.distortPipeline.destroy()
+            this.renderMode.distort = false
+            //this.cameras.main.reset()
+            this.scene.start("playScene")
         })
         let menu = this.add.text(centerX + 100, centerY, "Menu", menuConfig).setOrigin(0.5);
         menu.setInteractive();
