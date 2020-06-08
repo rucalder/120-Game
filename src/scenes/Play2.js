@@ -517,7 +517,7 @@ class Play2 extends Phaser.Scene{
             this.time.now = 0
             this.totalTime = 0
             this.cameras.main.setAlpha(0)
-            this.cam2.destroy()
+            //this.cam2.destroy()
             this.scene.restart("playScene")
         })
         let menu = this.add.text(centerX + 100, centerY, "Menu", menuConfig).setOrigin(0.5);
