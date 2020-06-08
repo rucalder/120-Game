@@ -37,7 +37,7 @@ class Play2 extends Phaser.Scene{
     {
         //initializing two cameras (one is affected by distort while the other isn't)
         var cam1 = this.cameras.main;
-        var cam2 = this.cameras.add(0, 0, 800, 600);
+        this.cam2 = this.cameras.add(0, 0, 800, 600);
 
         //setting up the distortion pipeline
         this.t = 0; // time variable for the distor shader
@@ -264,7 +264,7 @@ class Play2 extends Phaser.Scene{
 
                 //this.powerUps.add(powerUp);
 
-                cam2.ignore([powerUp_rum, powerUp_tonic, powerUp_orange]);
+                this.cam2.ignore([powerUp_rum, powerUp_tonic, powerUp_orange]);
                 //this spawns multiple items within the given game space
                 //first two coordinates are top left position of spawn space, and other two are width and height of spawn space
                 //testing powerup placement
@@ -356,7 +356,7 @@ class Play2 extends Phaser.Scene{
                     volume: .8,
                     loop: false
                 });
-                cam2.ignore([ bull ])
+                this.cam2.ignore([ bull ])
                 this.canonTimer.delay = Phaser.Math.Between(1000, 3000)
                 //player and bullets collision
                 this.physics.add.overlap(this.player, bull, this.playerHit, null, this);
@@ -381,7 +381,7 @@ class Play2 extends Phaser.Scene{
                     volume: .8,
                     loop: false
                 });
-                cam2.ignore([ bull ])
+                this.cam2.ignore([ bull ])
                 this.canonTimer2.delay = Phaser.Math.Between(1000, 3000)
                 //player and bullets collision
                 this.physics.add.overlap(this.player, bull, this.playerHit, null, this);
@@ -405,10 +405,10 @@ class Play2 extends Phaser.Scene{
 
         //if cam2 ignores an asset it will be affected by the wave effect
         this.cameras.main.ignore([ this.player.hp, this.player2.hp, this.time1, this.timeText]);
-        cam2.ignore([ this.p1_sky, this.player, this.player2, platforms, this.canon, this.canon2, this.p1_ship, this.p1_lives, this.p2_lives]);
+        this.cam2.ignore([ this.p1_sky, this.player, this.player2, platforms, this.canon, this.canon2, this.p1_ship, this.p1_lives, this.p2_lives]);
         //log to console to see which cam is ignoring the asset
         //console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
-        cam2.setRenderToTexture(this.customPipeline);
+        this.cam2.setRenderToTexture(this.customPipeline);
 
 
         //delay to warp increase effect
@@ -516,7 +516,9 @@ class Play2 extends Phaser.Scene{
         restart.on("pointerup", () =>{
             this.time.now = 0
             this.totalTime = 0
-            this.scene.restart("playScene");
+            this.cameras.main.setAlpha(0)
+            this.cam2.destroy()
+            this.scene.restart("playScene")
         })
         let menu = this.add.text(centerX + 100, centerY, "Menu", menuConfig).setOrigin(0.5);
         menu.setInteractive();
