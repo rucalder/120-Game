@@ -118,6 +118,9 @@ class Play2 extends Phaser.Scene{
             this.p2_lives.add(p2_heart);
         }
 
+        this.p1life = 3
+        this.p2life = 3
+
         //////////////////////////Player 1 Animations////////////////////////////////////////
         this.anims.create({
             key: 'p1_left',
@@ -624,12 +627,40 @@ class Play2 extends Phaser.Scene{
         });
         player.orange();
         if(player == this.player){
+            if(this.p1life = 0){
+                var p1_heart = this.p1_lives.create(50 + (30), 350, 'hearts').setScale(2,2);
+                this.p1_lives.add(p1_heart);
+            }
+            if(this.p1life = 1){
+                var p1_heart = this.p1_lives.create(50 + (60), 350, 'hearts').setScale(2,2);
+                this.p1_lives.add(p1_heart);
+            }
+            if(this.p1life = 2){
+                var p1_heart = this.p1_lives.create(50 + (90), 350, 'hearts').setScale(2,2);
+                this.p1_lives.add(p1_heart);
+            }
+            this.p1life++
+            this.cam2.ignore([this.p1_lives])
             
         }
         else{
-            
+            if(this.p2life = 0){
+                var p2_heart = this.p2_lives.create(50 + (30), 100, 'hearts').setScale(2,2);
+                this.p2_lives.add(p2_heart);
+            }
+            if(this.p2life = 1){
+                var p2_heart = this.p2_lives.create(50 + (60), 100, 'hearts').setScale(2,2);
+                this.p2_lives.add(p2_heart);
+            }
+            if(this.p2life = 2){
+                var p2_heart = this.p2_lives.create(50 + (90), 100, 'hearts').setScale(2,2);
+                this.p2_lives.add(p2_heart);
+            }
+            this.p2life++
+            this.cam2.ignore([this.p2_lives])
         }
     }
+
 
     playerHit(player, bullet){
         console.log('playerHit');
@@ -640,6 +671,7 @@ class Play2 extends Phaser.Scene{
             if (p1_live)
             {
                 p1_live.destroy();
+                this.p1life--
             }
         }
         else{
@@ -647,6 +679,7 @@ class Play2 extends Phaser.Scene{
             if (p2_live)
             {
                 p2_live.destroy();
+                this.p2life--
             }
         }
     }
