@@ -652,7 +652,7 @@ class Play2 extends Phaser.Scene{
         player.orange();
         if(player == this.player){
             if(this.p1life = 0){
-                var p1_heart = this.p1_lives.create(50 + (30), 350, 'hearts').setScale(2,2);
+                var p1_heart = this.p1_lives.create(50 + (90), 350, 'hearts').setScale(2,2);
                 this.p1_lives.add(p1_heart);
             }
             if(this.p1life = 1){
@@ -660,7 +660,7 @@ class Play2 extends Phaser.Scene{
                 this.p1_lives.add(p1_heart);
             }
             if(this.p1life = 2){
-                var p1_heart = this.p1_lives.create(50 + (90), 350, 'hearts').setScale(2,2);
+                var p1_heart = this.p1_lives.create(50 + (30), 350, 'hearts').setScale(2,2);
                 this.p1_lives.add(p1_heart);
             }
             this.p1life++
@@ -669,7 +669,7 @@ class Play2 extends Phaser.Scene{
         }
         else{
             if(this.p2life = 0){
-                var p2_heart = this.p2_lives.create(50 + (30), 100, 'hearts').setScale(2,2);
+                var p2_heart = this.p2_lives.create(50 + (90), 100, 'hearts').setScale(2,2);
                 this.p2_lives.add(p2_heart);
             }
             if(this.p2life = 1){
@@ -677,7 +677,7 @@ class Play2 extends Phaser.Scene{
                 this.p2_lives.add(p2_heart);
             }
             if(this.p2life = 2){
-                var p2_heart = this.p2_lives.create(50 + (90), 100, 'hearts').setScale(2,2);
+                var p2_heart = this.p2_lives.create(50 + (30), 100, 'hearts').setScale(2,2);
                 this.p2_lives.add(p2_heart);
             }
             this.p2life++
