@@ -12,6 +12,7 @@ class Play2 extends Phaser.Scene{
         this.load.image('p2_sky', "./assets/Sky2.png");
         this.load.image('bullet', "./assets/Ball.png");
         this.load.image('hearts', "./assets/Heart.png");
+        this.load.image('shadow', "./assets/Shadow.png");
 
         this.load.audio("bgmusic", "./assets/pirateGameSong.wav");
         this.load.audio("tonicSound", "./assets/tonicSound.wav");
@@ -87,19 +88,34 @@ class Play2 extends Phaser.Scene{
         //bottom border
         platforms.create(400, 568, 'ground').setScale(2).refreshBody().setVisible(false);
 
-        //creating player with physics
-        this.player = new Player1(this, 100, 450, "player1Right")
+        //creating shadow
+
+        this.pShadow = new Player1Shadow(this, 100, 467, 'shadow');
+        this.pShadow.setScale(0.5,0.5);
+        this.p2Shadow = new Player2Shadow(this, 100, 257, 'shadow');
+        this.p2Shadow.setScale(0.5,0.5);
+
+        //creating player w physics
+
+        this.player = new Player1(this, 100, 450, "player1Right");
         this.player.setScale(0.5,0.5);
         this.player2 = new Player2(this, 100, 200, 'player2Right');
         this.player2.setScale(0.5,0.5);
         this.player.setGravityY(1000)
         this.player2.setGravityY(1000)
 
+        
+        //this.pShadow.setGravityY(1000)
+       // this.p2Shadow2.setGravityY(1000)
+
         //how much character bounces when hitting the ground
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
         this.player2.setBounce(0.2);
         this.player2.setCollideWorldBounds(true);    
+
+           
+        
         
         //craeting hearts for health
         this.p1_lives = this.add.group();
@@ -212,6 +228,8 @@ class Play2 extends Phaser.Scene{
         this.physics.add.collider(this.player, platforms);
         this.physics.add.collider(this.player2, platforms);
 
+        this.physics.add.collider(this.pShadow, platforms);
+        this.physics.add.collider(this.p2Shadow, platforms);
         
         ////////////////////////PowerUps/////////////////////////////////////////////////////////////////
         this.powerUps_rum = this.physics.add.group();
@@ -408,7 +426,7 @@ class Play2 extends Phaser.Scene{
 
         //if cam2 ignores an asset it will be affected by the wave effect
         this.cameras.main.ignore([ this.player.hp, this.player2.hp, this.time1, this.timeText]);
-        this.cam2.ignore([ this.p1_sky, this.player, this.player2, platforms, this.canon, this.canon2, this.p1_ship, this.p1_lives, this.p2_lives]);
+        this.cam2.ignore([ this.p1_sky, this.player, this.player2, this.pShadow, this.p2Shadow, platforms, this.canon, this.canon2, this.p1_ship, this.p1_lives, this.p2_lives]);
         //log to console to see which cam is ignoring the asset
         //console.log('sky', sky.willRender(cam1), sky.willRender(cam2));
         this.cam2.setRenderToTexture(this.customPipeline);
@@ -434,6 +452,8 @@ class Play2 extends Phaser.Scene{
             console.log('update');
             this.player.update();
             this.player2.update();
+            this.pShadow.update();
+            this.p2Shadow.update();
             this.canon.update();
             this.canon2.update();
             this.p1_sky.tilePositionX += this.level
