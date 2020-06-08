@@ -494,7 +494,6 @@ class Play2 extends Phaser.Scene{
         this.bgmusic.stop()
         this.cameras.main.clearRenderToTexture();
         
-        
         let menuConfig = {
             fontFamily: "Courier",
             fontSize: "26px",
