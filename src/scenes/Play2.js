@@ -15,7 +15,7 @@ class Play2 extends Phaser.Scene{
         this.load.image('shadow', "./assets/Shadow.png");
 
         this.load.audio("bgmusic", "./assets/pirateGameSong.wav");
-        this.load.audio("hit", "./assets/hit.wav");
+        this.load.audio("hit", "./assets/Hit.wav");
         this.load.audio("tonicSound", "./assets/tonicSound.wav");
         this.load.audio("orangeSound", "./assets/orangeSound.wav");
         this.load.audio("jumpSound", "./assets/jump.wav");
@@ -691,6 +691,7 @@ class Play2 extends Phaser.Scene{
         console.log('playerHit');
         bullet.disableBody(true, true);
         player.damage(34);
+
         if(player == this.player){
             var p1_live = this.p1_lives.getFirstAlive();
             
