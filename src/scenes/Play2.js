@@ -492,6 +492,7 @@ class Play2 extends Phaser.Scene{
         this.anims.remove("p2_right")
         this.anims.remove("p1_right")
         this.bgmusic.stop()
+        this.cameras.main.clearRenderToTexture();
         
         
         let menuConfig = {
