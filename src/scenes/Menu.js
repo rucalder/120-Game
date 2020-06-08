@@ -4,7 +4,8 @@ class Menu extends Phaser.Scene{
     }
 
     preload() {
-      this.load.spritesheet('screen', "./assets/TitleScreen.png", { frameWidth: 1600, frameHeight: 1200 });
+      this.load.spritesheet('screen', "./assets/TitleScreen.png", { frameWidth: 800, frameHeight: 600, endFrame: 3 });
+      this.load.spritesheet('sky', "./assets/Sky.png", { frameWidth: 800, frameHeight: 600, endFrame: 3 });
       //this.load.image('p1_sky', "./assets/Sky1.png");
         
     }
@@ -39,17 +40,37 @@ class Menu extends Phaser.Scene{
         //menuConfig.backgroundColor = "#00FF00";
         //menuConfig.color = "#000";
 
-      
-      this.titleScreen = this.add.sprite(this, 0, 0, "screen").setOrigin(0, 0)
-      this.anims.create({
-        key: "title",
+      var config1 ={
+        key: "sunset",
+        frames: this.anims.generateFrameNumbers('sky', {
+          start: 0, 
+          end: 2
+        }),
         repeat: -1,
-        frames: this.anims.generateFrameNumbers("screen", {start: 0, end: 2, first: 0}),
-        frameRate:8
-      });
+        frameRate:5
+      } ;
+        //this.titleScreen = this.add.sprite(this, 0, 0).setOrigin(0, 0)
+        //this.bone = new Obstacle(this, 100, 100).setScale(1.5,1.5)
+        this.anims.create(config1);
+        this.set = this.add.sprite(400, 295, "sunset");
+        this.set.anims.play("sunset");
+      
+      var config ={
+        key: "title",
+        frames: this.anims.generateFrameNumbers('screen', {
+          start: 0, 
+          end: 2
+        }),
+        repeat: -1,
+        frameRate:3
+      } ;
       //this.titleScreen = this.add.sprite(this, 0, 0).setOrigin(0, 0)
       //this.bone = new Obstacle(this, 100, 100).setScale(1.5,1.5)
-      this.titleScreen.play("title")
+      this.anims.create(config);
+      this.flag = this.add.sprite(400, 300, "title");
+      this.flag.anims.play("title");
+      //this.titleScreen = this.add.sprite(this, 0, 0, 'screen').setOrigin(0, 0)
+      //this.titleScreen.play("title") 
 
       //this.add.text(20, 20, "Temp Menu");
       //this.scene.start("playScene");
